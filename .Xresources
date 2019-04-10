@@ -1,0 +1,29 @@
+! URxvt.font: xft:monospace:size=12
+URxvt.font:         xft:Hack-Regular:pixelsize=14:Symbola
+URxvt.boldFont:     xft:Hack-Bold:pixelsize=14:weight=bold,xft:Symbola
+URxvt.italicFont:   xft:Hack-RegularOblique:pixelsize=14:slant=italic,xft:Symbola
+URxvt.scrollBar: false
+
+URxvt.background: rgba:0000/0000/0200/c800
+URxvt.transparent: true
+URxvt.shading: 40
+
+! #define t_fg_highlight #B6B7BB
+! URxvt.colorBD: t_fg_highlight
+! URxvt.colorIT: t_fg_highlight
+! URxvt.colorUL: t_fg_highlight
+
+
+! vim: set ft=xdefaults:
+
+URxvt.clipboard.autocopy: true
+URxvt.keysym.C-c: perl:clipboard:copy
+URxvt.keysym.C-v: perl:clipboard:paste
+URxvt.keysym.C-C-v: perl:clipboard:paste_escaped
+
+! keyboard-select
+URxvt.keysym.M-s: perl:keyboard-select:activate
+Urxvt.keysym.M-r: perl:keyboard-select:search
+
+URxvt.perl-ext-common: selection-to-clipboard
+! URxvt.perl-ext-common: ...,tabbed,...
