@@ -24,6 +24,7 @@
         untracked = cyan
 
 [alias]
+        s = status
         go = log --graph --pretty=format:'%C(yellow)%h%Creset%C(red bold)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --decorate --abbrev-commit --all --author-date-order
         god = log --graph --pretty=format:'%C(yellow)%h%Creset%C(red bold)%d%Creset %s %Cgreen(%ci) %C(blue)<%an>%Creset' --decorate --abbrev-commit
         g = log --oneline --decorate --graph --all

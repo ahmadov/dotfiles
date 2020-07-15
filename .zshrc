@@ -33,3 +33,7 @@ mkcd () {
   mkdir -p "$1" 
   cd "$1"
 }
+
+# useful tools
+alias v='bat -p'
+

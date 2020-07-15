@@ -1,56 +1,82 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
-
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'derekwyatt/vim-fswitch'
-Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'scrooloose/nerdTree'
-Plugin 'kana/vim-textobj-user'
-Plugin 'kana/vim-textobj-function'
-Plugin 'kana/vim-operator-user'
-Plugin 'christoomey/vim-sort-motion'
-Plugin 'sheerun/vim-polyglot'
-Plugin 'tpope/vim-obsession'
-Plugin 'SirVer/ultisnips'
-
-call vundle#end()
-
-filetype plugin indent on
-
-nmap <silent> <F3> :NERDTreeToggle<CR>
-
-let g:NERDTreeWinSize=30
-autocmd BufEnter * silent! lcd %:p:h
-
-set number  "Show line numbers
-set relativenumber
-nmap <leader>num :set nu! <CR>:set rnu!<CR>
-set wrap  "enable wraping
-set linebreak   "Break lines at word (requires Wrap lines)
-set nolist         " list disables linebreak
-set scrolloff=5         " 2 lines above/below cursor when scrolling
-set noswapfile  " turn off swapfiles
-
 syntax on
+let &t_ut='' "background color issue workaround on kitty terminal
 
+set relativenumber
+set nu
 set showmatch   "Highlight matching brace
 set showcmd     "Show command in bottom bar
 set title       "Show file in titlebar
+set hidden
+set tabstop=4 softtabstop=4
+set shiftwidth=4
 set autoindent  "Auto-indent new lines
 set expandtab   "Use spaces instead of tabs
 set smartindent "Enable smart-indent
 set smarttab    "Enable smart-tabs
-set hlsearch    "Highlight all search results
-set smartcase   "Enable smart-case search
-set cursorline  "Highlight current line
-set hidden      "Remember undo after quitting
+set smartcase
+set undofile
+set scrolloff=8
+set incsearch
+
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-vinegar'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plugin 'junegunn/fzf.vim'
+Plugin 'sheerun/vim-polyglot'
+
+Plugin 'gruvbox-community/gruvbox'
+Plugin 'sainnhe/gruvbox-material'
+Plugin 'phanviet/vim-monokai-pro'
+Plugin 'vim-airline/vim-airline'
+
+call vundle#end()            " required
+
+set shell=/usr/bin/zsh
+
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
 
 let g:gruvbox_contrast_dark='hard'
 colorscheme gruvbox
 set background=dark
+let g:gruvbox_invert_selection='0'
+
+if has('termguicolors')
+   set termguicolors
+endif
+
+let loaded_matchparen = 1
+let mapleader=' '
+
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_winsize = 25
+" augroup ProjectDrawer
+"   autocmd!
+"   autocmd VimEnter * :Vexplore
+" augroup END
+let g:airline#extensions#tabline#enabled = 1
 
 let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
@@ -59,10 +85,13 @@ let g:cpp_experimental_simple_template_highlight = 1
 let g:cpp_experimental_template_highlight = 1
 let g:cpp_concepts_highlight = 1
 
-" nnoremap <silent> [oh :call gruvbox#hls_show()<CR>
-" nnoremap <silent> ]oh :call gruvbox#hls_hide()<CR>
-" nnoremap <silent> coh :call gruvbox#hls_toggle()<CR>
+nnoremap <leader>h :wincmd h<CR>
+nnoremap <leader>j :wincmd j<CR>
+nnoremap <leader>k :wincmd k<CR>
+nnoremap <leader>l :wincmd l<CR>
 
-" nnoremap * :let @/ = ""<CR>:call gruvbox#hls_show()<CR>*
-" nnoremap / :let @/ = ""<CR>:call gruvbox#hls_show()<CR>/
-" nnoremap ? :let @/ = ""<CR>:call gruvbox#hls_show()<CR>
+"FuGITive
+nmap <leader>gf :diffget //3<CR>
+nmap <leader>gj :diffget //2<CR>
+nmap <leader>gs :G<CR>
+
