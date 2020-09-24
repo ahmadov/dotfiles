@@ -1,0 +1,21 @@
+{
+    "languageserver": {
+        "ccls": {
+            "command": "ccls",
+            "filetypes": ["c", "cpp", "objc", "objcpp"],
+            "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+            "initializationOptions": {
+               "cache": {
+                 "directory": "/tmp/ccls"
+               },
+               "clang": {
+                "resourceDir": "/usr/lib/clang/10.0.1",
+                "extraArgs": [
+                  "-isystem",
+                  "/usr/include/c++/10.2.0"
+                ]
+              }
+             }
+        }
+    }
+}
