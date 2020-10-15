@@ -1,0 +1,24 @@
+theme = "gruvbox-dark"
+icons = "awesome"
+
+[[block]]
+block = "keyboard_layout"
+driver = "setxkbmap"
+interval = 15
+
+[[block]]
+block = "cpu"
+interval = 3
+format = "{utilization}%"
+info = 50
+warning = 70
+critical = 90
+
+[[block]]
+block = "memory"
+display_type = "memory"
+format_mem = "{Mup}%"
+format_swap = "{SUp}%"
+icons = true
+interval = 3
+

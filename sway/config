@@ -1,0 +1,21 @@
+set $mod Mod4
+
+set $left h
+set $down j
+set $up k
+set $right l
+
+set $term kitty
+set $menu rofi -show run --lines 10 -eh 2 --opacity "20"
+set $switcher_menu rofi -show window
+set $wallpaper $HOME/.config/wallpapers/wallpaper11.png
+
+font pango:IPAGothic 10, DejaVu Sans Mono 9
+
+# make sure workspaces config is load first
+include ~/.config/sway/config.d/workspaces
+
+# other configs
+include /etc/sway/config.d/*
+include ~/.config/sway/config.d/*
+
