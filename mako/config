@@ -1,0 +1,4 @@
+font=monospace 14
+ignore_timeout=1
+default-timeout=5000
+

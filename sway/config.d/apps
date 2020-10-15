@@ -1,0 +1,14 @@
+assign [class="firefox"] $ws2
+assign [class="Eclipse"] $ws7
+assign [class="Code"] $ws8
+assign [class="Spotify"] $ws9
+assign [class="Skype"] $ws10
+assign [class="Slack"] $ws10
+assign [class="Rambox"] $ws10
+assign [class="Signal"] $ws10
+assign [class="Teams"] $ws10
+
+for_window [app_id="pavucontrol"] floating enable
+for_window [app_id="nm-connection-editor"] floating enable
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable

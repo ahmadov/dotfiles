@@ -1,0 +1,6 @@
+exec mako
+# exec waybar
+exec blueman-applet
+exec gammastep
+exec /usr/lib/kdeconnectd
+

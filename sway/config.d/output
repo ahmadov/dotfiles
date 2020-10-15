@@ -1,0 +1,7 @@
+output * bg $wallpaper fill
+
+bindsym Ctrl+Shift+1 exec sh ~/.config/sway/scripts/workspace.sh home
+bindsym Ctrl+Shift+2 exec sh ~/.config/sway/scripts/workspace.sh work
+bindsym Ctrl+Shift+3 exec sh ~/.config/sway/scripts/workspace.sh work-fallback
+bindsym Ctrl+Shift+0 exec sh ~/.config/sway/scripts/workspace.sh default
+

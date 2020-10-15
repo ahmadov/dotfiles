@@ -1,0 +1,4 @@
+default_border none
+for_window [class="^.*"] border pixel 1
+hide_edge_borders both
+
