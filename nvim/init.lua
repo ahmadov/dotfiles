@@ -1,0 +1,5 @@
+require('plugins')
+require('settings')
+require('autoload')
+require('keybindings')
+require('disable_builtins')
