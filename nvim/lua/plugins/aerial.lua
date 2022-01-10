@@ -1,7 +1,8 @@
+local aerial = require('aerial')
 local M = {}
 
 function M.config()
-  vim.g.aerial = {
+  aerial.setup({
     close_behavior = 'auto',
     default_bindings = true,
     default_direction = 'prefer_right',
@@ -15,8 +16,11 @@ function M.config()
     min_width = 30,
     nerd_font = 'auto',
     open_automatic = false,
-    open_automatic_min_lines = 0,
-    open_automatic_min_symbols = 0,
+    -- open_automatic = function(bufnr)
+    --   return vim.api.nvim_buf_line_count(bufnr) > 80
+    --     and aerial.num_symbols(bufnr) > 4
+    --     and not aerial.was_closed()
+    -- end,
     post_jump_cmd = 'normal! zz',
     update_when_errors = true,
     filter_kind = {
@@ -28,7 +32,7 @@ function M.config()
       'Method',
       'Struct',
     },
-  }
+  })
 end
 
 return M

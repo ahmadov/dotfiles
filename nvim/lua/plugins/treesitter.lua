@@ -19,7 +19,13 @@ function M.config()
     indent = {
       enable = true,
     },
+    autotag = {
+      enable = true,
+    },
     autopairs = {
+      enable = true,
+    },
+    context_commentstring = {
       enable = true,
     },
     matchup = {

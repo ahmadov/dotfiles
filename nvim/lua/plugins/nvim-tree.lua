@@ -5,24 +5,19 @@ local M = {}
 
 function M.config()
 
-  vim.g.nvim_tree_side = 'left'
-  vim.g.nvim_tree_width = 40
-  vim.g.nvim_tree_ignore = {'.git', '.cache', '*.swp'}
-  vim.g.nvim_tree_auto_open = 1
-  vim.g.nvim_tree_auto_close = 1
+  -- vim.g.nvim_tree_auto_ignore_ft = [ 'startify', 'dashboard' ]
+  vim.b.nvim_tree_gitignore = 1
   vim.g.nvim_tree_quit_on_open = 0
-  vim.g.nvim_tree_follow = 1
   vim.g.nvim_tree_indent_markers = 1
-  vim.g.nvim_tree_hide_dotfiles = 0
   vim.g.nvim_tree_git_hl = 1
   vim.g.nvim_tree_root_folder_modifier = ':~'
-  vim.g.nvim_tree_tab_open = 0
-  vim.g.nvim_tree_allow_resize = 1
+  vim.g.nvim_tree_git_hl = 0
 
   vim.g.nvim_tree_show_icons = {
-      git = 1,
+      git = 0,
       folders = 1,
-      files = 1
+      files = 1,
+      folder_arrows = 1
   }
 
   vim.g.nvim_tree_icons = {
@@ -35,11 +30,6 @@ function M.config()
           renamed = '➜',
           untracked = '★'
       },
-      folder = {
-          default = '',
-          open = '',
-          symlink = ''
-      }
   }
 
   local get_lua_cb = function(cb_name)
@@ -56,12 +46,58 @@ function M.config()
     end
   end
 
+  require('nvim-tree').setup({
+    disable_netrw       = true,
+    hijack_netrw        = true,
+    open_on_setup       = false,
+    auto_close          = true,
+    open_on_tab         = false,
+    hijack_cursor       = false,
+    hide_dotfiles       = true,
+    git = {
+      enable = false,
+      ignore = true,
+      timeout = 400 -- (in ms)
+    },
+    diagnostics = {
+      enable = false,
+      icons = {
+        hint = "",
+        info = "",
+        warning = "",
+        error = "",
+      },
+    },
+    filters = {
+      dotfiles = false,
+      custom = { ".git", "node_modules", ".cache" },
+    },
+    update_focused_file = {
+      enable      = true,
+      update_cwd  = false,
+      ignore_list = { ".git", "node_modules", ".cache" },
+    },
+    system_open = {
+      cmd  = nil,
+      args = {}
+    },
+    view = {
+      width = 35,
+      side = 'left',
+      auto_resize = false,
+      mappings = {
+        custom_only = false,
+        list = {}
+      }
+    }
+  })
+
   -- Mappings for nvimtree
   utils.map(
       'n',
       '<C-n>',
-  --     ':NvimTreeToggle<CR>',
-      'v:lua toggle()<CR>',
+      ':NvimTreeToggle<CR>',
+      -- 'v:lua toggle()<CR>',
       {
           noremap = true,
           silent = true

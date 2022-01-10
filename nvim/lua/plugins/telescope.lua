@@ -1,4 +1,5 @@
 local utils = require('utils')
+local actions = require('telescope.actions')
 
 local M = {}
 
@@ -7,7 +8,6 @@ function M.config()
     defaults = {
       vimgrep_arguments = {
         'rg',
-  --       '--reverse',
         '--color=never',
         '--no-heading',
         '--with-filename',
@@ -15,6 +15,12 @@ function M.config()
         '--column',
         '--smart-case'
       },
+      mappings = {
+        i = {
+          ["<esc>"] = actions.close
+        },
+      },
+      dynamic_preview_title = true,
       prompt_prefix = '> ',
       selection_caret = '> ',
       entry_prefix = '  ',
@@ -50,31 +56,28 @@ function M.config()
       extensions = {
           media_files = {
               filetypes = {'png', 'webp', 'jpg', 'jpeg'},
-  --             find_cmd = 'rg' -- find command (defaults to `fd`)
+              find_cmd = 'rg'
           },
           fzf = {
-              fuzzy = true,                    -- false will only do exact matching
-              override_generic_sorter = false, -- override the generic sorter
-              override_file_sorter = true,     -- override the file sorter
-              case_mode = 'smart_case',        -- or 'ignore_case' or 'respect_case'
-                                               -- the default case_mode is 'smart_case'
+              fuzzy = true,
+              override_generic_sorter = false,
+              override_file_sorter = true,
+              case_mode = 'smart_case',
           },
           fzf_writer = {
               minimum_grep_characters = 1,
               minimum_files_characters = 1,
-
-              -- Disabled by default.
-              -- Will probably slow down some aspects of the sorter, but can make color highlights.
-              -- I will work on this more later.
               use_highlighter = false,
           }
       }
     }
   }
 
+  require('telescope').load_extension('dap')
+  require('telescope').load_extension('cmake')
   require('telescope').load_extension('media_files')
   require('telescope').load_extension('fzy_native')
-  
+
   utils.map('n', '<Leader>fm', [[<Cmd>lua require('telescope').extensions.media_files.media_files()<CR>]], {noremap = true, silent = true})
 end
 
