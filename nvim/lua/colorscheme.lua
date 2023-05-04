@@ -11,10 +11,11 @@ local themes = require('themes')
 
 -- themes.switchColorScheme('gruvbox-material-dark')
 -- themes.switchColorScheme('gruvbox-material-light')
-themes.switchColorScheme('gruvbox-dark')
+themes.switchColorScheme('gruvbox-dark-lua')
 -- themes.switchColorScheme('everforest-dark')
 -- themes.switchColorScheme('everforest-light')
 -- themes.switchColorScheme('edge-light')
+-- themes.switchColorScheme('edge-dark')
 -- vim.g.ayu_mirage = true
 -- themes.switchColorScheme('ayu-dark')
 -- highlights
@@ -63,9 +64,9 @@ vim.cmd([[
 --   highlight LspDiagnosticsUnderlineInformation guifg=#17D6EB, gui=undercurl
 --   highlight LspDiagnosticsUnderlineHint guifg=#17EB7A gui=undercurl
 
--- vim.cmd([[
---   hi DiffAdd        gui=NONE guifg=NONE guibg=#b8f026 
---   hi DiffChange     gui=NONE guifg=NONE guibg=#8ec07c 
---   hi DiffDelete     gui=NONE guifg=NONE guibg=#f2d3cd  
---   hi DiffText       gui=NONE guifg=NONE guibg=#fabd2f 
--- ]])
+vim.cmd([[
+  hi DiffAdd        gui=NONE guifg=NONE guibg=#385634 
+  hi DiffChange     gui=NONE guifg=NONE guibg=#464c24 
+  hi DiffDelete     gui=NONE guifg=NONE guibg=#780e02
+  hi DiffText       gui=NONE guifg=NONE guibg=#725103
+]])

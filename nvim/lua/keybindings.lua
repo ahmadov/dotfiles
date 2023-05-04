@@ -24,7 +24,8 @@ utils.map("", "<C-x>", [[<cmd>BufferClose<CR>]]) -- close the current buffer
 utils.map("", "<C-X>", [[<cmd>BufferClose!<CR>]]) -- force close the current buffer
 utils.map("n", "<C-t>", [[:<C-u>enew<CR>]]) -- new buffer
 utils.map("n", "<C-t>", [[<ESC>:<C-u>enew<CR>]]) -- new buffer
-utils.map("n", "gb", [[<cmd>BufferPick<CR>]])
+utils.map("n", "<leader>q", [[<Cmd>q<CR>]])
+utils.map("n", "B", [[<cmd>BufferPick<CR>]])
 utils.map("n", "<Leader>1", [[<Cmd>BufferGoto 1<CR>]])
 utils.map("n", "<Leader>2", [[<Cmd>BufferGoto 2<CR>]])
 utils.map("n", "<Leader>3", [[<Cmd>BufferGoto 3<CR>]])
@@ -96,11 +97,18 @@ utils.map("v", "J", [[:m '>+1<CR>gv=gv]])
 utils.map("v", "K", [[:m '<-2<CR>gv=gv]])
 
 -- commenting
-utils.map("n", "<C-_>", [[:CommentToggle<CR>]])
-utils.map("x", "<C-_>", [[:'<,'>CommentToggle<CR>]])
+-- utils.map("n", "<C-/>", [[:CommentToggle<CR>]])
+-- utils.map("x", "<C-/>", [[:'<,'>CommentToggle<CR>]])
+
+-- Tree
+utils.map('n', '<C-n>', ':Neotree toggle<CR>', { noremap = true, silent = true })
+utils.map('n', '\\', ':Neotree reveal<CR>', { noremap = true, silent = true })
+
+-- folding
+utils.map('n', 'Tab', ':AerialTreeToggle<CR>', { noremap = true, silent = true })
 
 -- Git
-utils.map('n', '<leader>gg', '<cmd>Neogit<CR>', { noremap = true, silent = true })
+utils.map('n', '<leader>g', '<cmd>lua require("neogit").open()<CR>', { noremap = true, silent = true })
 utils.map("n", "<leader>gs", [[:G<CR>]])
 utils.map("n", "<leader>gf", [[:diffget //2<CR>]])
 utils.map("n", "<leader>gj", [[:diffget //3<CR>]])
@@ -108,17 +116,27 @@ utils.map("n", "<leader>do", [[:DiffviewOpen<CR>]])
 utils.map("n", "<leader>,", [[:G ftp push --insecure<CR>]])
 
 -- CMake
-utils.map("n", "<leader>cg", [[:CMake configure<CR>]])
-utils.map("n", "<leader>cb", [[:CMake build<CR>]])
-utils.map("n", "<leader>cB", [[:CMake build_all<CR>]])
-utils.map("n", "<leader>cr", [[:CMake run<CR>]])
-utils.map("n", "<leader>cd", [[:CMake debug<CR>]])
-utils.map("n", "<leader>cx", [[:CMake build_and_run<CR>]])
-utils.map("n", "<leader>cX", [[:CMake build_and_debug<CR>]])
-utils.map("n", "<leader>ca", [[:CMake set_target_args<CR>]])
-utils.map("n", "<leader>cs", [[:Telescope cmake select_target<CR>]])
-utils.map("n", "<leader>ct", [[:Telescope cmake select_build_type<CR>]])
+-- utils.map("n", "<leader>cg", [[:CMake configure<CR>]])
+-- utils.map("n", "<leader>cb", [[:CMake build<CR>]])
+-- utils.map("n", "<leader>cB", [[:CMake build_all<CR>]])
+-- utils.map("n", "<leader>cr", [[:CMake run<CR>]])
+-- utils.map("n", "<leader>cd", [[:CMake debug<CR>]])
+-- utils.map("n", "<leader>cx", [[:CMake build_and_run<CR>]])
+-- utils.map("n", "<leader>cX", [[:CMake build_and_debug<CR>]])
+-- utils.map("n", "<leader>ca", [[:CMake set_target_args<CR>]])
+-- utils.map("n", "<leader>cs", [[:CMake select_target<CR>]])
+-- utils.map("n", "<leader>ct", [[:CMake select_build_type<CR>]])
 utils.map('n', 'gh', '<Cmd>ClangdSwitchSourceHeader<CR>')
+
+-- LSP
+utils.map('n', '<leader>f',  "<cmd>Lspsaga lsp_finder<CR>")
+utils.map('n', 'K',  "<cmd>Lspsaga hover_doc<CR>")
+utils.map('n', 'gD', '<Cmd>Lspsaga peek_definition<CR>', opts)
+utils.map('i', '<F2>', "<cmd>Lspsaga rename<CR>")
+utils.map('n', '<leader>rn', "<cmd>Lspsaga rename<CR>")
+utils.map('v', '<leader>rn', "<cmd>Lspsaga rename<CR>")
+utils.map('n', '<leader>a', "<cmd>Lspsaga code_action<CR>", { silent = true })
+utils.map('v', '<leader>a', "<cmd><C-U>Lspsaga range_code_action<CR>", { silent = true })
 
 -- Google test
 utils.map("n", "<leader>gt", [[:GTestRunUnderCursor<CR>]])
@@ -150,16 +168,21 @@ utils.map("n", "<Leader>gb", [[<Cmd>lua require('telescope.builtin').git_branche
 utils.map("n", "<Leader>b", [[<Cmd>lua require('telescope.builtin').buffers()<CR>]])
 utils.map("n", "<Leader>e", [[<Cmd>lua require('telescope.builtin').oldfiles()<CR>]])
 -- utils.map("n", "<Leader>e", [[<Cmd>lua require('telescope').extensions.frecency.frecency()<CR>]])
-utils.map("n", "<C-p>", [[<Cmd>lua require('utils').telescope_find_files()<CR>]])
+utils.map("n", "<C-p>", [[<Cmd>lua require('telescope.builtin').find_files()<CR>]])
+-- utils.map("n", "<C-P>", [[<Cmd>lua require('utils').telescope_find_files()<CR>]])
 utils.map("n", "<C-g>", [[<Cmd>lua require('telescope.builtin').git_status()<CR>]])
 utils.map("n", "<leader>gc", [[<Cmd>lua require('telescope.builtin').git_commits()<CR>]])
 utils.map("n", "<Leader>fb", [[<Cmd>lua require('telescope.builtin').file_browser()<CR>]])
 utils.map("n", "<Leader>fm", [[<Cmd>lua require('telescope').extensions.media_files.media_files()<CR>]])
-utils.map("n", "<Leader>s", [[<Cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]])
-utils.map("n", "<Leader>ts", [[<Cmd>lua require('telescope.builtin').live_grep()<CR>]])
+utils.map("n", "<Leader>t", [[<Cmd>lua require('telescope.builtin').live_grep()<CR>]])
+utils.map("n", "<Leader>T", [[<Cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]])
 
 utils.map('n', '<a-n>', [[<cmd>lua require('illuminate').next_reference{wrap=true}<cr>]])
 utils.map('n', '<a-p>', [[<cmd>lua require('illuminate').next_reference{reverse=true,wrap=true}<cr>]])
+
+-- markdown-preview
+utils.map("n", "<Alt-p>", [[:MarkdownPreview]])
+utils.map("n", "<Alt-q>", [[:MarkdownPreviewStop]])
 
 vim.cmd([[
 

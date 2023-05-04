@@ -1,4 +1,4 @@
-local lsp = require('plugins.lsp')
+local lsp = require('plugin.lsp')
 local lspconfig = require('lspconfig')
 local configs = require('lspconfig.configs')
 local coq = require('coq')

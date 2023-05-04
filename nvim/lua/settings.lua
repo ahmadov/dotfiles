@@ -30,7 +30,7 @@ vim.o.autoindent                = true
 vim.o.errorbells                = false
 vim.wo.number                   = true
 vim.o.undofile                  = true
-vim.o.undodir                   = '/home/elmi/.local/share/nvim/undo'
+-- vim.o.undodir                   = '~/.undodir
 vim.o.compatible                = false
 vim.wo.relativenumber           = true
 vim.wo.cursorline               = true
@@ -39,17 +39,19 @@ vim.o.backspace                 = 'indent,eol,start'
 vim.o.termguicolors             = true
 vim.o.cmdheight                 = 2
 vim.o.ttyfast                   = true
-vim.o.wrap                      = false
+vim.o.wrap                      = true
 vim.o.linebreak                 = true
 vim.o.numberwidth               = 2
 vim.g.mapleader                 = ' ';
 vim.g.auto_save                 = 1
-vim.wo.signcolumn               = 'yes'
+vim.o.signcolumn               = 'yes'
 vim.g.indentLine_enabled        = 1
 vim.wo.colorcolumn              = '99999'
 vim.o.listchars                 = 'space:⋅,tab:→ ' -- Display tabs
 vim.o.inccommand                = 'split'
 vim.o.lazyredraw                = true
+vim.g.loaded_matchparen         = false
+vim.o.colorcolumn               = "120"
 vim.opt.shortmess = {
   t = true, -- truncate file messages at start
   A = true, -- ignore annoying swap file messages
@@ -72,6 +74,7 @@ vim.cmd([[
   set expandtab
   set autoindent
   set smartindent
+  set title
 
   syntax enable
   syntax on

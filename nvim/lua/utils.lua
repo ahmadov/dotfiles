@@ -113,17 +113,4 @@ function M.get_git_dir(path)
   return  path .. '/' .. git_dir
 end
 
-local dap = require('dap')
-function M.debug_lldb(command, ...)
-  local config = {
-    type = 'cpp',
-    name = command,
-    request = 'launch',
-    program = command,
-    args = { ... },
-  }
-  dap.run(config)
-  dap.repl.open()
-end
-
 return M

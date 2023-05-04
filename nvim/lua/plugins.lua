@@ -2,57 +2,129 @@
 local packer_exists = pcall(vim.cmd, [[packadd packer.nvim]])
 
 if packer_exists then
-  local use = require('packer').use
+  local packer = require('packer')
+  packer.set_handler(
+    "conf",
+    function(_, plugin, value)
+      plugin.config = ([[require('%s').config()]]):format(value)
+    end
+  )
+  local use = packer.use
   return require('packer').startup(
       function()
           use {'wbthomason/packer.nvim', opt = true}
-          use {'lewis6991/impatient.nvim', rocks = 'mpack'}
+          use {
+              "williamboman/mason.nvim",
+              conf = "plugin.mason"
+          }
+          use {
+            'lewis6991/impatient.nvim',
+            conf = "plugin.impatient",
+          }
+          use {'rhysd/accelerated-jk'}
+          use {'kana/vim-niceblock'}
+
+          use {
+            'danymat/neogen',
+            conf = "plugin.neogen",
+          }
+          use {
+            'Saecki/crates.nvim',
+            conf = "plugin.crates",
+          }
+          use {
+            'brenoprata10/nvim-highlight-colors',
+            conf = "plugin.highligth_color",
+          }
+          use {
+            'kylechui/nvim-surround',
+            conf = "plugin.nvim-surround",
+          }
+          -- use {
+          --   'mg979/vim-visual-multi',
+          --   conf = "plugin.visual_multi",
+          -- }
+          use {
+            'monkoose/matchparen.nvim',
+            conf = "plugin.matchparen",
+          }
+          use {
+            'vladdoster/remember.nvim',
+            conf = "plugin.lastplace",
+          }
+          use {'bronson/vim-visual-star-search'}
+          -- use {
+          --   'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+          --   conf = "plugin.lsp_lines",
+          -- }
+          use {
+            'stevearc/stickybuf.nvim',
+            conf = "plugin.stickybuf",
+          }
+          -- use {'gbprod/cutlass.nvim'}
+          
           use {
             'glepnir/dashboard-nvim',
-            config = require('plugins.dashboard').config()
+            branch = 'master',
+            event = 'VimEnter',
+            conf = "plugin.dashboard",
+          }
+          use {
+            'jose-elias-alvarez/null-ls.nvim',
+            -- conf = "plugin.null_ls",
+          }
+          use {
+            'iamcco/markdown-preview.nvim',
+            conf = "plugin.markdown-preview",
           }
           use {
             'folke/persistence.nvim',
-            config = require('plugins.persistence').config(),
+            conf = "plugin.persistence",
           }
           use {
             'kyazdani42/nvim-web-devicons',
-            config = require('plugins.nvim-web-devicons').config(),
+            conf = "plugin.nvim-web-devicons",
           }
           use {
-            'kyazdani42/nvim-tree.lua',
-            event = "VimEnter",
-            config = require('plugins.nvim-tree').config(),
-          }
+            'nvim-neo-tree/neo-tree.nvim',
+            conf = "plugin.neotree",
+            branch = "v2.x",
+            requires = { 
+              'nvim-lua/plenary.nvim',
+              'kyazdani42/nvim-web-devicons',
+              'MunifTanjim/nui.nvim',
+            }
+          } 
           use {
             'lewis6991/gitsigns.nvim',
-            config = require('plugins.gitsigns').config(),
+            conf = "plugin.gitsigns",
           }
           use {
             'nvim-lualine/lualine.nvim',
-            config = require('plugins.lualine').config(),
+            conf = "plugin.lualine",
             requires = {'kyazdani42/nvim-web-devicons', opt = true}
           }
           use {
             'romgrk/barbar.nvim',
             event = "VimEnter",
-            config = require('plugins.barbar').config(),
+            conf = "plugin.barbar",
           }
           use {
             'hrsh7th/vim-eft',
-            config = require('plugins.vim-eft').config(),
+            conf = "plugin.vim-eft",
           }
           use {
             'akinsho/toggleterm.nvim',
-            config = require('plugins.toggleterm').config()
+            branch = 'main',
+            conf = "plugin.toggleterm",
           }
           use {
             'mbbill/undotree',
-            config = require('plugins.undotree').config(),
+            conf = "plugin.undotree",
           }
           use {
             'nvim-treesitter/nvim-treesitter',
-            config = require('plugins.treesitter').config(),
+            conf = "plugin.treesitter",
             requires = {
               -- Automatically end & rename tags
               'windwp/nvim-ts-autotag',
@@ -63,53 +135,52 @@ if packer_exists then
           use {'nvim-treesitter/nvim-treesitter-textobjects', after = {'nvim-treesitter'}}
           use {'RRethy/nvim-treesitter-textsubjects', after = {'nvim-treesitter'}}
           use {'RRethy/vim-illuminate'}
-          use {'AndrewRadev/splitjoin.vim'}
-          use {
-            'norcalli/nvim-colorizer.lua',
-          }
+          -- use {'AndrewRadev/splitjoin.vim'}
           use {'tpope/vim-repeat'}
-          use {
-            'junegunn/fzf.vim',
-            config = require('plugins.fzf').config(),
-          }
-          use {'tpope/vim-surround'}
           use {'tpope/vim-fugitive'}
           use {
             'TimUntersberger/neogit',
-            config = require('plugins.neogit').config(),
+            conf = "plugin.neogit",
             requires = 'nvim-lua/plenary.nvim'
           }
           use {
             'sindrets/diffview.nvim',
-            config = require('plugins.diffview').config(),
+            -- conf = "plugin.diffview",
           }
           use {
-            'terrortylor/nvim-comment',
-            config = require('plugins.nvim-comment').config(),
+            'numToStr/Comment.nvim',
+            conf = "plugin.Comment",
           }
           use {
             'lukas-reineke/indent-blankline.nvim',
-            config = require('plugins.indent-blankline').config()
+            conf = "plugin.indent-blankline",
           }
-          use {
-            'ethanholz/nvim-lastplace',
-            config = require('plugins.lastplace').config()
-          }
+          -- use {
+          --   'ethanholz/nvim-lastplace',
+          --   conf = "plugin.lastplace",()
+          -- }
           use {
             'sbdchd/neoformat',
-            config = require('plugins.neoformat').config(),
+            conf = "plugin.neoformat",
+          }
+          -- Replace with nvim-tasks
+          -- use {
+          --   'Shatur/neovim-cmake',
+          --   conf = "plugin.neovim-cmake",
+          -- }
+          use {
+            'Shatur/neovim-tasks',
+            conf = "plugin.neovim-tasks",
           }
           use {
-            'Shatur/neovim-cmake',
-            config = require('plugins.neovim-cmake').config()
+            'tversteeg/registers.nvim',
+            branch = 'main'
           }
-          use {'tversteeg/registers.nvim'}
-          use {'alepez/vim-gtest'}
           use {'sumneko/lua-language-server'}
           use {
             'ms-jpq/coq_nvim',
             branch = 'coq',
-            config = require('plugins.coq').config()
+            conf = "plugin.coq",
           }
           use {
             'ms-jpq/coq.artifacts',
@@ -117,50 +188,44 @@ if packer_exists then
           }
           use {
             'onsails/lspkind-nvim',
-            config = require('plugins.lspkind').config(),
+            conf = "plugin.lspkind",
           }
           use {
             'neovim/nvim-lspconfig',
-            config = require('plugins.lsp').config(),
+            conf = "plugin.lsp",
           }
           use {'williamboman/nvim-lsp-installer'}
           use {
             'windwp/nvim-autopairs',
-            config = require('plugins.nvim-autopairs').config(),
+            conf = "plugin.nvim-autopairs",
           }
           use {'alvan/vim-closetag'}
-          use {'andymass/vim-matchup'}
           use {'tweekmonster/startuptime.vim'}
-          use {
-            'chentau/marks.nvim',
-            config = require('plugins.marks').config()
-          }
           use {'nvim-lua/lsp-status.nvim'}
-          use {
-            'ray-x/lsp_signature.nvim',
-            config = require('plugins.lsp_signature').config()
-          } 
+          -- Try again
+          -- use {
+          --   'ray-x/lsp_signature.nvim',
+          --   conf = "plugin.lsp_signature",()
+          -- } 
+          use {'MunifTanjim/nui.nvim'}
           use {
             'stevearc/aerial.nvim',
-            config = require('plugins.aerial').config(),
+            conf = "plugin.aerial",
           }
           use {
-            'simrat39/symbols-outline.nvim',
-            config = require('plugins.symbols-outline').config(),
-          }
-          use {
-            'filipdutescu/renamer.nvim',
-            config = require('plugins.renamer').config()
+            'glepnir/lspsaga.nvim',
+            branch = 'main',
+            conf = "plugin.lspsaga",
           }
           use {
             'folke/trouble.nvim',
-            setup = require('plugins.trouble').setup(),
-            config = require('plugins.trouble').config(),
+            -- setup = require('plugin.trouble').setup(),
+            conf = "plugin.trouble",
             requires = {'kyazdani42/nvim-web-devicons', opt = true},
           }
           use {
             'nvim-telescope/telescope.nvim',
-            config = require('plugins.telescope').config(),
+            conf = "plugin.telescope",
             requires = {
               {'nvim-lua/popup.nvim'},
               {'nvim-lua/plenary.nvim'},
@@ -172,7 +237,7 @@ if packer_exists then
           }
           use {
             'mfussenegger/nvim-dap',
-            config = require('plugins.dap').config(),
+            conf = "plugin.dap",
           }
           use {'rcarriga/nvim-dap-ui'}
           use {'theHamsta/nvim-dap-virtual-text'}
@@ -181,86 +246,59 @@ if packer_exists then
           use {'famiu/nvim-reload'}
           use({
             'gelguy/wilder.nvim',
-            opt = true
+            -- TODO: config
           })
-          use {
+          use({
             "luukvbaal/stabilize.nvim",
             config = function()
-              require("stabilize").setup({
-                force = true, -- stabilize window even when current cursor position will be hidden behind new window
-                forcemark = nil, -- set context mark to register on force event which can be jumped to with '<forcemark>
-                ignore = { -- do not manage windows matching these file/buftypes
-                  filetype = { "packer", "Dashboard", "Trouble", "TelescopePrompt" },
-                  buftype = {
-                    "packer",
-                    "Dashboard",
-                    "terminal",
-                    "quickfix",
-                    "loclist",
+                require("stabilize").setup({
+                  force = true, -- stabilize window even when current cursor position will be hidden behind new window
+                  forcemark = nil, -- set context mark to register on force event which can be jumped to with '<forcemark>
+                  ignore = { -- do not manage windows matching these file/buftypes
+                    filetype = { "packer", "Dashboard", "Trouble", "TelescopePrompt" },
+                    buftype = {
+                      "packer",
+                      "Dashboard",
+                      "terminal",
+                      "quickfix",
+                      "loclist",
+                    },
                   },
-                },
-                nested = nil, -- comma-separated list of autocmds that wil trigger the plugins window restore function
-              })
-            end,
-          }
-          use({
-            "Darazaki/indent-o-matic",
-            disable = true,
-            config = function()
-              require("indent-o-matic").setup({
-                -- The values indicated here are the defaults
-
-                -- Number of lines without indentation before giving up (use -1 for infinite)
-                max_lines = 2048,
-
-                -- Space indentations that should be detected
-                standard_widths = { 2, 4, 8 },
-              })
-            end,
+                  nested = nil, -- comma-separated list of autocmds that wil trigger the plugin.window restore function
+                })
+              end,
           })
+          -- use({
+          --   "Darazaki/indent-o-matic",
+          -- })
           use {
             'simrat39/rust-tools.nvim',
             config = function()
-              require('rust-tools').setup({})
-            end
+               require('rust-tools').setup({})
+             end
           }
           use {
             'windwp/nvim-spectre',
             config = function()
-              require('spectre').setup()
-            end
+             	require('spectre').setup()
+             end
           }
           use {
             'rcarriga/nvim-notify',
-            config = require('plugins.nvim-notify').config()
+            conf = "plugin.nvim-notify",
           }
 
-          use {'antoinemadec/FixCursorHold.nvim'}
-          use {'folke/zen-mode.nvim'}
+          use {'antoinemadec/FixCursorHold.nvim', event = 'BufReadPre'}
 
           -- Colorschemes
-          use {'rktjmp/lush.nvim'}
           use {
-            '~/git/gruvbox.nvim',
-            requires = {'rktjmp/lush.nvim'},
+            'ellisonleao/gruvbox.nvim',
           }
           use {'potatoesmaster/i3-vim-syntax'}
           use {'sainnhe/gruvbox-material'}
           use {'sainnhe/sonokai'}
-          use {'tjdevries/colorbuddy.vim'}
-          use {'tjdevries/gruvbuddy.nvim'}
-          use {'Th3Whit3Wolf/onebuddy'}
-          use {'EdenEast/nightfox.nvim'}
           use {'sainnhe/edge'}
           use {'sainnhe/everforest'}
-          use {'navarasu/onedark.nvim'}
-          use {'disrupted/one-nvim'}
-          use {'Shatur/neovim-ayu'}
-          use {'olimorris/onedarkpro.nvim'}
-          -- Make it hard!
-          use {
-            'takac/vim-hardtime'
-          }
       end
   )
 end
