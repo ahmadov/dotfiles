@@ -5,7 +5,6 @@ function M.config()
     backends = { "lsp", "treesitter", "markdown" },
     -- close_behavior = 'auto',
     default_bindings = true,
-    diagnostics_trigger_update = true,
     highlight_mode = 'split_width',
     highlight_on_jump = 300,
     link_tree_to_folds = true,
@@ -24,7 +23,10 @@ function M.config()
     --     and not aerial.was_closed()
     -- end,
     post_jump_cmd = 'normal! zz',
-    update_when_errors = true,
+    lsp = {
+      diagnostics_trigger_update = true,
+      update_when_errors = true,
+    },
     filter_kind = {
       'Class',
       'Constructor',

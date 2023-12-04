@@ -129,7 +129,7 @@ if packer_exists then
               -- Automatically end & rename tags
               'windwp/nvim-ts-autotag',
               -- Dynamically set commentstring based on cursor location in file
-              'JoosepAlviste/nvim-ts-context-commentstring'
+              {'JoosepAlviste/nvim-ts-context-commentstring', conf = "plugin.ts_commentstring"}
             }
           }
           use {'nvim-treesitter/nvim-treesitter-textobjects', after = {'nvim-treesitter'}}
@@ -139,13 +139,13 @@ if packer_exists then
           use {'tpope/vim-repeat'}
           use {'tpope/vim-fugitive'}
           use {
-            'TimUntersberger/neogit',
+            'NeogitOrg/neogit',
             conf = "plugin.neogit",
             requires = 'nvim-lua/plenary.nvim'
           }
           use {
             'sindrets/diffview.nvim',
-            -- conf = "plugin.diffview",
+            conf = "plugin.diffview",
           }
           use {
             'numToStr/Comment.nvim',
@@ -213,7 +213,7 @@ if packer_exists then
             conf = "plugin.aerial",
           }
           use {
-            'glepnir/lspsaga.nvim',
+            'nvimdev/lspsaga.nvim',
             branch = 'main',
             conf = "plugin.lspsaga",
           }
@@ -294,11 +294,17 @@ if packer_exists then
           use {
             'ellisonleao/gruvbox.nvim',
           }
+          use {
+            'luisiacc/gruvbox-baby',
+            branch = 'main',
+          }
           use {'potatoesmaster/i3-vim-syntax'}
           use {'sainnhe/gruvbox-material'}
+          use {'marko-cerovac/material.nvim'}
           use {'sainnhe/sonokai'}
           use {'sainnhe/edge'}
           use {'sainnhe/everforest'}
+          use {'navarasu/onedark.nvim'}
       end
   )
 end

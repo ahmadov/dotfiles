@@ -1,77 +1,120 @@
 local M = {}
 
 function M.config()
-  local cb = require('diffview.config').diffview_callback
+  local actions = require("diffview.actions")
+
   local G = {}
-  require('diffview').setup {
-    diff_binaries = false,    -- Show diffs for binaries
-    file_panel = {
-      win_config = {
-        width = 35,
+  require('diffview').setup({
+    diff_binaries = false,
+    enhanced_diff_hl = true, -- Set up hihglights in the hooks instead
+    git_cmd = { "git" },
+    hg_cmd = { "chg" },
+    use_icons = true,
+    show_help_hints = false,
+    icons = {
+      folder_closed = "",
+      folder_open = "",
+    },
+    signs = {
+      fold_closed = "",
+      fold_open = "",
+    },
+    view = {
+      default = {
+        -- layout = "diff1_inline",
+        winbar_info = false,
+      },
+      merge_tool = {
+        layout = "diff3_mixed",
+        disable_diagnostics = true,
+        winbar_info = true,
+      },
+      file_history = {
+        -- layout = "diff1_inline",
+        winbar_info = false,
       },
     },
-    key_bindings = {
+    file_panel = {
+      listing_style = "tree",
+      tree_options = {
+        flatten_dirs = true,
+        folder_statuses = "only_folded",
+      },
+      win_config = function()
+        local editor_width = vim.o.columns
+        return {
+          position = "left",
+          width = editor_width >= 247 and 45 or 35,
+        }
+      end,
+    },
+    file_history_panel = {
+      log_options = {
+        git = {
+          single_file = {
+            diff_merges = "first-parent",
+            follow = true,
+          },
+          multi_file = {
+            diff_merges = "first-parent",
+          },
+        },
+      },
+      win_config = {
+        position = "bottom",
+        height = 16,
+      },
+    },
+    default_args = {
+      DiffviewOpen = {},
+      DiffviewFileHistory = {},
+    },
+    hooks = {
+      diff_buf_read = function()
+        vim.opt_local.wrap = false
+      end,
+      ---@diagnostic disable-next-line: unused-local
+      diff_buf_win_enter = function(bufnr, winid, ctx)
+        -- Highlight 'DiffChange' as 'DiffDelete' on the left, and 'DiffAdd' on
+        -- the right.
+        if ctx.layout_name:match("^diff2") then
+          if ctx.symbol == "a" then
+            vim.opt_local.winhl = table.concat({
+              "DiffAdd:DiffviewDiffAddAsDelete",
+              "DiffDelete:DiffviewDiffDelete",
+              "DiffChange:DiffAddAsDelete",
+              "DiffText:DiffDeleteText",
+            }, ",")
+          elseif ctx.symbol == "b" then
+            vim.opt_local.winhl = table.concat({
+              "DiffDelete:DiffviewDiffDelete",
+              "DiffChange:DiffAdd",
+              "DiffText:DiffAddText",
+            }, ",")
+          end
+        end
+      end,
+    },
+    keymaps = {
       view = {
-        ['q']             = "<cmd>DiffviewClose<CR>",
-        ['<esc>']         = "<cmd>DiffviewClose<CR>",
+        { "n", "-", actions.toggle_stage_entry, { desc = "Stage / unstage the selected entry" } },
       },
       file_panel = {
-        ['q']             = "<cmd>DiffviewClose<CR>",
-        ['<esc>']         = "<cmd>DiffviewClose<CR>",
-        ['<space>']       = cb('select_entry')
-      }
-      -- The `view` bindings are active in the diff buffers, only when the current
-      -- tabpage is a Diffview.
-      -- view = {
-      --   ['<tab>']     = cb('select_next_entry'),  -- Open the diff for the next file 
-      --   ['<s-tab>']   = cb('select_prev_entry'),  -- Open the diff for the previous file
-      --   ['<leader>e'] = cb('focus_files'),        -- Bring focus to the files panel
-      --   ['<leader>b'] = cb('toggle_files'),       -- Toggle the files panel.
-      -- },
-      -- file_panel = {
-      --   ['j']             = cb('next_entry'),         -- Bring the cursor to the next file entry
-      --   ['<down>']        = cb('next_entry'),
-      --   ['k']             = cb('prev_entry'),         -- Bring the cursor to the previous file entry.
-      --   ['<up>']          = cb('prev_entry'),
-      --   ['<cr>']          = cb('select_entry'),       -- Open the diff for the selected entry.
-      --   ['o']             = cb('select_entry'),
-      --   ['<2-LeftMouse>'] = cb('select_entry'),
-      --   ['-']             = cb('toggle_stage_entry'), -- Stage / unstage the selected entry.
-      --   ['S']             = cb('stage_all'),          -- Stage all entries.
-      --   ['U']             = cb('unstage_all'),        -- Unstage all entries.
-      --   ['X']             = cb('restore_entry'),      -- Restore entry to the state on the left side.
-      --   ['R']             = cb('refresh_files'),      -- Update stats and entries in the file list.
-      --   ['<tab>']         = cb('select_next_entry'),
-      --   ['<s-tab>']       = cb('select_prev_entry'),
-      --   ['<leader>e']     = cb('focus_files'),
-      --   ['<leader>b']     = cb('toggle_files'),
-      -- }
+        { "n", "<cr>", actions.focus_entry, { desc = "Focus the selected entry" } },
+        { "n", "s", actions.toggle_stage_entry, { desc = "Stage / unstage the selected entry" } },
+        { "n", "cc",  "<Cmd>Git commit <bar> wincmd J<CR>", { desc = "Commit staged changes" } },
+        { "n", "ca",   "<Cmd>Git commit --amend <bar> wincmd J<CR>", { desc = "Amend the last commit" } },
+        { "n", "c<space>",  ":Git commit ", { desc = "Populate command line with \":Git commit \"" } },
+        { "n", "rr",  "<Cmd>Git rebase --continue <bar> wincmd J<CR>", { desc = "Continue the current rebase" } },
+        { "n", "re",  "<Cmd>Git rebase --edit-todo <bar> wincmd J<CR>", { desc = "Edit the current rebase todo list." } },
+      },
+      file_history_panel = {
+        { "n", "<cr>", actions.focus_entry, { desc = "Focus the selected entry" } },
+      },
     }
-  }
+  })
 
-  function G.apply_diff_tweaks()
-    local StandardView = require('diffview.views.standard.standard_view').StandardView
-    vim.schedule(function ()
-      local view = require('diffview.lib').get_current_view()
-      if view and view:instanceof(StandardView) then
-        local curhl = vim.wo[view.left_winid].winhl
-        vim.wo[view.left_winid].winhl = table.concat({
-            "DiffAdd:DiffAddAsDelete",
-            curhl ~= "" and curhl or nil
-          }, ",")
-      end
-    end)
-  end
-
-  -- vim.api.nvim_exec([[
-  --   hi! def DiffAddAsDelete guibg=#3C2C3C
-  --   augroup diffview_config
-  --     au!
-  --     au TabNew * lua DiffviewConfig.apply_diff_tweaks()
-  --   augroup END
-  -- ]], false)
-
-  _G.DiffviewConfig = G
+  -- _G.Config.plugin.diffview = G
 end
 
 return M

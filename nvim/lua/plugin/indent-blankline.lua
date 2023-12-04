@@ -3,56 +3,25 @@ local M = {}
 function M.config()
 
     vim.opt.termguicolors = true
-    vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
-    vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
-    vim.cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
-    vim.cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
-    vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
-    vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
+    vim.cmd([[
+      highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine
+      highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine
+      highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine
+      highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine
+      highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine
+      highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine
+    ]])
 
     vim.opt.list = true
     vim.opt.listchars:append("space:⋅")
     vim.opt.listchars:append("eol:↴")
 
-    require("indent_blankline").setup {
-        show_current_context = true,
-        show_end_of_line = true,
-        space_char_blankline = " ",
-        -- char_highlight_list = {
-        --     "IndentBlanklineIndent1",
-        --     "IndentBlanklineIndent2",
-        --     "IndentBlanklineIndent3",
-        --     "IndentBlanklineIndent4",
-        --     "IndentBlanklineIndent5",
-        --     "IndentBlanklineIndent6",
-        -- },
-        use_treesitter = true,
-        buftype_exclude = { "terminal", "man", "trouble" },
-        filetype_exclude = {
-            "NvimTree",
-            "Preview",
-            "__doc__",
-            "dashboard",
-            "dashpreview",
-            "fzf",
-            "help",
-            "log",
-            "man",
-            "markdown",
-            "nerdtree",
-            "peekaboo",
-            "sagahover",
-            "startify",
-            "terminal",
-            "translator",
-            "vista",
-            "packer",
-            "aerial",
-            "lspinfo",
-            "lspsagafinder",
-            "Trouble",
-        }
-    }
+    require('ibl').setup({
+      scope = {
+        show_start = false,
+        show_end = false,
+      }
+    })
 end
 
 return M

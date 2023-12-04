@@ -8,6 +8,42 @@ list['gruvbox-dark'] = [[
   colorscheme gruvbox
 ]]
 
+list['onedark-darker-lua'] = function()
+  require('onedark').setup({
+      style = 'darker'
+  })
+  vim.o.background = 'dark'
+  require('onedark').load()
+end
+
+list['onedark-deep-lua'] = function()
+  require('onedark').setup({
+      style = 'deep'
+  })
+  vim.o.background = 'dark'
+  require('onedark').load()
+end
+
+list['onedark-warmer-lua'] = function()
+  require('onedark').setup({
+      style = 'warmer'
+  })
+  vim.o.background = 'dark'
+  require('onedark').load()
+end
+
+list['gruvbox-baby-lua'] = function()
+  vim.g.gruvbox_baby_telescope_theme = 1
+  vim.g.gruvbox_baby_transparent_mode = 1
+  vim.g.gruvbox_background_color = "#171717"
+  vim.cmd("colorscheme gruvbox-baby")
+end
+
+list['material-lua'] = function()
+  vim.g.material_style = "deep ocean"
+  vim.cmd("colorscheme material")
+end
+
 list['gruvbox-dark-lua'] = function()
   local config = require("gruvbox").config
   require("gruvbox").setup({
@@ -144,7 +180,7 @@ list['gruvbox-material-light'] = [[
 list['gruvbox-material-dark'] = [[
   set background=dark
   let g:gruvbox_material_background = 'hard'
-  let g:gruvbox_material_palette = 'mix'
+  let g:gruvbox_material_palette = 'material'
   let g:gruvbox_material_visual = 'green background'
   let g:gruvbox_material_menu_selection_background = 'green'
   let g:gruvbox_material_cursor = 'orange'
