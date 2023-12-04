@@ -129,9 +129,6 @@ function M.config()
   vim.api.nvim_set_keymap('i', '<A-BS>', '<Cmd>lua require("dapui").close(); require("dap").terminate()<CR><Cmd>DapVirtualTextForceRefresh<CR>', { noremap = true })
   vim.api.nvim_set_keymap('v', '<A-BS>', '<Cmd>lua require("dapui").close(); require("dap").terminate()<CR><Cmd>DapVirtualTextForceRefresh<CR>', { noremap = true })
 
-  vim.api.nvim_set_keymap('n', '<A-l>', '<Cmd>lua require("dapui").eval()<CR>', { noremap = true })
-  vim.api.nvim_set_keymap('v', '<A-l>', '<Cmd>lua require("dapui").eval()<CR>', { noremap = true })
-
 end
 
 return M
