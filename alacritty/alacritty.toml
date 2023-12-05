@@ -1,0 +1,61 @@
+[colors.bright]
+black = "#928374"
+blue = "#7daea3"
+cyan = "#8ec07c"
+green = "#b8bb26"
+magenta = "#d3869b"
+red = "#fb4934"
+white = "#ebdbb2"
+yellow = "#fabd2f"
+
+[colors.normal]
+black = "#191919"
+blue = "#458588"
+cyan = "#89b482"
+green = "#a9b665"
+magenta = "#b16286"
+red = "#cc241d"
+white = "#a89984"
+yellow = "#e78a4e"
+
+[colors.primary]
+background = "#000000"
+foreground = "#ebdbb2"
+
+[env]
+TERM = "alacritty"
+WINIT_X11_SCALE_FACTOR = "1"
+
+[font]
+size = 12.0
+
+[font.bold]
+family = "FiraCode Nerd Font Mono"
+style = "Bold"
+
+[font.bold_italic]
+family = "FiraCode Nerd Font Mono"
+style = "Medium"
+
+[font.glyph_offset]
+x = 0
+y = 0
+
+[font.italic]
+family = "FiraCode Nerd Font Mono"
+style = "Regular"
+
+[font.normal]
+family = "FiraCode Nerd Font Mono"
+style = "Regular"
+
+[font.offset]
+x = 0
+y = 0
+
+[window]
+opacity = 1.0
+
+[window.padding]
+x = 10
+y = 10
