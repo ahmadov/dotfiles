@@ -42,11 +42,6 @@ vim.cmd([[
   endif
 ]])
 
--- if vim.fn.has('unix') == 1 then
---   vim.o.guifont = 'FiraCode Nerd Font Mono 8' -- Fonts on Windows set in ginit to avoid metrics error in Neovim Qt
---   vim.o.shell = '/usr/bin/zsh' -- I use fish on Linux and it slow for running internal commands
--- end
 vim.opt.guifont = { "FiraCode Nerd Font Mono", ":h12" }
 
-vim.keymap.set({ 'n', 'v' }, '<CR>', ':', { noremap = true, desc = 'Enter command line mode' })
 vim.keymap.set({ 'n', 'v' }, '<A-q>', '<cmd>q<CR>', { noremap = true, desc = 'Enter command line mode' })

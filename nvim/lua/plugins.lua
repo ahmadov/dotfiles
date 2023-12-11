@@ -119,6 +119,19 @@ if packer_exists then
             conf = "plugin.toggleterm",
           }
           use {
+            'kevinhwang91/nvim-ufo',
+            conf = "plugin.ufo",
+            requires = 'kevinhwang91/promise-async'
+          }
+          use {
+          "folke/noice.nvim",
+          conf = "plugin.noice",
+          requires = {
+            "MunifTanjim/nui.nvim",
+            "rcarriga/nvim-notify",
+          }
+      }
+          use {
             'mbbill/undotree',
             conf = "plugin.undotree",
           }
