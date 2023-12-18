@@ -124,14 +124,6 @@ if packer_exists then
             requires = 'kevinhwang91/promise-async'
           }
           use {
-          "folke/noice.nvim",
-          conf = "plugin.noice",
-          requires = {
-            "MunifTanjim/nui.nvim",
-            "rcarriga/nvim-notify",
-          }
-      }
-          use {
             'mbbill/undotree',
             conf = "plugin.undotree",
           }
