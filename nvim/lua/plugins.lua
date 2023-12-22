@@ -182,14 +182,31 @@ if packer_exists then
             branch = 'main'
           }
           use {'sumneko/lua-language-server'}
+          -- use {
+          --   'ms-jpq/coq_nvim',
+          --   branch = 'coq',
+          --   conf = "plugin.coq",
+          -- }
+          -- use {
+          --   'ms-jpq/coq.artifacts',
+          --   branch = 'artifacts'
+          -- }
           use {
-            'ms-jpq/coq_nvim',
-            branch = 'coq',
-            conf = "plugin.coq",
-          }
-          use {
-            'ms-jpq/coq.artifacts',
-            branch = 'artifacts'
+            'hrsh7th/nvim-cmp',
+            conf = 'plugin.nvim-cmp',
+            requires = {
+              'hrsh7th/cmp-nvim-lsp',
+              'hrsh7th/cmp-buffer',
+              'hrsh7th/cmp-path',
+              'hrsh7th/cmp-cmdline',
+              'hrsh7th/cmp-nvim-lsp-signature-help',
+              {
+                'L3MON4D3/LuaSnip',
+                tag = 'v2.*',
+                run = "make install_jsregexp",
+                requires = 'saadparwaiz1/cmp_luasnip'
+              }
+            }
           }
           use {
             'onsails/lspkind-nvim',

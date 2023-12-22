@@ -4,7 +4,7 @@ local lsp_status = require('lsp-status')
 local configs = require('lspconfig.configs')
 local aerial = require('aerial')
 local utils = require('utils')
-local coq = require('coq')
+local nvim_cmp = require('cmp_nvim_lsp');
 
 lsp_status.config({
   status_symbol = '',
@@ -77,7 +77,7 @@ end
 
 local capabilities = vim.tbl_extend(
   "keep",
-  vim.lsp.protocol.make_client_capabilities(),
+  nvim_cmp.default_capabilities(),
   lsp_status.capabilities
 )
 -- local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -116,87 +116,20 @@ M.on_attach = on_attach
 M.capabilities = capabilities
 
 local function setup_servers()
-  local servers = {'cssls', 'html', 'gopls', 'cmake', 'vuels'}
-  -- local servers = {'eslint'}
-  -- local servers = {}
+  local servers = {'cssls', 'html', 'gopls', 'cmake', 'vuels', 'tsserver', 'pyright'}
   for _, lsp in pairs(servers) do
-    -- lspconfig[lsp].setup({
-    -- configs[lsp] = {
-    --   default_config = {
-    --     coq.lsp_ensure_capabilities({
-    --       on_attach = on_attach,
-    --       capabilities = capabilities,
-    --     })
-    --   }
-    -- }
-    lspconfig[lsp].setup{
-      coq.lsp_ensure_capabilities({
-        on_attach = on_attach,
-        capabilities = capabilities,
-      })
-    }
-    -- })
+    lspconfig[lsp].setup({
+      on_attach = on_attach,
+      capabilities = capabilities,
+    })
   end
 end
 
 function M.config()
   setup_servers();
-  -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
-  -- require('lspinstall').post_install_hook = function ()
-  --   setup_servers() -- reload installed servers
-  --   vim.cmd('bufdo e') -- this triggers the FileType autocmd that starts the server
-  -- end
-
-  -- require('lsp.ccls');
   require('lsp.clangd');
   require('lsp.intelephense');
-  require('lsp.tsserver');
   require('lsp.rust_analyzer');
-  require('lsp.pyright');
 end
 
 return M
-
--- local function setup_servers()
---   require'lspinstall'.setup()
---   local servers = require'lspinstall'.installed_servers()
---   for _, server in pairs(servers) do
---     require'lspconfig'[server].setup{
---       on_attach = on_attach,
---     }
---   end
--- end
-
--- setup_servers()
-
-
--- if executable('intelephense')
---  augroup LspPHPIntelephense
---    au!
---    au User lsp_setup call lsp#register_server({
---        \ 'name': 'intelephense',
---        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'intelephense --stdio']},
---        \ 'whitelist': ['php'],
---        \ 'initialization_options': {'storagePath': '/tmp/intelephense'},
---        \ 'workspace_config': {
---        \   'intelephense': {
---        \     'files': {
---        \       'maxSize': 1000000,
---        \       'associations': ['*.php', '*.phtml'],
---        \       'exclude': [],
---        \     },
---        \     'completion': {
---        \       'insertUseDeclaration': v:true,
---        \       'fullyQualifyGlobalConstantsAndFunctions': v:false,
---        \       'triggerParameterHints': v:true,
---        \       'maxItems': 100,
---        \     },
---        \     'format': {
---        \       'enable': v:true
---        \     },
---        \   },
---        \ }
---        \})
---  augroup END
--- endif
-

@@ -13,7 +13,7 @@ function M.config()
       end
 
     end,
-    open_mapping = [[!]],
+    open_mapping = [[|]],
     hide_numbers = true, -- hide the number column in toggleterm buffers
     shade_filetypes = {},
     shade_terminals = true,

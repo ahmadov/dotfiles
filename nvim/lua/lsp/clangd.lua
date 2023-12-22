@@ -14,7 +14,7 @@ lspconfig.clangd.setup{
       '--pch-storage=memory',
     },
     on_attach = lsp.on_attach,
-    capabilities = vim.tbl_extend("keep", lsp.capabilities, lsp_status.capabilities),
+    capabilities = lsp.capabilities,
     handlers = lsp_status.extensions.clangd.setup(),
     root_dir = lspconfig.util.root_pattern('CMakeLists.txt', '.git', 'Makefile', 'compile_commands.json', 'compile_flags.txt'),
     filetypes = {'c', 'cpp', 'cc', 'objc', 'objcpp'},

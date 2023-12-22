@@ -1,4 +1,5 @@
 local utils = require('utils')
+local ls = require('luasnip')
 
 -- keybind list
 utils.map("", "<leader>c", '"+y')
@@ -137,6 +138,9 @@ utils.map('n', '<leader>rn', "<cmd>Lspsaga rename<CR>")
 utils.map('v', '<leader>rn', "<cmd>Lspsaga rename<CR>")
 utils.map('n', '<leader>a', "<cmd>Lspsaga code_action<CR>", { silent = true })
 utils.map('v', '<leader>a', "<cmd><C-U>Lspsaga range_code_action<CR>", { silent = true })
+vim.keymap.set({"i"}, "<C-K>", function() ls.expand() end, {silent = true})
+vim.keymap.set({"n", "i", "s"}, "<Tab>", function() ls.jump( 1) end, {silent = true})
+vim.keymap.set({"n", "i", "s"}, "<S-Tab>", function() ls.jump(-1) end, {silent = true})
 
 -- Google test
 utils.map("n", "<leader>gt", [[:GTestRunUnderCursor<CR>]])

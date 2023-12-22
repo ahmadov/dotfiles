@@ -1,7 +1,6 @@
 local lsp = require('plugin.lsp')
 local lspconfig = require('lspconfig')
 local configs = require('lspconfig.configs')
-local coq = require('coq')
 
 lspconfig.intelephense.setup{
   on_attach = lsp.on_attach,
