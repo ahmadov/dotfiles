@@ -1,332 +1,276 @@
--- check if packer is installed (~/local/share/nvim/site/pack)
-local packer_exists = pcall(vim.cmd, [[packadd packer.nvim]])
+return {
+  -- LSP
+  {
+    'neovim/nvim-lspconfig',
+    config = function() require('plugin.lsp').config() end,
+    dependencies = {
+      { 'williamboman/mason.nvim', opts = {} },
+      { 'williamboman/mason-lspconfig.nvim', opts = {} }, 
+      { 'j-hui/fidget.nvim', opts = {} },
+      { 'folke/neodev.nvim', opts = {} }
+    }
+  },
+  {
+    'hrsh7th/nvim-cmp',
+    config = function() require('plugin.nvim-cmp').config() end,
+    dependencies = {
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-cmdline',
+      'hrsh7th/cmp-nvim-lsp-signature-help',
+      {
+        'L3MON4D3/LuaSnip',
+        version = 'v2.*',
+        build = "make install_jsregexp",
+        dependencies = 'saadparwaiz1/cmp_luasnip'
+      }
+    }
+  },
+  -- { 'danymat/neogen', opts = {} },
 
-if packer_exists then
-  local packer = require('packer')
-  packer.set_handler(
-    "conf",
-    function(_, plugin, value)
-      plugin.config = ([[require('%s').config()]]):format(value)
-    end
-  )
-  local use = packer.use
-  return require('packer').startup(
-      function()
-          use {'wbthomason/packer.nvim', opt = true}
-          use {
-              "williamboman/mason.nvim",
-              conf = "plugin.mason"
-          }
-          use {
-            'lewis6991/impatient.nvim',
-            conf = "plugin.impatient",
-          }
-          use {'rhysd/accelerated-jk'}
-          use {'kana/vim-niceblock'}
+  -- Git
+  {
+    'lewis6991/gitsigns.nvim',
+    config = function() require('plugin.gitsigns').config() end,
+  },
+  {'tpope/vim-fugitive'},
+  {
+    'NeogitOrg/neogit',
+    config = function() require('plugin.neogit').config() end,
+    dependencies = 'nvim-lua/plenary.nvim'
+  },
+  {
+    'sindrets/diffview.nvim',
+    config = function() require('plugin.diffview').config() end,
+  },
 
-          use {
-            'danymat/neogen',
-            conf = "plugin.neogen",
-          }
-          use {
-            'Saecki/crates.nvim',
-            conf = "plugin.crates",
-          }
-          use {
-            'brenoprata10/nvim-highlight-colors',
-            conf = "plugin.highligth_color",
-          }
-          use {
-            'kylechui/nvim-surround',
-            conf = "plugin.nvim-surround",
-          }
-          -- use {
-          --   'mg979/vim-visual-multi',
-          --   conf = "plugin.visual_multi",
-          -- }
-          use {
-            'monkoose/matchparen.nvim',
-            conf = "plugin.matchparen",
-          }
-          use {
-            'vladdoster/remember.nvim',
-            conf = "plugin.lastplace",
-          }
-          use {'bronson/vim-visual-star-search'}
-          -- use {
-          --   'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-          --   conf = "plugin.lsp_lines",
-          -- }
-          use {
-            'stevearc/stickybuf.nvim',
-            conf = "plugin.stickybuf",
-          }
-          -- use {'gbprod/cutlass.nvim'}
-          
-          use {
-            'glepnir/dashboard-nvim',
-            branch = 'master',
-            event = 'VimEnter',
-            conf = "plugin.dashboard",
-          }
-          use {
-            'jose-elias-alvarez/null-ls.nvim',
-            -- conf = "plugin.null_ls",
-          }
-          use {
-            'iamcco/markdown-preview.nvim',
-            conf = "plugin.markdown-preview",
-          }
-          use {
-            'folke/persistence.nvim',
-            conf = "plugin.persistence",
-          }
-          use {
-            'kyazdani42/nvim-web-devicons',
-            conf = "plugin.nvim-web-devicons",
-          }
-          use {
-            'nvim-neo-tree/neo-tree.nvim',
-            conf = "plugin.neotree",
-            branch = "v2.x",
-            requires = { 
-              'nvim-lua/plenary.nvim',
-              'kyazdani42/nvim-web-devicons',
-              'MunifTanjim/nui.nvim',
-            }
-          } 
-          use {
-            'lewis6991/gitsigns.nvim',
-            conf = "plugin.gitsigns",
-          }
-          use {
-            'nvim-lualine/lualine.nvim',
-            conf = "plugin.lualine",
-            requires = {'kyazdani42/nvim-web-devicons', opt = true}
-          }
-          use {
-            'romgrk/barbar.nvim',
-            event = "VimEnter",
-            conf = "plugin.barbar",
-          }
-          use {
-            'hrsh7th/vim-eft',
-            conf = "plugin.vim-eft",
-          }
-          use {
-            'akinsho/toggleterm.nvim',
-            branch = 'main',
-            conf = "plugin.toggleterm",
-          }
-          use {
-            'kevinhwang91/nvim-ufo',
-            conf = "plugin.ufo",
-            requires = 'kevinhwang91/promise-async'
-          }
-          use {
-            'mbbill/undotree',
-            conf = "plugin.undotree",
-          }
-          use {
-            'nvim-treesitter/nvim-treesitter',
-            conf = "plugin.treesitter",
-            requires = {
-              -- Automatically end & rename tags
-              'windwp/nvim-ts-autotag',
-              -- Dynamically set commentstring based on cursor location in file
-              {'JoosepAlviste/nvim-ts-context-commentstring', conf = "plugin.ts_commentstring"}
-            }
-          }
-          use {'nvim-treesitter/nvim-treesitter-textobjects', after = {'nvim-treesitter'}}
-          use {'RRethy/nvim-treesitter-textsubjects', after = {'nvim-treesitter'}}
-          use {'RRethy/vim-illuminate'}
-          -- use {'AndrewRadev/splitjoin.vim'}
-          use {'tpope/vim-repeat'}
-          use {'tpope/vim-fugitive'}
-          use {
-            'NeogitOrg/neogit',
-            conf = "plugin.neogit",
-            requires = 'nvim-lua/plenary.nvim'
-          }
-          use {
-            'sindrets/diffview.nvim',
-            conf = "plugin.diffview",
-          }
-          use {
-            'numToStr/Comment.nvim',
-            conf = "plugin.Comment",
-          }
-          use {
-            'lukas-reineke/indent-blankline.nvim',
-            conf = "plugin.indent-blankline",
-          }
-          -- use {
-          --   'ethanholz/nvim-lastplace',
-          --   conf = "plugin.lastplace",()
-          -- }
-          use {
-            'sbdchd/neoformat',
-            conf = "plugin.neoformat",
-          }
-          -- Replace with nvim-tasks
-          -- use {
-          --   'Shatur/neovim-cmake',
-          --   conf = "plugin.neovim-cmake",
-          -- }
-          use {
-            'Shatur/neovim-tasks',
-            conf = "plugin.neovim-tasks",
-          }
-          use {
-            'tversteeg/registers.nvim',
-            branch = 'main'
-          }
-          use {'sumneko/lua-language-server'}
-          -- use {
-          --   'ms-jpq/coq_nvim',
-          --   branch = 'coq',
-          --   conf = "plugin.coq",
-          -- }
-          -- use {
-          --   'ms-jpq/coq.artifacts',
-          --   branch = 'artifacts'
-          -- }
-          use {
-            'hrsh7th/nvim-cmp',
-            conf = 'plugin.nvim-cmp',
-            requires = {
-              'hrsh7th/cmp-nvim-lsp',
-              'hrsh7th/cmp-buffer',
-              'hrsh7th/cmp-path',
-              'hrsh7th/cmp-cmdline',
-              'hrsh7th/cmp-nvim-lsp-signature-help',
-              {
-                'L3MON4D3/LuaSnip',
-                tag = 'v2.*',
-                run = "make install_jsregexp",
-                requires = 'saadparwaiz1/cmp_luasnip'
-              }
-            }
-          }
-          use {
-            'onsails/lspkind-nvim',
-            conf = "plugin.lspkind",
-          }
-          use {
-            'neovim/nvim-lspconfig',
-            conf = "plugin.lsp",
-          }
-          use {'williamboman/nvim-lsp-installer'}
-          use {
-            'windwp/nvim-autopairs',
-            conf = "plugin.nvim-autopairs",
-          }
-          use {'alvan/vim-closetag'}
-          use {'tweekmonster/startuptime.vim'}
-          use {'nvim-lua/lsp-status.nvim'}
-          -- Try again
-          -- use {
-          --   'ray-x/lsp_signature.nvim',
-          --   conf = "plugin.lsp_signature",()
-          -- } 
-          use {'MunifTanjim/nui.nvim'}
-          use {
-            'stevearc/aerial.nvim',
-            conf = "plugin.aerial",
-          }
-          use {
-            'nvimdev/lspsaga.nvim',
-            branch = 'main',
-            conf = "plugin.lspsaga",
-          }
-          use {
-            'folke/trouble.nvim',
-            -- setup = require('plugin.trouble').setup(),
-            conf = "plugin.trouble",
-            requires = {'kyazdani42/nvim-web-devicons', opt = true},
-          }
-          use {
-            'nvim-telescope/telescope.nvim',
-            conf = "plugin.telescope",
-            requires = {
-              {'nvim-lua/popup.nvim'},
-              {'nvim-lua/plenary.nvim'},
-              {'nvim-telescope/telescope-media-files.nvim'},
-              {'nvim-telescope/telescope-fzy-native.nvim'},
-              {'nvim-telescope/telescope-fzf-writer.nvim'},
-              {'nvim-telescope/telescope-symbols.nvim'}
-            }
-          }
-          use {
-            'mfussenegger/nvim-dap',
-            conf = "plugin.dap",
-          }
-          use {'rcarriga/nvim-dap-ui'}
-          use {'theHamsta/nvim-dap-virtual-text'}
-          use {'nvim-telescope/telescope-dap.nvim'}
-          use {'p00f/nvim-ts-rainbow'}
-          use {'famiu/nvim-reload'}
-          use({
-            'gelguy/wilder.nvim',
-            -- TODO: config
-          })
-          use({
-            "luukvbaal/stabilize.nvim",
-            config = function()
-                require("stabilize").setup({
-                  force = true, -- stabilize window even when current cursor position will be hidden behind new window
-                  forcemark = nil, -- set context mark to register on force event which can be jumped to with '<forcemark>
-                  ignore = { -- do not manage windows matching these file/buftypes
-                    filetype = { "packer", "Dashboard", "Trouble", "TelescopePrompt" },
-                    buftype = {
-                      "packer",
-                      "Dashboard",
-                      "terminal",
-                      "quickfix",
-                      "loclist",
-                    },
-                  },
-                  nested = nil, -- comma-separated list of autocmds that wil trigger the plugin.window restore function
-                })
-              end,
-          })
-          -- use({
-          --   "Darazaki/indent-o-matic",
-          -- })
-          use {
-            'simrat39/rust-tools.nvim',
-            config = function()
-               require('rust-tools').setup({})
-             end
-          }
-          use {
-            'windwp/nvim-spectre',
-            config = function()
-             	require('spectre').setup()
-             end
-          }
-          use {
-            'rcarriga/nvim-notify',
-            conf = "plugin.nvim-notify",
-          }
+  -- UI
 
-          use {'antoinemadec/FixCursorHold.nvim', event = 'BufReadPre'}
+  -- Colorscheme
 
-          -- Colorschemes
-          use {
-            'ellisonleao/gruvbox.nvim',
-          }
-          use {
-            'luisiacc/gruvbox-baby',
-            branch = 'main',
-          }
-          use {'potatoesmaster/i3-vim-syntax'}
-          use {'sainnhe/gruvbox-material'}
-          use {'marko-cerovac/material.nvim'}
-          use {'sainnhe/sonokai'}
-          use {'sainnhe/edge'}
-          use {'sainnhe/everforest'}
-          use {'navarasu/onedark.nvim'}
-      end
-  )
-end
+  -- Malicious
+  'tpope/vim-sleuth',
+  { 'folke/which-key.nvim', opts = {} },
+
+  {
+    'Saecki/crates.nvim',
+    config = function() require('plugin.crates').config() end,
+  },
+  {
+    'brenoprata10/nvim-highlight-colors',
+    config = function() require('plugin.highligth_color').config() end,
+  },
+  { 'kylechui/nvim-surround', opts = {} },
+  {
+    'monkoose/matchparen.nvim',
+    config = function() require('plugin.matchparen').config() end,
+  },
+  { 'vladdoster/remember.nvim', opts = {} },
+  {
+    'stevearc/stickybuf.nvim',
+    config = function() require('plugin.stickybuf').config() end,
+  },
+  {
+    'glepnir/dashboard-nvim',
+    branch = 'master',
+    event = 'VimEnter',
+    -- config = function() require('plugin.dashboard').config() end,
+  },
+  {
+    'jose-elias-alvarez/null-ls.nvim',
+    -- config = function() require('plugin.null_ls').config() end,
+  },
+  {
+    'iamcco/markdown-preview.nvim',
+    config = function() require('plugin.markdown-preview').config() end,
+  },
+  {
+    'folke/persistence.nvim',
+    config = function() require('plugin.persistence').config() end,
+  },
+  {
+    'kyazdani42/nvim-web-devicons',
+    config = function() require('plugin.nvim-web-devicons').config() end,
+  },
+  {
+    'nvim-neo-tree/neo-tree.nvim',
+    config = function() require('plugin.neotree').config() end,
+    branch = "v2.x",
+    dependencies = { 
+      'nvim-lua/plenary.nvim',
+      'kyazdani42/nvim-web-devicons',
+      'MunifTanjim/nui.nvim',
+    }
+  },
+  {
+    'nvim-lualine/lualine.nvim',
+    config = function() require('plugin.lualine').config() end,
+  },
+  {
+    'romgrk/barbar.nvim',
+    event = "VimEnter",
+    config = function() require('plugin.barbar').config() end,
+  },
+  {
+    'hrsh7th/vim-eft',
+    config = function() require('plugin.vim-eft').config() end,
+  },
+  {
+    'akinsho/toggleterm.nvim',
+    branch = 'main',
+    config = function() require('plugin.toggleterm').config() end,
+  },
+  {
+    'kevinhwang91/nvim-ufo',
+    config = function() require('plugin.ufo').config() end,
+    dependencies = 'kevinhwang91/promise-async'
+  },
+  {
+    'mbbill/undotree',
+    config = function() require('plugin.undotree').config() end,
+  },
+  {
+    'nvim-treesitter/nvim-treesitter',
+    config = function() require('plugin.treesitter').config() end,
+    dependencies = {
+      -- Automatically end & rename tags
+      'windwp/nvim-ts-autotag',
+      'nvim-treesitter/nvim-treesitter-textobjects',
+      -- Dynamically set commentstring based on cursor location in file
+      {'JoosepAlviste/nvim-ts-context-commentstring', config = function() require('plugin.ts_commentstring').config() end}
+    },
+    build = ':TSUpdate'
+  },
+  {'RRethy/nvim-treesitter-textsubjects'},
+  {'RRethy/vim-illuminate'},
+  {'tpope/vim-repeat'},
+  {
+    'numToStr/Comment.nvim',
+    config = function() require('plugin.Comment').config() end,
+  },
+  {
+    'lukas-reineke/indent-blankline.nvim',
+    config = function() require('plugin.indent-blankline').config() end,
+  },
+  {
+    'sbdchd/neoformat',
+    config = function() require('plugin.neoformat').config() end,
+  },
+  {
+    'Shatur/neovim-tasks',
+    config = function() require('plugin.neovim-tasks').config() end,
+  },
+  {
+    'tversteeg/registers.nvim',
+    branch = 'main'
+  },
+  {'sumneko/lua-language-server'},
+  -- {
+  --   'ms-jpq/coq_nvim',
+  --   branch = 'coq',
+  --   config = function() require('plugin.coq').config() end,
+  -- }
+  -- {
+  --   'ms-jpq/coq.artifacts',
+  --   branch = 'artifacts'
+  -- }
+  {
+    'onsails/lspkind-nvim',
+    config = function() require('plugin.lspkind').config() end,
+  },
+  {
+    'windwp/nvim-autopairs',
+    config = function() require('plugin.nvim-autopairs').config() end,
+  },
+  {'alvan/vim-closetag'},
+  {'tweekmonster/startuptime.vim'},
+  { 'nvim-lua/lsp-status.nvim', },
+  -- Try again
+  -- {
+  --   'ray-x/lsp_signature.nvim',
+  --   config = function() require('plugin.lsp_signature').config() end,()
+  -- } 
+  {'MunifTanjim/nui.nvim'},
+  {
+    'stevearc/aerial.nvim',
+    config = function() require('plugin.aerial').config() end,
+  },
+  {
+    'nvimdev/lspsaga.nvim',
+    branch = 'main',
+    config = function() require('plugin.lspsaga').config() end,
+  },
+  {
+    'folke/trouble.nvim',
+    config = function() require('plugin.trouble').config() end,
+    dependencies = {'kyazdani42/nvim-web-devicons', opts = {}},
+  },
+  {
+    'nvim-telescope/telescope.nvim',
+    branch = '0.1.x',
+    config = function() require('plugin.telescope').config() end,
+    dependencies = {
+      'nvim-lua/popup.nvim',
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope-media-files.nvim',
+      'nvim-telescope/telescope-fzf-writer.nvim',
+      'nvim-telescope/telescope-symbols.nvim',
+      {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        build = 'make',
+        cond = function()
+          return vim.fn.executable 'make' == 1
+        end,
+      },
+    }
+  },
+  {
+    'mfussenegger/nvim-dap',
+    config = function() require('plugin.dap').config() end,
+  },
+  {'rcarriga/nvim-dap-ui'},
+  {'theHamsta/nvim-dap-virtual-text'},
+  {'nvim-telescope/telescope-dap.nvim'},
+  {'p00f/nvim-ts-rainbow'},
+  {'famiu/nvim-reload'},
+  { 'gelguy/wilder.nvim' },
+  {
+    "luukvbaal/stabilize.nvim",
+    config = function()
+        require("stabilize").setup({
+          force = true, -- stabilize window even when current cursor position will be hidden behind new window
+          forcemark = nil, -- set context mark to register on force event which can be jumped to with '<forcemark>
+          ignore = { -- do not manage windows matching these file/buftypes
+            filetype = { "packer", "Dashboard", "Trouble", "TelescopePrompt" },
+            buftype = {
+              "Dashboard",
+              "terminal",
+              "quickfix",
+              "loclist",
+            },
+          },
+          nested = nil, -- comma-separated list of autocmds that wil trigger the plugin.window restore function
+        })
+      end,
+  },
+  { 'simrat39/rust-tools.nvim', opts = {} },
+  { 'windwp/nvim-spectre', opts = {} },
+  {
+    'rcarriga/nvim-notify',
+    config = function() require('plugin.nvim-notify').config() end,
+  },
+
+  {'antoinemadec/FixCursorHold.nvim', event = 'BufReadPre'},
+
+  -- Colorschemes
+  {
+    'ellisonleao/gruvbox.nvim',
+  },
+  {'sainnhe/gruvbox-material'},
+  {'marko-cerovac/material.nvim'},
+  {'sainnhe/sonokai'},
+  {'sainnhe/edge'},
+  {'sainnhe/everforest'},
+  {'navarasu/onedark.nvim'},
+}

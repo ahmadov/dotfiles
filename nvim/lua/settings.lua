@@ -64,7 +64,7 @@ vim.opt.shortmess = {
   c = true,
   W = true, -- Don't show [w] or written when writing
 }
-vim.opt.shell = "/bin/zsh"
+vim.opt.shell = "/bin/fish"
 
 vim.cmd('filetype plugin indent on') --- " Enables plugin & indent
 vim.cmd([[
@@ -82,7 +82,3 @@ vim.cmd([[
   set formatoptions-=r
   set formatoptions-=o
 ]], '')
--- set foldmethod=expr
--- set foldexpr=nvim_treesitter#foldexpr()
---   au FocusGained,BufEnter * :silent! !
---   au FocusLost,WinLeave * :silent! noautocmd w

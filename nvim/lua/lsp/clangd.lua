@@ -2,7 +2,7 @@ local lsp = require('plugin.lsp')
 local lspconfig = require('lspconfig')
 local lsp_status = require('lsp-status')
 
-lspconfig.clangd.setup{
+lspconfig.clangd.setup({
     cmd = {
       'clangd',
       '--clang-tidy',
@@ -24,4 +24,4 @@ lspconfig.clangd.setup{
       completeUnimported = true,
       semanticHighlighting = true,
     },
-}
+})

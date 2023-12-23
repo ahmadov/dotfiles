@@ -1,23 +1,14 @@
-vim.cmd([[packadd nvim-lspconfig]])
 local lspconfig = require('lspconfig')
-local lsp_status = require('lsp-status')
+local mason_lspconfig = require('mason-lspconfig')
 local configs = require('lspconfig.configs')
 local aerial = require('aerial')
 local utils = require('utils')
 local nvim_cmp = require('cmp_nvim_lsp');
 
-lsp_status.config({
-  status_symbol = '',
-  current_function = false,
-  diagnostics = false, -- Will be displayed via lualine
-})
-lsp_status.register_progress()
-
 function on_attach(_, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- aerial.on_attach(_, bufnr);
-  lsp_status.on_attach(_)
   require('illuminate').on_attach(_)
   -- Aerial does not set any mappings by default, so you'll want to set some up
   -- Toggle the aerial window with <leader>o
@@ -75,13 +66,8 @@ function on_attach(_, bufnr)
   -- utils.map('n', ']d', "<cmd>lua require('lspsaga.diagnostic').lsp_jump_diagnostic_next()<CR>", opts)
 end
 
-local capabilities = vim.tbl_extend(
-  "keep",
-  nvim_cmp.default_capabilities(),
-  lsp_status.capabilities
-)
--- local capabilities = vim.lsp.protocol.make_client_capabilities()
--- local capabilities = lsp_status.capabilities -- vim.lsp.protocol.make_client_capabilities()
+local capabilities = nvim_cmp.default_capabilities(capabilities)
+
 capabilities.textDocument.semanticHighlighting = true
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.resolveSupport = {
@@ -116,13 +102,17 @@ M.on_attach = on_attach
 M.capabilities = capabilities
 
 local function setup_servers()
-  local servers = {'cssls', 'html', 'gopls', 'cmake', 'vuels', 'tsserver', 'pyright'}
-  for _, lsp in pairs(servers) do
-    lspconfig[lsp].setup({
-      on_attach = on_attach,
-      capabilities = capabilities,
-    })
-  end
+  local servers = {'clangd', 'cmake', 'rust_analyzer', 'pyright'}
+
+  mason_lspconfig.setup({ ensure_installed = servers })
+  mason_lspconfig.setup_handlers({
+    function(server_name)
+      lspconfig[server_name].setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+      })
+    end,
+  })
 end
 
 function M.config()

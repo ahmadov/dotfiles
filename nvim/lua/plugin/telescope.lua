@@ -5,12 +5,10 @@ local M = {}
 function M.config()
   local actions = require('telescope.actions')
   local action_layout = require("telescope.actions.layout")
-  require('telescope').setup{
-    -- defaults = require('telescope.themes').get_ivy {
+  require('telescope').setup({
     defaults = {
       vimgrep_arguments = {
         'rg',
-        -- '--reverse',
         '--color=never',
         '--no-heading',
         '--with-filename',
@@ -82,12 +80,11 @@ function M.config()
           }
       }
     }
-  }
+  })
 
   require('telescope').load_extension('dap')
-  -- require('telescope').load_extension('cmake')
   require('telescope').load_extension('media_files')
-  require('telescope').load_extension('fzy_native')
+  require('telescope').load_extension('fzf')
 
   utils.map('n', '<Leader>fm', [[<Cmd>lua require('telescope').extensions.media_files.media_files()<CR>]], {noremap = true, silent = true})
 end

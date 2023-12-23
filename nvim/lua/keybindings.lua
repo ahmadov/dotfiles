@@ -1,5 +1,5 @@
 local utils = require('utils')
-local ls = require('luasnip')
+local luasnip = require('luasnip')
 
 -- keybind list
 utils.map("", "<leader>c", '"+y')
@@ -138,19 +138,12 @@ utils.map('n', '<leader>rn', "<cmd>Lspsaga rename<CR>")
 utils.map('v', '<leader>rn', "<cmd>Lspsaga rename<CR>")
 utils.map('n', '<leader>a', "<cmd>Lspsaga code_action<CR>", { silent = true })
 utils.map('v', '<leader>a', "<cmd><C-U>Lspsaga range_code_action<CR>", { silent = true })
-vim.keymap.set({"i"}, "<C-K>", function() ls.expand() end, {silent = true})
-vim.keymap.set({"n", "i", "s"}, "<Tab>", function() ls.jump( 1) end, {silent = true})
-vim.keymap.set({"n", "i", "s"}, "<S-Tab>", function() ls.jump(-1) end, {silent = true})
-
--- Google test
-utils.map("n", "<leader>gt", [[:GTestRunUnderCursor<CR>]])
-utils.map("n", "<leader>gr", [[:GTestRun<CR>]])
+vim.keymap.set({"i"}, "<C-K>", function() luasnip.expand() end, {silent = true})
+vim.keymap.set({"n", "s"}, "<Tab>", function() luasnip.jump( 1) end, {silent = true})
+vim.keymap.set({"n", "s"}, "<S-Tab>", function() luasnip.jump(-1) end, {silent = true})
 
 -- String operations
 utils.map("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/]])
-
--- Zen mode
-utils.map("n", "<leader>z", [[:ZenMode<CR>]])
 
 -- Undotree
 utils.map("n", "<leader>u", [[:UndotreeToggle<CR>]])
@@ -163,7 +156,6 @@ utils.map("n", "sk", [[:SplitjoinSplit<CR>]])
 utils.map("n", "<leader>fd", [[:Neoformat<CR>]])
 
 utils.map('n', '<C-a>', '<esc>ggVG<CR>')
--- utils.map("n", "<C-aa>", [[ <Cmd> %y+<CR>]], opt)
 
 utils.map('n', '<leader>ql', [[<cmd>lua require('persistence').load()<CR>]])
 
@@ -171,18 +163,15 @@ utils.map('n', '<leader>ql', [[<cmd>lua require('persistence').load()<CR>]])
 utils.map("n", "<Leader>gb", [[<Cmd>lua require('telescope.builtin').git_branches()<CR>]])
 utils.map("n", "<Leader>b", [[<Cmd>lua require('telescope.builtin').buffers()<CR>]])
 utils.map("n", "<Leader>e", [[<Cmd>lua require('telescope.builtin').oldfiles()<CR>]])
--- utils.map("n", "<Leader>e", [[<Cmd>lua require('telescope').extensions.frecency.frecency()<CR>]])
 utils.map("n", "<C-p>", [[<Cmd>lua require('telescope.builtin').find_files()<CR>]])
--- utils.map("n", "<C-P>", [[<Cmd>lua require('utils').telescope_find_files()<CR>]])
 utils.map("n", "<C-g>", [[<Cmd>lua require('telescope.builtin').git_status()<CR>]])
 utils.map("n", "<leader>gc", [[<Cmd>lua require('telescope.builtin').git_commits()<CR>]])
-utils.map("n", "<Leader>fb", [[<Cmd>lua require('telescope.builtin').file_browser()<CR>]])
 utils.map("n", "<Leader>fm", [[<Cmd>lua require('telescope').extensions.media_files.media_files()<CR>]])
 utils.map("n", "<Leader>t", [[<Cmd>lua require('telescope.builtin').live_grep()<CR>]])
-utils.map("n", "<Leader>T", [[<Cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]])
+utils.map("n", "<Leader>s", [[<Cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]])
 
-utils.map('n', '<a-n>', [[<cmd>lua require('illuminate').next_reference{wrap=true}<cr>]])
-utils.map('n', '<a-p>', [[<cmd>lua require('illuminate').next_reference{reverse=true,wrap=true}<cr>]])
+utils.map('n', '<A-n>', [[<cmd>lua require('illuminate').next_reference{wrap=true}<cr>]])
+utils.map('n', '<A-p>', [[<cmd>lua require('illuminate').next_reference{reverse=true,wrap=true}<cr>]])
 
 -- markdown-preview
 utils.map("n", "<Alt-p>", [[:MarkdownPreview]])

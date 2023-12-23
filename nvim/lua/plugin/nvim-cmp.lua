@@ -2,25 +2,28 @@ local luasnip = require("luasnip")
 local lspkind = require('lspkind')
 local cmp = require('cmp')
 
+local has_words_before = function()
+  unpack = unpack or table.unpack
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
 local M = {}
 
 function M.config()
-  local has_words_before = function()
-    unpack = unpack or table.unpack
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-  end
-
   cmp.setup({
     formatting = {
       format = lspkind.cmp_format(),
-       menu = ({
+      menu = ({
         buffer = "[Buffer]",
         nvim_lsp = "[LSP]",
         luasnip = "[LuaSnip]",
         nvim_lua = "[Lua]",
         latex_symbols = "[Latex]",
       })
+    },
+    completion = {
+      completeopt = 'menu,menuone,noinsert',
     },
     snippet = {
       expand = function(args)
