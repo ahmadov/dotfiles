@@ -16,8 +16,9 @@ lspconfig.clangd.setup({
     on_attach = lsp.on_attach,
     capabilities = lsp.capabilities,
     handlers = lsp_status.extensions.clangd.setup(),
-    root_dir = lspconfig.util.root_pattern('CMakeLists.txt', '.git', 'Makefile', 'compile_commands.json', 'compile_flags.txt'),
+    root_dir = lspconfig.util.root_pattern('.clangd', '.clang-tidy', '.clang-format', 'Makefile', 'compile_commands.json', 'compile_flags.txt', 'configure.ac', '.git'),
     filetypes = {'c', 'cpp', 'cc', 'objc', 'objcpp'},
+    single_file_support = true,
     init_options = {
       clangdFileStatus = true,
       usePlaceholders = true,

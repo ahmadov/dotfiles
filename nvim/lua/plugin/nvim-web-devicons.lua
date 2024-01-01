@@ -1,7 +1,7 @@
 local M = {}
 
 function M.config()
-  require('nvim-web-devicons').setup {
+  require('nvim-web-devicons').setup({
     override = {
       html = {
         icon = '',
@@ -74,7 +74,7 @@ function M.config()
         name = 'xz'
       }
     }
-  }
+  })
 end
 
 return M

@@ -101,8 +101,8 @@ local M = {}
 M.on_attach = on_attach
 M.capabilities = capabilities
 
-local function setup_servers()
-  local servers = {'clangd', 'cmake', 'rust_analyzer', 'pyright'}
+function M.config()
+  local servers = {'clangd', 'cmake', 'rust_analyzer', 'pyright', 'intelephense'}
 
   mason_lspconfig.setup({ ensure_installed = servers })
   mason_lspconfig.setup_handlers({
@@ -113,10 +113,7 @@ local function setup_servers()
       })
     end,
   })
-end
 
-function M.config()
-  setup_servers();
   require('lsp.clangd');
   require('lsp.intelephense');
   require('lsp.rust_analyzer');

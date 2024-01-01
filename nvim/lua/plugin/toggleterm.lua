@@ -1,7 +1,7 @@
 local M = {}
 
 function M.config()
-  require("toggleterm").setup{
+  require("toggleterm").setup({
     -- size can be a number or function which is passed the current terminal
     size = function(term)
       if term.direction == "horizontal" then
@@ -11,9 +11,8 @@ function M.config()
       elseif term.direction == "float" then 
         return vim.o.columns
       end
-
     end,
-    open_mapping = [[|]],
+    open_mapping = [[C-\]],
     hide_numbers = true, -- hide the number column in toggleterm buffers
     shade_filetypes = {},
     shade_terminals = true,
@@ -38,7 +37,7 @@ function M.config()
         background = "Normal",
       }
     }
-  }
+  })
 end
 
 return M

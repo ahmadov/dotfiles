@@ -44,9 +44,15 @@ function M.config()
         ['l'] = 'open',
         ['o'] = 'open',
         ['r'] = 'rename',
-        ['/'] = '',
+        ['/'] = 'fuzzy_finder',
         ['Y'] = 'copy_file_name',
         ['y'] = 'copy_file_path',
+      },
+      fuzzy_finder_mappings = {
+        ["<down>"] = "move_cursor_down",
+        ["<C-n>"] = "move_cursor_down",
+        ["<up>"] = "move_cursor_up",
+        ["<C-p>"] = "move_cursor_up",
       },
     },
   })

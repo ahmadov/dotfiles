@@ -50,13 +50,30 @@ function M.config()
   })
   dap_virtual_text.setup()
 
+  dap.configurations.cpp = {
+    {
+      name = "Launch file",
+      type = "lldb",
+      request = "launch",
+      program = function()
+        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+      end,
+      cwd = '${workspaceFolder}',
+      stopOnEntry = false,
+      args = {}
+    },
+  }
+  dap.configurations.c = dap.configurations.cpp
+  dap.configurations.rust = dap.configurations.cpp
+
   dap.adapters.codelldb = {
     type = 'server',
     port = "${port}",
     executable = {
-      command = '~/git/codelldb/extension/adapter/codelldb',
+      command = '~/git/codelldb/adapter/codelldb',
       args = {"--port", "${port}"},
-    }
+    },
+    name = 'codelldb'
   }
 
   dap.adapters.lldb = {
@@ -65,12 +82,28 @@ function M.config()
       pidProperty = 'pid',
       pidSelect = 'ask',
     },
-    command = 'lldb-vscode-14',
+    command = 'lldb-vscode',
     env = {
       LLDB_LAUNCH_FLAG_LAUNCH_IN_TTY = 'YES',
     },
     name = 'lldb',
   }
+
+  vim.api.nvim_create_user_command('Codelldb',
+    function(command)
+      local config = {
+        name = command.fargs[1],
+        type = 'codelldb',
+        request = 'launch',
+        program = command.fargs[1],
+        -- args = { vim.list_slice(command.fargs, 2, vim.tbl_count(command.fargs)) },
+        cwd = '${workspaceFolder}'
+      }
+      dap.run(config)
+      dap.repl.open()
+    end,
+    { nargs = '+', complete = 'file', desc = 'Run command in Codelldb' }
+  )
 
   vim.api.nvim_create_user_command('Lldb',
     function(command)
@@ -80,6 +113,7 @@ function M.config()
         request = 'launch',
         program = command.fargs[1],
         args = { vim.list_slice(command.fargs, 2, vim.tbl_count(command.fargs)) },
+        cwd = '${workspaceFolder}'
       }
       dap.run(config)
       dap.repl.open()

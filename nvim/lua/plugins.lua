@@ -5,9 +5,11 @@ return {
     config = function() require('plugin.lsp').config() end,
     dependencies = {
       { 'williamboman/mason.nvim', opts = {} },
-      { 'williamboman/mason-lspconfig.nvim', opts = {} }, 
+      { 'williamboman/mason-lspconfig.nvim' }, 
       { 'j-hui/fidget.nvim', opts = {} },
-      { 'folke/neodev.nvim', opts = {} }
+      { 'folke/neodev.nvim', opts = {
+        library = { plugins = { "nvim-dap-ui" }, types = true }
+      }}
     }
   },
   {
@@ -46,12 +48,25 @@ return {
   },
 
   -- UI
+  {
+    'karb94/neoscroll.nvim',
+    config = function ()
+      require('plugin.neoscroll').config()
+    end
+  },
 
   -- Colorscheme
 
   -- Malicious
   'tpope/vim-sleuth',
-  { 'folke/which-key.nvim', opts = {} },
+  -- {
+  --   'lervag/vimtex',
+  --   config = function()
+  --     require('plugin.vimtex').config()
+  --   end,
+  --   ft = { "tex" },
+  -- },
+  -- { 'folke/which-key.nvim', opts = {} },
 
   {
     'Saecki/crates.nvim',
@@ -96,7 +111,7 @@ return {
   {
     'nvim-neo-tree/neo-tree.nvim',
     config = function() require('plugin.neotree').config() end,
-    branch = "v2.x",
+    branch = "v3.x",
     dependencies = { 
       'nvim-lua/plenary.nvim',
       'kyazdani42/nvim-web-devicons',
@@ -118,7 +133,7 @@ return {
   },
   {
     'akinsho/toggleterm.nvim',
-    branch = 'main',
+    version = "*",
     config = function() require('plugin.toggleterm').config() end,
   },
   {
@@ -204,7 +219,7 @@ return {
   {
     'folke/trouble.nvim',
     config = function() require('plugin.trouble').config() end,
-    dependencies = {'kyazdani42/nvim-web-devicons', opts = {}},
+    dependencies = {'kyazdani42/nvim-web-devicons'},
   },
   {
     'nvim-telescope/telescope.nvim',
@@ -226,10 +241,10 @@ return {
     }
   },
   {
-    'mfussenegger/nvim-dap',
-    config = function() require('plugin.dap').config() end,
+    'rcarriga/nvim-dap-ui',
+    config = function() require('plugin.nvim-dap').config() end,
+    dependencies = { 'mfussenegger/nvim-dap' }
   },
-  {'rcarriga/nvim-dap-ui'},
   {'theHamsta/nvim-dap-virtual-text'},
   {'nvim-telescope/telescope-dap.nvim'},
   {'p00f/nvim-ts-rainbow'},
@@ -264,13 +279,12 @@ return {
   {'antoinemadec/FixCursorHold.nvim', event = 'BufReadPre'},
 
   -- Colorschemes
-  {
-    'ellisonleao/gruvbox.nvim',
-  },
-  {'sainnhe/gruvbox-material'},
-  {'marko-cerovac/material.nvim'},
-  {'sainnhe/sonokai'},
-  {'sainnhe/edge'},
-  {'sainnhe/everforest'},
-  {'navarasu/onedark.nvim'},
+  'ellisonleao/gruvbox.nvim',
+  'srcery-colors/srcery-vim',
+  'sainnhe/gruvbox-material',
+  'marko-cerovac/material.nvim',
+  'sainnhe/sonokai',
+  'sainnhe/edge',
+  'sainnhe/everforest',
+  'navarasu/onedark.nvim',
 }
