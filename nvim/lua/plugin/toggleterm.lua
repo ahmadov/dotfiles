@@ -12,7 +12,7 @@ function M.config()
         return vim.o.columns
       end
     end,
-    open_mapping = [[C-\]],
+    open_mapping = [[<C-\>]],
     hide_numbers = true, -- hide the number column in toggleterm buffers
     shade_filetypes = {},
     shade_terminals = true,

@@ -48,12 +48,12 @@ return {
   },
 
   -- UI
-  {
-    'karb94/neoscroll.nvim',
-    config = function ()
-      require('plugin.neoscroll').config()
-    end
-  },
+  -- {
+  --   'karb94/neoscroll.nvim',
+  --   config = function ()
+  --     require('plugin.neoscroll').config()
+  --   end
+  -- },
 
   -- Colorscheme
 
