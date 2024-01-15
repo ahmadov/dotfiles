@@ -1,45 +1,53 @@
 [user]
-	name = [name]
-	email = [email]
+  name = [name]
+  email = [email]
 [core]
-        editor = vim
+  editor = nvim
+  pager = delta
+
+[interactive]
+  diffFilter = delta --color-only
+
+[add.interactive]
+  useBuiltin = false # required for git 2.37.0
+
+[delta]
+  navigate = true    # use n and N to move between diff sections
+  light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+
+[merge]
+  conflictstyle = diff3
+
+[diff]
+  colorMoved = default
 
 [color]
-        ui = auto
+  ui = auto
 
 [color "branch"]
-        current = yellow reverse
-        local = yellow
-        remote = green
+  current = yellow reverse
+  local = yellow
+  remote = green
 
 [color "diff"]
-        meta = yellow bold
-        frag = magenta bold
-        old = red bold
-        new = green bold
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
 
 [color "status"]
-        added = yellow
-        changed = green
-        untracked = cyan
+  added = yellow
+  changed = green
+  untracked = cyan
 
 [alias]
-        s = status
-        go = log --graph --pretty=format:'%C(yellow)%h%Creset%C(red bold)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --decorate --abbrev-commit --all --author-date-order
-        god = log --graph --pretty=format:'%C(yellow)%h%Creset%C(red bold)%d%Creset %s %Cgreen(%ci) %C(blue)<%an>%Creset' --decorate --abbrev-commit
-        g = log --oneline --decorate --graph --all
-        gs = log --oneline --decorate --graph --all --author-date-order
-        gbd = log --graph --simplify-by-decoration --pretty=format:'%C(yellow)%h%C(white)%d %C(bold black)%ai %C(reset)%n' --all
-        gb = log --graph --simplify-by-decoration --pretty=format:'%C(yellow)%h%C(white)%d %C(bold black)%ar %C(reset)%n' --all
-        g2 = log --graph --pretty=format':%s %C(bold blue)%an, %ar %Cgreen(%h)%Creset'
-        g3 = log --pretty=format:"%Cgreen%h%Creset %ad %C(cyan)%an%Creset %s%C(red)%d%Creset" --graph --date=short
-        g4 = log --graph --abbrev-commit --decorate --all --format=format:\"%C(bold blue)%h%C(dim black) %C(reset)%C(dim white)%aD%C(dim black) %C(bold blue)%an%C(reset) %C(green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)\"
-        g5 = log --graph --abbrev-commit --decorate --all --format=format:\"%C(bold blue)%h%C(reset) %C(bold cyan)%aD%C(dim white) %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)\"
-        glong = log --stat --decorate --graph
-        logMerges = log --first-parent --graph
-        ll = log --pretty=format:\"%C(bold blue)%h %C(red)%d %C(white bold)%s %Cgreen(%cr) %C(blue)<%an>%Creset %n\" --decorate --stat --graph
-        
-        gdiff = log --oneline --decorate --graph --full-history -p  -c --color-words -b
-        gdifff = log --oneline --decorate --graph --follow --full-history -p  -c --color-words -b
-        gldiff = log --format=medium --decorate --graph -p  -c
-        gldifff = log --format=medium --decorate --graph --follow -p -c
+  s = status
+  g = log --oneline --decorate --graph --all
+  gs = log --oneline --decorate --graph --all --author-date-order
+  sn = show --name-only
+
+[credential]
+  helper = cache
+
+[lfs]
+  cachecredentials = true
