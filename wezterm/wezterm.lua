@@ -14,8 +14,8 @@ color_scheme.foreground = '#ebdbb3'
 config.color_schemes = { ['scheme'] = color_scheme }
 config.color_scheme = 'scheme'
 
-config.font = wezterm.font('Liga SFMono Nerd Font')
 config.font = wezterm.font_with_fallback({
+  'Liga SFMono Nerd Font',
   'FiraCode Nerd Font',
 })
 
