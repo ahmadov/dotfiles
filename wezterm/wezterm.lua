@@ -6,13 +6,13 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
-local color_scheme = 'Gruvbox dark, hard (base16)'
-local gruvbox = wezterm.color.get_builtin_schemes()[color_scheme]
-gruvbox.background = '#000'
-gruvbox.foreground = '#ebdbb3'
+local color_scheme_name = 'Ayu Dark (Gogh)'
+local color_scheme = wezterm.color.get_builtin_schemes()[color_scheme_name]
+color_scheme.background = '#000'
+color_scheme.foreground = '#ebdbb3'
 
-config.color_schemes = { ['gruvbox'] = gruvbox }
-config.color_scheme = 'gruvbox'
+config.color_schemes = { ['scheme'] = color_scheme }
+config.color_scheme = 'scheme'
 
 config.font = wezterm.font('Liga SFMono Nerd Font')
 config.font = wezterm.font_with_fallback({

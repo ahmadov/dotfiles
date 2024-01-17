@@ -1,5 +1,5 @@
 [shell]
-program = "/usr/bin/fish"
+program = "/usr/local/bin/fish"
 
 [colors.bright]
 black = "#928374"
@@ -30,11 +30,11 @@ TERM = "alacritty"
 WINIT_X11_SCALE_FACTOR = "1"
 
 [font]
-size = 13.0
+size = 16.0
 
 [font.bold]
 family = "Liga SFMono Nerd Font"
-style = "Bold"
+style = "SemiBold"
 
 [font.bold_italic]
 family = "Liga SFMono Nerd Font"
@@ -50,7 +50,7 @@ style = "Regular"
 
 [font.normal]
 family = "Liga SFMono Nerd Font"
-style = "Regular"
+style = "Light"
 
 [font.offset]
 x = 0
