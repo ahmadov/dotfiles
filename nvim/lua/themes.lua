@@ -1,49 +1,5 @@
 local list = {}
 
-list['gruvbox-dark'] = [[
-  set background=dark
-  let g:gruvbox_invert_selection = 0
-  let g:gruvbox_transparent_bg = 1
-  let g:gruvbox_contrast_dark = 'hard'
-  colorscheme gruvbox
-]]
-
-list['onedark-darker-lua'] = function()
-  require('onedark').setup({
-      style = 'darker'
-  })
-  vim.o.background = 'dark'
-  require('onedark').load()
-end
-
-list['onedark-deep-lua'] = function()
-  require('onedark').setup({
-      style = 'deep'
-  })
-  vim.o.background = 'dark'
-  require('onedark').load()
-end
-
-list['onedark-warmer-lua'] = function()
-  require('onedark').setup({
-      style = 'warmer'
-  })
-  vim.o.background = 'dark'
-  require('onedark').load()
-end
-
-list['gruvbox-baby-lua'] = function()
-  vim.g.gruvbox_baby_telescope_theme = 1
-  vim.g.gruvbox_baby_transparent_mode = 1
-  vim.g.gruvbox_background_color = "#171717"
-  vim.cmd("colorscheme gruvbox-baby")
-end
-
-list['material-lua'] = function()
-  vim.g.material_style = "deep ocean"
-  vim.cmd("colorscheme material")
-end
-
 list['gruvbox-dark-lua'] = function()
   local config = require("gruvbox").config
   require("gruvbox").setup({
@@ -103,16 +59,6 @@ list['gruvbox-dark-lua'] = function()
   vim.cmd("colorscheme gruvbox")
 end
 
-list['ayu-light'] = [[
-  set background=light
-  colorscheme ayu
-]]
-
-list['onebuddy-light'] = [[
-  set background=light
-  colorscheme onebuddy
-]]
-
 list['edge-dark'] = [[
   let g:edge_style = 'neon'
   let g:edge_disable_italic_comment = 1
@@ -139,27 +85,23 @@ list['edge-light'] = [[
   colorscheme edge
 ]]
 
-list['everforest-light'] = [[
-  let g:everforest_disable_italic_comment = 1
-  let g:everforest_background = 'hard'
-  let g:everforest_cursor = 'green'
-  let g:everforest_transparent_background = 0
-  let g:everforest_better_performance = 1
-  let g:everforest_ui_contrast = 'high'
-  set background=light
-  colorscheme everforest
-]]
+list['everforest-dark-lua'] = function()
+  vim.o.background = 'dark'
+  require("everforest").setup({
+    background = 'hard',
+    dim_inactive_windows = true,
+  })
+  require("everforest").load()
+end
 
-list['everforest-dark'] = [[
-  set background=dark
-  let g:everforest_disable_italic_comment = 1
-  let g:everforest_background = 'hard'
-  let g:everforest_cursor = 'green'
-  let g:everforest_transparent_background = 0
-  let g:everforest_better_performance = 1
-  let g:everforest_ui_contrast = 'high'
-  colorscheme everforest
-]]
+list['everforest-light-lua'] = function()
+  vim.o.background = 'light'
+  require("everforest").setup({
+    background = 'hard',
+    dim_inactive_windows = true,
+  })
+  require("everforest").load()
+end
 
 list['gruvbox-material-light'] = [[
   let g:gruvbox_material_background = 'hard'
@@ -180,7 +122,7 @@ list['gruvbox-material-light'] = [[
 list['gruvbox-material-dark'] = [[
   set background=dark
   let g:gruvbox_material_background = 'hard'
-  let g:gruvbox_material_palette = 'material'
+  let g:gruvbox_material_palette = 'mix'
   let g:gruvbox_material_visual = 'green background'
   let g:gruvbox_material_menu_selection_background = 'green'
   let g:gruvbox_material_cursor = 'orange'

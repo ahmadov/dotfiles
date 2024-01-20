@@ -280,11 +280,8 @@ return {
 
   -- Colorschemes
   'ellisonleao/gruvbox.nvim',
-  'srcery-colors/srcery-vim',
-  'sainnhe/gruvbox-material',
-  'marko-cerovac/material.nvim',
   'sainnhe/sonokai',
   'sainnhe/edge',
-  'sainnhe/everforest',
-  'navarasu/onedark.nvim',
+  'sainnhe/gruvbox-material',
+  'neanias/everforest-nvim',
 }

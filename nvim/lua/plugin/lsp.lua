@@ -5,11 +5,12 @@ local aerial = require('aerial')
 local utils = require('utils')
 local nvim_cmp = require('cmp_nvim_lsp');
 
-function on_attach(_, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+function on_attach(client, bufnr)
+  client.server_capabilities.semanticTokensProvider = nil
 
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   -- aerial.on_attach(_, bufnr);
-  require('illuminate').on_attach(_)
+  require('illuminate').on_attach(client)
   -- Aerial does not set any mappings by default, so you'll want to set some up
   -- Toggle the aerial window with <leader>o
   utils.buf_map(bufnr, 'n', '<leader>o', '<cmd>AerialToggle<CR>', {})
