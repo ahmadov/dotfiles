@@ -1,6 +1,6 @@
 local themes = require('themes')
 
-themes.switchColorScheme('gruvbox-material-dark')
+themes.switchColorScheme('gruvbox-material-dark-lua')
 
 vim.cmd([[
   hi LineNr guibg=NONE

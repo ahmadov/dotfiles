@@ -119,24 +119,28 @@ list['gruvbox-material-light'] = [[
   colorscheme gruvbox-material
 ]]
 
-list['gruvbox-material-dark'] = [[
-  set background=dark
-  let g:gruvbox_material_background = 'hard'
-  let g:gruvbox_material_palette = 'mix'
-  let g:gruvbox_material_visual = 'green background'
-  let g:gruvbox_material_menu_selection_background = 'green'
-  let g:gruvbox_material_cursor = 'orange'
-  let g:gruvbox_material_disable_italic_comment = 1
-  let g:gruvbox_material_sign_column_background = 'none'
-  let g:gruvbox_material_statusline_style = 'material'
-  let g:gruvbox_material_ui_contrast = 'high'
-  let g:gruvbox_material_enable_bold = 1
-  let g:gruvbox_material_better_performance = 1
-  let g:gruvbox_material_diagnostic_line_highlight = 1
-  let g:gruvbox_material_diagnostic_text_highlight = 1
-  let g:gruvbox_material_disable_terminal_colors = 1
-  colorscheme gruvbox-material
-]]
+list['gruvbox-material-dark-lua'] = function()
+  vim.o.background = 'dark'
+  vim.g.gruvbox_material_background = 'hard'
+  vim.g.gruvbox_material_foreground = 'mix'
+  vim.g.gruvbox_material_palette = 'mix'
+  vim.g.gruvbox_material_visual = 'green background'
+  vim.g.gruvbox_material_menu_selection_background = 'green'
+  vim.g.gruvbox_material_cursor = 'orange'
+  vim.g.gruvbox_material_disable_italic_comment = 1
+  vim.g.gruvbox_material_sign_column_background = 'none'
+  vim.g.gruvbox_material_statusline_style = 'material'
+  vim.g.gruvbox_material_ui_contrast = 'high'
+  vim.g.gruvbox_material_enable_bold = 1
+  vim.g.gruvbox_material_better_performance = 1
+  vim.g.gruvbox_material_diagnostic_line_highlight = 1
+  vim.g.gruvbox_material_diagnostic_text_highlight = 1
+  vim.g.gruvbox_material_disable_terminal_colors = 1
+  vim.cmd([[
+    let g:gruvbox_material_colors_override = { 'bg0': ['#1b1b1c', '234'] }
+    colorscheme gruvbox-material
+  ]])
+end
 
 local themes = {}
 
