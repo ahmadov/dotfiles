@@ -137,7 +137,7 @@ list['gruvbox-material-dark-lua'] = function()
   vim.g.gruvbox_material_diagnostic_text_highlight = 1
   vim.g.gruvbox_material_disable_terminal_colors = 1
   vim.cmd([[
-    let g:gruvbox_material_colors_override = { 'bg0': ['#1b1b1c', '234'] }
+    let g:gruvbox_material_colors_override = { 'bg0': ['#151515', '234'] }
     colorscheme gruvbox-material
   ]])
 end

@@ -23,11 +23,13 @@ vim.cmd([[
   autocmd VimEnter * hi LspReferenceRead  cterm=inverse ctermbg=242 guibg=#3c3b2a gui=NONE
   autocmd VimEnter * hi LspReferenceWrite cterm=inverse ctermbg=242 guibg=#3c3b2a gui=NONE
 
-  hi DiffAdd                gui=NONE guifg=NONE guibg=#385634 
-  hi DiffChange             gui=NONE guifg=NONE guibg=#464c24 
-  hi DiffDelete             gui=NONE guifg=NONE guibg=#780e02
-  hi DiffText               gui=NONE guifg=NONE guibg=#725103
-  hi DiffviewDiffDelete     gui=NONE guifg=#878d96 guibg=NONE
+  " hi DiffAdd                gui=NONE guifg=NONE guibg=#385634 
+  " hi DiffChange             gui=NONE guifg=NONE guibg=#464c24 
+  " hi DiffDelete             gui=NONE guifg=NONE guibg=#780e02
+  " hi DiffText               gui=NONE guifg=NONE guibg=#725103
+  " hi DiffviewDiffDelete     gui=NONE guifg=#878d96 guibg=NONE
+
+  hi BufferCurrent          gui=NONE guifg=#98c379 guibg=NONE
 ]])
 
 --   highlight LspDiagnosticsUnderlineError guifg=#EB4917 gui=undercurl

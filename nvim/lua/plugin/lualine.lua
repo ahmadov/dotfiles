@@ -28,7 +28,7 @@ function M.config()
   require('lualine').setup {
     options = {
       icons_enabled = true,
-      theme = 'everforest',
+      theme = 'edge',
       -- component_separators = { left = '', right = ''},
       -- section_separators = { left = '', right = ''},
       component_separators = '',
