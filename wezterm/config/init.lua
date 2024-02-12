@@ -4,7 +4,9 @@ local Config = {}
 
 function Config:init()
    self.__index = self
-   local config = setmetatable({ options = {} }, self)
+   -- In newer versions of wezterm, use the config_builder which will
+   -- help provide clearer error messages
+   local config = setmetatable({ options = wezterm.config_builder() }, self)
    return config
 end
 

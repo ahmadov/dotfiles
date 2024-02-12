@@ -78,8 +78,6 @@ local keys = {
     action = wezterm.action.CloseCurrentPane { confirm = false },
   },
   { key = 's', mods = 'LEADER', action = wezterm.action.ShowTabNavigator },
-  { key = 'j', mods = 'LEADER', action = wezterm.action.ActivateTabRelative(1) },
-  { key = 'k', mods = 'LEADER', action = wezterm.action.ActivateTabRelative(-1) },
 }
 for i = 1, 8 do
   table.insert(keys, {

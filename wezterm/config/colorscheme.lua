@@ -26,42 +26,31 @@ function tab_title(tab_info)
   return tab_info.active_pane.title
 end
 
-wezterm.on(
-  'format-tab-title',
-  function(tab, tabs, panes, config, hover, max_width)
-    local edge_background = '#000'
-    local background = '#282828'
-    local foreground = '#a89984'
+wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
+  local edge_background = '#000'
+  local background = '#282828'
+  local foreground = '#a89984'
 
-    if tab.is_active then
-      background = '#fea019'
-      foreground = '#3c3836'
-    elseif hover then
-      background = '#403d3c'
-      foreground = '#a89984'
-    end
-
-    local edge_foreground = background
-
-    local title = tab_title(tab)
-
-    -- ensure that the titles fit in the available space,
-    -- and that we have room for the edges.
-    title = wezterm.truncate_right(title, max_width - 2)
-
-    return {
-      { Background = { Color = edge_background } },
-      { Foreground = { Color = edge_foreground } },
-      { Text = SOLID_LEFT_ARROW },
-      { Background = { Color = background } },
-      { Foreground = { Color = foreground } },
-      { Text = title },
-      { Background = { Color = edge_background } },
-      { Foreground = { Color = edge_foreground } },
-      { Text = SOLID_RIGHT_ARROW },
-    }
+  if tab.is_active then
+    background = '#fea019'
+    foreground = '#3c3836'
+  elseif hover then
+    background = '#403d3c'
+    foreground = '#a89984'
   end
-)
+
+  local title = tab_title(tab)
+
+  -- ensure that the titles fit in the available space,
+  -- and that we have room for the edges.
+  title = wezterm.truncate_right(title, max_width - 2)
+
+  return {
+    { Background = { Color = background } },
+    { Foreground = { Color = foreground } },
+    { Text = ' ' .. title .. ' ' },
+  }
+end)
 
 return {
    color_schemes = { ['scheme'] = color_scheme },
