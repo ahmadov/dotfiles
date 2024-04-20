@@ -243,7 +243,10 @@ return {
   {
     'rcarriga/nvim-dap-ui',
     config = function() require('plugin.nvim-dap').config() end,
-    dependencies = { 'mfussenegger/nvim-dap' }
+    dependencies = {
+      'mfussenegger/nvim-dap',
+      'nvim-neotest/nvim-nio'
+    }
   },
   {'theHamsta/nvim-dap-virtual-text'},
   {'nvim-telescope/telescope-dap.nvim'},

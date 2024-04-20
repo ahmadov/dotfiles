@@ -1,11 +1,5 @@
 return {
   default_prog = { '/usr/local/bin/fish', '-l' },
-  default_gui_startup_args = { 'connect', 'unix' },
-  unix_domains = {
-    {
-      name = 'unix',
-    },
-  },
   front_end = "WebGpu",
 
   hyperlink_rules = {

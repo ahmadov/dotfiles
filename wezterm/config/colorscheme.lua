@@ -5,12 +5,6 @@ local color_scheme = wezterm.color.get_builtin_schemes()[color_scheme_name]
 color_scheme.background = '#111'
 color_scheme.foreground = '#ebdbb3'
 
--- The filled in variant of the < symbol
-local SOLID_LEFT_ARROW = wezterm.nerdfonts.pl_right_hard_divider
-
--- The filled in variant of the > symbol
-local SOLID_RIGHT_ARROW = wezterm.nerdfonts.pl_left_hard_divider
-
 -- This function returns the suggested title for a tab.
 -- It prefers the title that was set via `tab:set_title()`
 -- or `wezterm cli set-tab-title`, but falls back to the
@@ -43,12 +37,12 @@ wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_wid
 
   -- ensure that the titles fit in the available space,
   -- and that we have room for the edges.
-  title = wezterm.truncate_right(title, max_width - 2)
+  title = wezterm.truncate_right(title, max_width + 2)
 
   return {
     { Background = { Color = background } },
     { Foreground = { Color = foreground } },
-    { Text = ' ' .. title .. ' ' },
+    { Text = (tab.tab_index + 1) .. ": " .. title .. " " },
   }
 end)
 

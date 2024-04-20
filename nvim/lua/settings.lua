@@ -37,6 +37,7 @@ vim.wo.cursorline               = true
 vim.o.incsearch                 = true
 vim.o.backspace                 = 'indent,eol,start'
 vim.o.termguicolors             = true
+vim.o.termsync                  = false
 vim.o.cmdheight                 = 2
 vim.o.ttyfast                   = true
 vim.o.wrap                      = false

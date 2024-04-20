@@ -63,9 +63,7 @@ local keys = {
   {
     key = 'c',
     mods = 'LEADER',
-    action = wezterm.action.SpawnTab {
-      DomainName = 'unix',
-    },
+    action = wezterm.action.SpawnTab 'DefaultDomain',
   },
   {
     key = 'd',
