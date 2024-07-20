@@ -6,7 +6,13 @@ function M.config()
     require('nvim-treesitter.configs').setup {
       ensure_installed = {'c', 'cpp', 'rust', 'vim', 'lua', 'cmake', 'go', 'python', 'markdown', 'markdown_inline'},
       auto_install = false,
-      highlight = { enable = true },
+      highlight = {
+        enable = true,
+        disable = function(_, bufnr)
+            return vim.api.nvim_buf_line_count(bufnr) > 5000
+        end,
+        additional_vim_regex_highlighting = { "latex" },
+      },
       textobjects = { enable = true },
       textsubjects = { enable = true },
       incremental_selection = {

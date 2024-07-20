@@ -279,8 +279,6 @@ return {
     config = function() require('plugin.nvim-notify').config() end,
   },
 
-  {'antoinemadec/FixCursorHold.nvim', event = 'BufReadPre'},
-
   -- Colorschemes
   'ellisonleao/gruvbox.nvim',
   'sainnhe/sonokai',

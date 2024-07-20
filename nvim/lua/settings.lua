@@ -65,6 +65,7 @@ vim.opt.shortmess = {
   c = true,
   W = true, -- Don't show [w] or written when writing
 }
+
 if vim.fn.has('macunix') then
   vim.opt.shell = "/usr/local/bin/fish"
 else
@@ -73,6 +74,11 @@ end
 
 vim.cmd('filetype plugin indent on') --- " Enables plugin & indent
 vim.cmd([[
+  set nocursorline
+  set nocursorcolumn
+  syntax sync minlines=200
+  syntax sync maxlines=500
+
   set tabstop=2
   set softtabstop=2
   set shiftwidth=2

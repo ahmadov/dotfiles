@@ -62,3 +62,10 @@ opacity = 1.0
 [window.padding]
 x = 5
 y = 3
+
+[keyboard]
+bindings = [
+  { key = "Tab", mods = "Control", chars = "\u001b[27;5;9~" },
+  { key = "Tab", mods = "Control|Shift", chars = "\u001b[27;6;9~" },
+]
+
