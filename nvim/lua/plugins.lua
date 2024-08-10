@@ -250,7 +250,6 @@ return {
   },
   {'theHamsta/nvim-dap-virtual-text'},
   {'nvim-telescope/telescope-dap.nvim'},
-  {'p00f/nvim-ts-rainbow'},
   {'famiu/nvim-reload'},
   { 'gelguy/wilder.nvim' },
   {
