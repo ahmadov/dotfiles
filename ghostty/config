@@ -1,0 +1,17 @@
+command = /usr/local/bin/fish
+
+theme = GruvboxDarkHard
+background = "#000000"
+foreground = "#ebdbb2"
+background-opacity = 0.95
+
+font-family = Liga SFMono Nerd Font
+font-size = 16
+font-thicken = true
+
+cursor-style = block
+cursor-style-blink = false
+shell-integration-features = no-cursor
+mouse-hide-while-typing = true
+
+macos-titlebar-style = "transparent"
