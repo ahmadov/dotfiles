@@ -3,11 +3,17 @@ command = /usr/local/bin/fish
 theme = GruvboxDarkHard
 background = "#000000"
 foreground = "#ebdbb2"
-background-opacity = 0.95
 
 font-family = Liga SFMono Nerd Font
-font-size = 16
+font-size = 14
 font-thicken = true
+
+shell-integration = fish
+
+split-divider-color = "#fabd2f"
+unfocused-split-fill = "#3c3b2a"
+
+scrollback-limit = 10000000
 
 cursor-style = block
 cursor-style-blink = false
@@ -15,3 +21,24 @@ shell-integration-features = no-cursor
 mouse-hide-while-typing = true
 
 macos-titlebar-style = "transparent"
+
+# keybind = ctrl+tab=text:\x1b[9;5u
+# keybind = ctrl+shift+tab=text:\x1b[9;6u
+
+macos-option-as-alt = true
+
+# tmux replacement
+
+keybind = ctrl+tab=next_tab
+keybind = ctrl+shift+tab=previous_tab
+
+keybind = ctrl+a>n=new_tab
+
+keybind = ctrl+a>h=goto_split:left
+keybind = ctrl+a>j=goto_split:bottom
+keybind = ctrl+a>k=goto_split:top
+keybind = ctrl+a>l=goto_split:right
+
+keybind = ctrl+a>-=new_split:down
+keybind = ctrl+a>\=new_split:right
+keybind = ctrl+a>f=toggle_split_zoom
