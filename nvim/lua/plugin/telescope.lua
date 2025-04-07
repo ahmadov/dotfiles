@@ -14,7 +14,10 @@ function M.config()
         '--with-filename',
         '--line-number',
         '--column',
-        '--smart-case'
+        '--smart-case',
+        '--max-columns=512',
+        -- '-g !/contrib/',
+        -- '-g !/build/',
       },
       mappings = {
         i = {

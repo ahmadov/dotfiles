@@ -2,7 +2,15 @@ local M = {}
 
 function M.config()
   require('lspsaga').setup({
-    code_action_icon = '💡',
+    ui = {
+      code_action = '💡',
+    },
+    lightbulb = {
+      enable = true,
+      sign = true,
+      sign_priority = 20,
+      virtual_text = true,
+    },
     diagnostic_header = { " ", " ", " ", "ﴞ " },
     -- show_diagnostic_source = true,
     -- code_action_prompt = {
@@ -11,12 +19,6 @@ function M.config()
     --   sign_priority = 20,
     --   virtual_text  = false,
     -- },
-    code_action_lightbulb = {
-        enable = true,
-        sign = true,
-        sign_priority = 20,
-        virtual_text = true,
-    },
     finder_action_keys = {
       open = {'<CR>', 'o'},
       vsplit = 's',

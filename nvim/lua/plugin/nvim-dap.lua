@@ -53,10 +53,10 @@ function M.config()
   dap.configurations.cpp = {
     {
       name = "Launch file",
-      type = "lldb",
+      type = "codelldb",
       request = "launch",
       program = function()
-        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        return vim.fn.input('Path to executable: ', vim.fn.getcwd(), 'file')
       end,
       cwd = '${workspaceFolder}',
       stopOnEntry = false,
@@ -64,63 +64,58 @@ function M.config()
     },
   }
   dap.configurations.c = dap.configurations.cpp
-  dap.configurations.rust = dap.configurations.cpp
 
   dap.adapters.codelldb = {
     type = 'server',
     port = "${port}",
     executable = {
-      command = '~/git/codelldb/adapter/codelldb',
+      command = '/Users/ahmadov/.local/share/nvim/mason/bin/codelldb',
       args = {"--port", "${port}"},
     },
     name = 'codelldb'
   }
 
   dap.adapters.lldb = {
+    name = 'lldb',
     type = 'executable',
     attach = {
       pidProperty = 'pid',
       pidSelect = 'ask',
     },
-    command = 'lldb-vscode',
+    command = 'lldb-dap',
     env = {
       LLDB_LAUNCH_FLAG_LAUNCH_IN_TTY = 'YES',
     },
-    name = 'lldb',
   }
-
-  vim.api.nvim_create_user_command('Codelldb',
-    function(command)
-      local config = {
-        name = command.fargs[1],
-        type = 'codelldb',
-        request = 'launch',
-        program = command.fargs[1],
-        -- args = { vim.list_slice(command.fargs, 2, vim.tbl_count(command.fargs)) },
-        cwd = '${workspaceFolder}'
-      }
-      dap.run(config)
-      dap.repl.open()
-    end,
-    { nargs = '+', complete = 'file', desc = 'Run command in Codelldb' }
-  )
 
   vim.api.nvim_create_user_command('Lldb',
     function(command)
       local config = {
-        type = 'lldb',
         name = command.fargs[1],
+        type = 'lldb',
         request = 'launch',
         program = command.fargs[1],
         args = { vim.list_slice(command.fargs, 2, vim.tbl_count(command.fargs)) },
-        cwd = '${workspaceFolder}'
+        cwd = '${workspaceFolder}',
       }
       dap.run(config)
-      dap.repl.open()
     end,
-    { nargs = '+', complete = 'file', desc = 'Run command in LLDB' }
+    { nargs = '+', complete = 'file', desc = 'Run command in lldb' }
   )
-
+  vim.api.nvim_create_user_command('Codelldb',
+    function(command)
+      local config = {
+        name = command.fargs[1],
+        type = 'lldb',
+        request = 'launch',
+        program = command.fargs[1],
+        args = { vim.list_slice(command.fargs, 2, vim.tbl_count(command.fargs)) },
+        cwd = '${workspaceFolder}',
+      }
+      dap.run(config)
+    end,
+    { nargs = '+', complete = 'file', desc = 'Run command in Codelldb' }
+  )
 
   vim.fn.sign_define('DapBreakpoint', { text = '', texthl = 'DiagnosticError' })
   vim.fn.sign_define('DapLogPoint', { text = '', texthl = 'DiagnosticInfo' })
@@ -163,6 +158,27 @@ function M.config()
   vim.api.nvim_set_keymap('i', '<A-BS>', '<Cmd>lua require("dapui").close(); require("dap").terminate()<CR><Cmd>DapVirtualTextForceRefresh<CR>', { noremap = true })
   vim.api.nvim_set_keymap('v', '<A-BS>', '<Cmd>lua require("dapui").close(); require("dap").terminate()<CR><Cmd>DapVirtualTextForceRefresh<CR>', { noremap = true })
 
+  vim.keymap.set({ '', 'i' }, '<leader>cs', '<Cmd>CMakeSelectBuildTarget<CR>', { noremap = true, desc = 'Select CMake target' })
+  vim.keymap.set({ '', 'i' }, '<leader>ct', '<Cmd>CMakeSelectBuildType<CR>', { noremap = true, desc = 'Select CMake build type' })
+  vim.keymap.set({ '', 'i' }, '<leader>cr', '<Cmd>CMakeRun<CR>', { noremap = true, desc = 'Run CMake target' })
+  vim.keymap.set({ '', 'i' }, '<leader>cd', '<Cmd>CMakeDebug<CR>', { noremap = true, desc = 'Debug CMake target' })
+  vim.keymap.set({ '', 'i' }, '<leader>cb', '<Cmd>CMakeBuild<CR>', { noremap = true, desc = 'Build CMake target' })
+
+  vim.keymap.set({ '', 'i' }, '<leader>cg', '<Cmd>CMakeGenerator<CR>', { noremap = true, desc = 'Run CMake configure task' })
+  vim.keymap.set({ '', 'i' }, '<A-F9>', '<Cmd>CMakeClean<CR>', { noremap = true, desc = 'Run CMake clean task' })
+
+  dap.listeners.before.attach.dapui_config = function()
+    dapui.open()
+  end
+  dap.listeners.before.launch.dapui_config = function()
+    dapui.open()
+  end
+  -- dap.listeners.before.event_terminated.dapui_config = function()
+  --   dapui.close()
+  -- end
+  -- dap.listeners.before.event_exited.dapui_config = function()
+  --   dapui.close()
+  -- end
 end
 
 return M

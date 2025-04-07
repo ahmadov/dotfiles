@@ -13,7 +13,7 @@ function M.config()
         args = {
           configure = { '-D', 'CMAKE_EXPORT_COMPILE_COMMANDS=1', '-G', 'Ninja'}
         },
-        dap_name = 'lldb',
+        dap_name = 'codelldb',
       },
     },
     quickfix = {
@@ -55,6 +55,8 @@ function M.config()
   vim.keymap.set({ '', 'i' }, '<leader>cg', function() tasks.start('auto', 'configure') end, { noremap = true, desc = 'Run CMake configure task' })
   vim.keymap.set({ '', 'i' }, '<S-F9>', function() tasks.start('auto', 'clippy') end, { noremap = true, desc = 'Run Cargo clippy task' })
   vim.keymap.set({ '', 'i' }, '<A-F9>', function() tasks.start('auto', 'clean') end, { noremap = true, desc = 'Run CMake clean task' })
+
+  vim.api.nvim_command('command! -complete=file -nargs=+ Codelldb lua require("utils").debug_lldb(<f-args>)')
 end
 
 return M

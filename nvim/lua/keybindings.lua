@@ -143,7 +143,7 @@ vim.keymap.set({"n", "s"}, "<Tab>", function() luasnip.jump( 1) end, {silent = t
 vim.keymap.set({"n", "s"}, "<S-Tab>", function() luasnip.jump(-1) end, {silent = true})
 
 -- String operations
-utils.map("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/]])
+utils.map("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>]])
 
 -- Undotree
 utils.map("n", "<leader>u", [[:UndotreeToggle<CR>]])
@@ -163,7 +163,8 @@ utils.map('n', '<leader>ql', [[<cmd>lua require('persistence').load()<CR>]])
 utils.map("n", "<Leader>gb", [[<Cmd>lua require('telescope.builtin').git_branches()<CR>]])
 utils.map("n", "<Leader>b", [[<Cmd>lua require('telescope.builtin').buffers()<CR>]])
 utils.map("n", "<Leader>e", [[<Cmd>lua require('telescope.builtin').oldfiles()<CR>]])
-utils.map("n", "<C-p>", [[<Cmd>lua require('telescope.builtin').find_files()<CR>]])
+utils.map("n", "<C-p>", [[<Cmd>lua require('utils').telescope_find_files()<CR>]])
+-- utils.map("n", "<C-P>", [[<Cmd>lua require('telescope.builtin').find_files()<CR>]])
 utils.map("n", "<C-g>", [[<Cmd>lua require('telescope.builtin').git_status()<CR>]])
 utils.map("n", "<leader>gc", [[<Cmd>lua require('telescope.builtin').git_commits()<CR>]])
 utils.map("n", "<Leader>fm", [[<Cmd>lua require('telescope').extensions.media_files.media_files()<CR>]])

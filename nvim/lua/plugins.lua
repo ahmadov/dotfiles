@@ -7,9 +7,8 @@ return {
       { 'williamboman/mason.nvim', opts = {} },
       { 'williamboman/mason-lspconfig.nvim' }, 
       { 'j-hui/fidget.nvim', opts = {} },
-      { 'folke/neodev.nvim', opts = {
-        library = { plugins = { "nvim-dap-ui" }, types = true }
-      }}
+      { 'folke/neodev.nvim', opts = { library = { plugins = { "nvim-dap-ui" }, types = true } } },
+      { 'https://git.sr.ht/~p00f/clangd_extensions.nvim' },
     }
   },
   {
@@ -26,8 +25,20 @@ return {
         version = 'v2.*',
         build = "make install_jsregexp",
         dependencies = 'saadparwaiz1/cmp_luasnip'
-      }
+      },
+      {
+        'https://git.sr.ht/~p00f/clangd_extensions.nvim',
+        -- config = function()
+        --   require("clangd_extensions").setup({})
+        -- end
+      },
     }
+  },
+  {
+    'https://git.sr.ht/~p00f/clangd_extensions.nvim',
+    config = function()
+      require("clangd_extensions").setup({})
+    end
   },
   -- { 'danymat/neogen', opts = {} },
 
@@ -90,7 +101,7 @@ return {
     'glepnir/dashboard-nvim',
     branch = 'master',
     event = 'VimEnter',
-    -- config = function() require('plugin.dashboard').config() end,
+    config = function() require('plugin.dashboard').config() end,
   },
   {
     'jose-elias-alvarez/null-ls.nvim',
@@ -172,15 +183,19 @@ return {
     'sbdchd/neoformat',
     config = function() require('plugin.neoformat').config() end,
   },
+  -- {
+  --   'Shatur/neovim-tasks',
+  --   config = function() require('plugin.neovim-tasks').config() end,
+  -- },
   {
-    'Shatur/neovim-tasks',
-    config = function() require('plugin.neovim-tasks').config() end,
+    'Civitasv/cmake-tools.nvim',
+    config = function() require('plugin.cmake-tools').config() end,
   },
   {
     'tversteeg/registers.nvim',
     branch = 'main'
   },
-  {'sumneko/lua-language-server'},
+  -- {'sumneko/lua-language-server'},
   -- {
   --   'ms-jpq/coq_nvim',
   --   branch = 'coq',

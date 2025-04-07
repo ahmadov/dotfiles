@@ -65,6 +65,10 @@ function on_attach(client, bufnr)
   -- utils.map('n', '<leader>d', "<cmd>lua require('lspsaga.diagnostic').show_line_diagnostics()<CR>", opts)
   -- utils.map('n', '[d', "<cmd>lua require('lspsaga.diagnostic').lsp_jump_diagnostic_prev()<CR>", opts)
   -- utils.map('n', ']d', "<cmd>lua require('lspsaga.diagnostic').lsp_jump_diagnostic_next()<CR>", opts)
+  
+  -- Inlay hints
+  vim.lsp.inlay_hint.enable()
+  utils.map('n', '<leader>i', '<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({0}),{0})<CR>', opts)
 end
 
 local capabilities = nvim_cmp.default_capabilities(capabilities)
