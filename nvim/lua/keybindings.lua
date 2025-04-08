@@ -117,16 +117,18 @@ utils.map("n", "<leader>do", [[:DiffviewOpen<CR>]])
 utils.map("n", "<leader>,", [[:G ftp push --insecure<CR>]])
 
 -- CMake
--- utils.map("n", "<leader>cg", [[:CMake configure<CR>]])
--- utils.map("n", "<leader>cb", [[:CMake build<CR>]])
--- utils.map("n", "<leader>cB", [[:CMake build_all<CR>]])
--- utils.map("n", "<leader>cr", [[:CMake run<CR>]])
--- utils.map("n", "<leader>cd", [[:CMake debug<CR>]])
--- utils.map("n", "<leader>cx", [[:CMake build_and_run<CR>]])
--- utils.map("n", "<leader>cX", [[:CMake build_and_debug<CR>]])
--- utils.map("n", "<leader>ca", [[:CMake set_target_args<CR>]])
--- utils.map("n", "<leader>cs", [[:CMake select_target<CR>]])
--- utils.map("n", "<leader>ct", [[:CMake select_build_type<CR>]])
+vim.keymap.set({ '', 'i' }, '<leader>cg', '<Cmd>CMakeGenerat<CR>', { noremap = true, desc = 'Run CMake configure task' })
+vim.keymap.set({ '', 'i' }, '<leader>cx', '<Cmd>CMakeClean<CR>', { noremap = true, desc = 'Run CMake clean task' })
+
+vim.keymap.set({ '', 'i' }, '<leader>cs', '<Cmd>CMakeSelectBuildTarget<CR>', { noremap = true, desc = 'Select CMake target' })
+vim.keymap.set({ '', 'i' }, '<leader>ct', '<Cmd>CMakeSelectBuildType<CR>', { noremap = true, desc = 'Select CMake build type' })
+vim.keymap.set({ '', 'i' }, '<leader>cr', '<Cmd>CMakeRun<CR>', { noremap = true, desc = 'Run CMake target' })
+vim.keymap.set({ '', 'i' }, '<leader>cd', '<Cmd>CMakeDebug<CR>', { noremap = true, desc = 'Debug CMake target' })
+vim.keymap.set({ '', 'i' }, '<leader>cb', '<Cmd>CMakeBuild<CR>', { noremap = true, desc = 'Build CMake target' })
+
+vim.api.nvim_set_keymap('n', '<A-s>', '<Cmd>ClangdSwitchSourceHeader<CR>', { noremap = true })
+vim.api.nvim_set_keymap('i', '<A-s>', '<Cmd>ClangdSwitchSourceHeader<CR>', { noremap = true })
+vim.api.nvim_set_keymap('v', '<A-s>', '<Cmd>ClangdSwitchSourceHeader<CR>', { noremap = true })
 utils.map('n', 'gh', '<Cmd>ClangdSwitchSourceHeader<CR>')
 
 -- LSP
@@ -173,10 +175,6 @@ utils.map("n", "<Leader>s", [[<Cmd>lua require('telescope.builtin').current_buff
 
 utils.map('n', '<A-n>', [[<cmd>lua require('illuminate').next_reference{wrap=true}<cr>]])
 utils.map('n', '<A-p>', [[<cmd>lua require('illuminate').next_reference{reverse=true,wrap=true}<cr>]])
-
--- markdown-preview
-utils.map("n", "<Alt-p>", [[:MarkdownPreview]])
-utils.map("n", "<Alt-q>", [[:MarkdownPreviewStop]])
 
 vim.cmd([[
 

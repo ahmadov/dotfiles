@@ -49,8 +49,8 @@ function on_attach(client, bufnr)
 
 
   -- Telescope LSP
-  utils.map('n', '<A-o>', "<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>", opts)
-  utils.map('n', '<A-i>', "<cmd>lua require('telescope.builtin').lsp_incoming_calls()<CR>", opts)
+  utils.map('n', '<A-g>', "<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>", opts)
+  utils.map('n', '<leader>i', "<cmd>lua require('telescope.builtin').lsp_incoming_calls()<CR>", opts)
 
   utils.map('n', ']g', "<cmd>lua require('gitsigns.actions').next_hunk()<CR>", opts)
   utils.map('n', '[g', "<cmd>lua require('gitsigns.actions').prev_hunk()<CR>", opts)

@@ -8,44 +8,26 @@ function M.config()
   dap.set_log_level('INFO') -- Helps when configuring DAP, see logs with :DapShowLog
   dapui.setup({
     mappings = {
-      open = "o",
-      remove = "d",
-      edit = "e",
-      repl = "r",
-      toggle = "t",
+      expand = "<Tab>",
     },
-    expand_lines = vim.fn.has("nvim-0.7"),
     layouts = {
       {
-        elements = {
-          'scopes',
-          'breakpoints',
-          'stacks',
-          'watches',
-        },
-        size = 55,
-        position = 'right',
-      },
-      {
-        elements = {
-          'repl',
-          'console',
-        },
-        size = 15,
-        position = 'bottom',
-      },
-    },
-    floating = {
-      max_height = nil,
-      max_width = nil,
-      border = "single",
-      mappings = {
-        close = { "q", "<Esc>" },
-      },
-    },
-    windows = { indent = 1 },
-    render = {
-      max_type_length = nil,
+        elements = { {
+            id = "watches",
+            size = 0.2
+          }, {
+            id = "breakpoints",
+            size = 0.2
+          }, {
+            id = "stacks",
+            size = 0.3
+          }, {
+            id = "scopes",
+            size = 0.3
+          } },
+        position = "left",
+        size = 40
+      }
     },
   })
   dap_virtual_text.setup()
@@ -106,10 +88,10 @@ function M.config()
     function(command)
       local config = {
         name = command.fargs[1],
-        type = 'lldb',
+        type = 'codelldb',
         request = 'launch',
         program = command.fargs[1],
-        args = { vim.list_slice(command.fargs, 2, vim.tbl_count(command.fargs)) },
+        args = vim.list_slice(command.fargs, 2, vim.tbl_count(command.fargs)),
         cwd = '${workspaceFolder}',
       }
       dap.run(config)
@@ -148,24 +130,13 @@ function M.config()
   vim.api.nvim_set_keymap('i', '<A-v>', '<Cmd>lua require("dap.ui.widgets").hover()<CR>', { noremap = true })
   vim.api.nvim_set_keymap('v', '<A-v>', '<Cmd>lua require("dap.ui.widgets").hover()<CR>', { noremap = true })
 
-  vim.api.nvim_set_keymap('n', '<A-s>', '<Cmd>ClangdSwitchSourceHeader<CR>', { noremap = true })
-  vim.api.nvim_set_keymap('i', '<A-s>', '<Cmd>ClangdSwitchSourceHeader<CR>', { noremap = true })
-  vim.api.nvim_set_keymap('v', '<A-s>', '<Cmd>ClangdSwitchSourceHeader<CR>', { noremap = true })
-
   vim.api.nvim_set_keymap("n", "<A-f>", [[ <Cmd>lua require('dapui').float_element()<CR>]], { noremap = true })
 
   vim.api.nvim_set_keymap('n', '<A-BS>', '<Cmd>lua require("dapui").close(); require("dap").terminate()<CR><Cmd>DapVirtualTextForceRefresh<CR>', { noremap = true })
   vim.api.nvim_set_keymap('i', '<A-BS>', '<Cmd>lua require("dapui").close(); require("dap").terminate()<CR><Cmd>DapVirtualTextForceRefresh<CR>', { noremap = true })
   vim.api.nvim_set_keymap('v', '<A-BS>', '<Cmd>lua require("dapui").close(); require("dap").terminate()<CR><Cmd>DapVirtualTextForceRefresh<CR>', { noremap = true })
 
-  vim.keymap.set({ '', 'i' }, '<leader>cs', '<Cmd>CMakeSelectBuildTarget<CR>', { noremap = true, desc = 'Select CMake target' })
-  vim.keymap.set({ '', 'i' }, '<leader>ct', '<Cmd>CMakeSelectBuildType<CR>', { noremap = true, desc = 'Select CMake build type' })
-  vim.keymap.set({ '', 'i' }, '<leader>cr', '<Cmd>CMakeRun<CR>', { noremap = true, desc = 'Run CMake target' })
-  vim.keymap.set({ '', 'i' }, '<leader>cd', '<Cmd>CMakeDebug<CR>', { noremap = true, desc = 'Debug CMake target' })
-  vim.keymap.set({ '', 'i' }, '<leader>cb', '<Cmd>CMakeBuild<CR>', { noremap = true, desc = 'Build CMake target' })
-
-  vim.keymap.set({ '', 'i' }, '<leader>cg', '<Cmd>CMakeGenerator<CR>', { noremap = true, desc = 'Run CMake configure task' })
-  vim.keymap.set({ '', 'i' }, '<A-F9>', '<Cmd>CMakeClean<CR>', { noremap = true, desc = 'Run CMake clean task' })
+  vim.keymap.set("n", "<A-/>", function() dapui.eval(nil, { enter = true }) end)
 
   dap.listeners.before.attach.dapui_config = function()
     dapui.open()
