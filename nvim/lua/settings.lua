@@ -33,7 +33,7 @@ vim.o.undofile                  = true
 -- vim.o.undodir                   = '~/.undodir
 vim.o.compatible                = false
 vim.wo.relativenumber           = true
-vim.wo.cursorline               = true
+vim.o.cursorline               = true
 vim.o.incsearch                 = true
 vim.o.backspace                 = 'indent,eol,start'
 vim.o.termguicolors             = true
@@ -74,7 +74,6 @@ end
 
 vim.cmd('filetype plugin indent on') --- " Enables plugin & indent
 vim.cmd([[
-  set nocursorline
   set nocursorcolumn
   syntax sync minlines=200
   syntax sync maxlines=500

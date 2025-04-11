@@ -8,26 +8,37 @@ function M.config()
   dap.set_log_level('INFO') -- Helps when configuring DAP, see logs with :DapShowLog
   dapui.setup({
     mappings = {
-      expand = "<Tab>",
+      expand = { "<Tab>", "<CR>", "<2-LeftMouse>" },
+      open = {"o", "<CR>"},
     },
     layouts = {
       {
         elements = { {
             id = "watches",
-            size = 0.2
+            size = 0.1
           }, {
             id = "breakpoints",
-            size = 0.2
+            size = 0.1
           }, {
             id = "stacks",
-            size = 0.3
+            size = 0.4
           }, {
             id = "scopes",
-            size = 0.3
+            size = 0.4
           } },
         position = "left",
         size = 40
-      }
+      }, {
+        elements = { {
+            id = "repl",
+            size = 0.5
+          }, {
+            id = "console",
+            size = 0.5
+          } },
+        position = "bottom",
+        size = 10
+      },
     },
   })
   dap_virtual_text.setup()
@@ -99,12 +110,12 @@ function M.config()
     { nargs = '+', complete = 'file', desc = 'Run command in Codelldb' }
   )
 
-  vim.fn.sign_define('DapBreakpoint', { text = '', texthl = 'DiagnosticError' })
-  vim.fn.sign_define('DapLogPoint', { text = '', texthl = 'DiagnosticInfo' })
-  vim.fn.sign_define('DapStopped', { text = '', texthl = 'Constant' })
-  vim.fn.sign_define('DapBreakpointRejected', { text = '' })
+  vim.fn.sign_define('DapBreakpoint',          { text='•', texthl='red', linehl='DapBreakpoint', numhl='DapBreakpoint' })
+  vim.fn.sign_define('DapStopped',             { text='', texthl='green', numhl='green' })
 
   vim.api.nvim_set_keymap('n', '<A-b>', '<Cmd>lua require("dap").toggle_breakpoint()<CR>', { noremap = true })
+  vim.api.nvim_set_keymap('i', '<A-b>', '<Cmd>lua require("dap").toggle_breakpoint()<CR>', { noremap = true })
+  vim.api.nvim_set_keymap('v', '<A-b>', '<Cmd>lua require("dap").toggle_breakpoint()<CR>', { noremap = true })
 
   vim.api.nvim_set_keymap('n', '<A-o>', '<Cmd>lua require("dap").step_over()<CR>', { noremap = true })
   vim.api.nvim_set_keymap('i', '<A-o>', '<Cmd>lua require("dap").step_over()<CR>', { noremap = true })
@@ -121,6 +132,14 @@ function M.config()
   vim.api.nvim_set_keymap('n', '<A-c>', '<Cmd>lua require("dap").continue()<CR>', { noremap = true })
   vim.api.nvim_set_keymap('i', '<A-c>', '<Cmd>lua require("dap").continue()<CR>', { noremap = true })
   vim.api.nvim_set_keymap('v', '<A-c>', '<Cmd>lua require("dap").continue()<CR>', { noremap = true })
+
+  vim.api.nvim_set_keymap('n', '<A-t>', '<Cmd>lua require("dap").terminate()<CR>', { noremap = true })
+  vim.api.nvim_set_keymap('i', '<A-t>', '<Cmd>lua require("dap").terminate()<CR>', { noremap = true })
+  vim.api.nvim_set_keymap('v', '<A-t>', '<Cmd>lua require("dap").terminate()<CR>', { noremap = true })
+
+  vim.api.nvim_set_keymap('n', '<A-r>', '<Cmd>lua require("dap").restart()<CR>', { noremap = true })
+  vim.api.nvim_set_keymap('i', '<A-r>', '<Cmd>lua require("dap").restart()<CR>', { noremap = true })
+  vim.api.nvim_set_keymap('v', '<A-r>', '<Cmd>lua require("dap").restart()<CR>', { noremap = true })
 
   vim.api.nvim_set_keymap('n', '<A-d>', '<Cmd>lua require("dapui").toggle()<CR>', { noremap = true })
   vim.api.nvim_set_keymap('i', '<A-d>', '<Cmd>lua require("dapui").toggle()<CR>', { noremap = true })
@@ -139,9 +158,13 @@ function M.config()
   vim.keymap.set("n", "<A-/>", function() dapui.eval(nil, { enter = true }) end)
 
   dap.listeners.before.attach.dapui_config = function()
+    vim.cmd([[Neotree close]])
+    dapui.close()
     dapui.open()
   end
   dap.listeners.before.launch.dapui_config = function()
+    vim.cmd([[Neotree close]])
+    dapui.close()
     dapui.open()
   end
   -- dap.listeners.before.event_terminated.dapui_config = function()

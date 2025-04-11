@@ -104,6 +104,7 @@ utils.map("v", "K", [[:m '<-2<CR>gv=gv]])
 -- Tree
 utils.map('n', '<C-n>', ':Neotree toggle<CR>', { noremap = true, silent = true })
 utils.map('n', '\\', ':Neotree reveal<CR>', { noremap = true, silent = true })
+utils.map('n', '<C-b>', ':Neotree float buffers<CR>', { noremap = true, silent = true })
 
 -- folding
 utils.map('n', 'Tab', ':AerialTreeToggle<CR>', { noremap = true, silent = true })

@@ -5,8 +5,9 @@ themes.switchColorScheme('gruvbox-material-dark-lua')
 vim.cmd([[
   hi LineNr guibg=NONE
   hi SignColumn guibg=NONE
-  hi VertSplit guibg=NONE
+  hi VertSplit guibg=#282c34
   hi EndOfBuffer guifg=#282c34
+  hi CursorLineNr guifg=#EBA217
 
   hi GitSignsAdd guifg = #98c379 guibg = none
   hi GitSignsChange guifg = #fabd2f guibg = none
