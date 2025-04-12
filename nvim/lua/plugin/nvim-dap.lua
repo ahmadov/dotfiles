@@ -62,7 +62,7 @@ function M.config()
     type = 'server',
     port = "${port}",
     executable = {
-      command = '/Users/ahmadov/.local/share/nvim/mason/bin/codelldb',
+      command = vim.fn.expand('~/.local/share/nvim/mason/bin/codelldb'),
       args = {"--port", "${port}"},
     },
     name = 'codelldb'
