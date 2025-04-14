@@ -2,7 +2,9 @@ local M = {}
 
 function M.config()
   local osys = require("cmake-tools.osys")
-  require('cmake-tools').setup({
+  local cmake = require('cmake-tools')
+
+  cmake.setup({
     cmake_build_directory = function()
       return "build/${variant:buildType}"
     end,
@@ -18,25 +20,29 @@ function M.config()
     cmake_notifications = {
       runner = { enabled = false },
       executor = { enabled = false },
-      spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }, -- icons used for progress display
-      refresh_rate_ms = 100, -- how often to iterate icons
-    },
-    cmake_runner = {
-      opts = {
-        quickfix = {
-          auto_close_when_success = false,
-          position = "bottom",
-        },
-      },
     },
     cmake_executor = {
-      opts = {
-        quickfix = {
-          auto_close_when_success = false,
-          position = "bottom",
+      name = "toggleterm",
+      default_opts = {
+        toggleterm = {
+          direction = "horizontal",
+          close_on_exit = true,
+          auto_scroll = true,
+          focus = false,
         },
-      },
-    }
+      }
+    },
+    cmake_runner = {
+      name = "toggleterm",
+      default_opts = {
+        toggleterm = {
+          direction = "horizontal",
+          close_on_exit = false,
+          auto_scroll = true,
+          focus = false,
+        },
+      }
+    },
   })
 end
 
