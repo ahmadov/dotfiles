@@ -102,10 +102,10 @@ utils.map("v", "K", [[:m '<-2<CR>gv=gv]])
 -- utils.map("x", "<C-/>", [[:'<,'>CommentToggle<CR>]])
 
 -- Tree
-utils.map('n', '<C-n>', ':Neotree toggle left<CR>', { noremap = true, silent = true })
-utils.map('n', '\\', ':Neotree reveal left<CR>', { noremap = true, silent = true })
+utils.map('n', '<C-n>', ':Neotree toggle right<CR>', { noremap = true, silent = true })
+utils.map('n', '\\', ':Neotree reveal right<CR>', { noremap = true, silent = true })
 utils.map('n', '<C-b>', ':Neotree buffers float<CR>', { noremap = true, silent = true })
-utils.map('n', '<leader>f',  "<cmd>Neotree float<CR>")
+utils.map('n', '<leader>f', ':Neotree toggle float<CR>', { noremap = true, silent = true })
 
 -- folding
 utils.map('n', 'Tab', ':AerialTreeToggle<CR>', { noremap = true, silent = true })
@@ -139,8 +139,8 @@ utils.map('n', 'gD', '<Cmd>Lspsaga peek_definition<CR>')
 utils.map('i', '<F2>', "<cmd>Lspsaga rename<CR>")
 utils.map('n', '<leader>rn', "<cmd>Lspsaga rename<CR>")
 utils.map('v', '<leader>rn', "<cmd>Lspsaga rename<CR>")
-utils.map('n', '<leader>a', "<cmd>Lspsaga code_action<CR>", { silent = true })
-utils.map('v', '<leader>a', "<cmd><C-U>Lspsaga range_code_action<CR>", { silent = true })
+-- utils.map('n', '<leader>a', "<cmd>Lspsaga code_action<CR>", { silent = true })
+-- utils.map('v', '<leader>a', "<cmd><C-U>Lspsaga range_code_action<CR>", { silent = true })
 vim.keymap.set({"i"}, "<C-K>", function() luasnip.expand() end, {silent = true})
 vim.keymap.set({"n", "s"}, "<Tab>", function() luasnip.jump( 1) end, {silent = true})
 vim.keymap.set({"n", "s"}, "<S-Tab>", function() luasnip.jump(-1) end, {silent = true})
@@ -176,6 +176,8 @@ utils.map("n", "<Leader>s", [[<Cmd>lua require('telescope.builtin').current_buff
 
 utils.map('n', '<A-n>', [[<cmd>lua require('illuminate').next_reference{wrap=true}<cr>]])
 utils.map('n', '<A-p>', [[<cmd>lua require('illuminate').next_reference{reverse=true,wrap=true}<cr>]])
+
+vim.keymap.set({ 'i', 'n', 'v' }, '<A-z>', [[<cmd>lua require('utils').toggle_zoom()<CR>]], { noremap = true })
 
 vim.cmd([[
 

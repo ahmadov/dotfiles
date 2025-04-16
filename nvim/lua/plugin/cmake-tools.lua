@@ -26,7 +26,7 @@ function M.config()
       default_opts = {
         toggleterm = {
           direction = "horizontal",
-          close_on_exit = true,
+          close_on_exit = false,
           auto_scroll = true,
           focus = false,
         },

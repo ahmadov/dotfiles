@@ -7,7 +7,7 @@ set CH_RELEASE_PATH $CH_REPO_PATH/build/Release
 
 set CH_COMMON "-DENABLE_BUILD_PATH_MAPPING=0 -DENABLE_TESTS=0"
 
-set CH_SLIM_ARGS "-DENABLE_LIBRARIES=0 -DENABLE_LIBURING=0"
+set CH_SLIM_ARGS "-DENABLE_LIBRARIES=0 -DENABLE_LIBURING=0 -DENABLE_CPPJIEBA=1 -DENABLE_AWS_S3=1"
 set CH_FAT_ARGS "-DENABLE_LIBRARIES=1"
 
 set CH_DEBUG_ARGS "-DCMAKE_BUILD_TYPE=Debug -DDEBUG_O_LEVEL=0"
@@ -45,21 +45,21 @@ function makerf -d "Make ClickHouse (fat) in release mode"
   popd
 end
 
-function cpld -d "Compile ClickHouse in debug mode"
+function cpl -d "Compile ClickHouse in debug mode"
   mkdir -p $CH_DEBUG_PATH
   pushd $CH_DEBUG_PATH
-  ninja clickhouse-server clickhouse-client
+  ninja
   popd
 end
 
 function cplr -d "Compile ClickHouse in release mode"
   mkdir -p $CH_RELEASE_PATH
   pushd $CH_RELEASE_PATH
-  ninja clickhouse-server clickhouse-client
+  ninja
   popd
 end
 
-function runds -d "Start ClickHouse server in debug mode"
+function runs -d "Start ClickHouse server in debug mode"
   pushd $CH_REPO_PATH
   $CH_DEBUG_PATH/programs/clickhouse-server
   popd
@@ -71,7 +71,7 @@ function runrs -d "Start ClickHouse server in release mode"
   popd
 end
 
-function rundc -d "Start ClickHouse client in debug mode"
+function runc -d "Start ClickHouse client in debug mode"
   pushd $CH_REPO_PATH
   $CH_DEBUG_PATH/programs/clickhouse-client
   popd

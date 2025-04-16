@@ -113,4 +113,23 @@ function M.get_git_dir(path)
   return  path .. '/' .. git_dir
 end
 
+local function zoom_in()
+  vim.cmd([[tab split]])
+  vim.api.nvim_tabpage_set_var(0, "zoomed", "true")
+end
+
+local function zoom_out()
+  vim.cmd([[mkview]])
+  vim.cmd([[tab close]])
+  vim.cmd([[loadview]])
+end
+
+function M.toggle_zoom()
+    if not vim.t["zoomed"] then
+        zoom_in()
+    else
+        zoom_out()
+    end
+end
+
 return M

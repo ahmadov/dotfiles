@@ -13,29 +13,34 @@ function M.config()
     },
     layouts = {
       {
-        elements = { {
-            id = "watches",
-            size = 0.1
-          }, {
+        elements = {
+          {
             id = "breakpoints",
             size = 0.1
-          }, {
+          },
+          {
             id = "stacks",
-            size = 0.4
-          }, {
+            size = 0.3
+          },
+          {
             id = "scopes",
-            size = 0.4
-          } },
+            size = 0.6
+          }
+        },
         position = "left",
         size = 40
-      }, {
-        elements = { {
+      },
+      {
+        elements = {
+          {
             id = "repl",
-            size = 0.5
-          }, {
+            size = 0.3
+          },
+          {
             id = "console",
-            size = 0.5
-          } },
+            size = 0.7
+          }
+        },
         position = "bottom",
         size = 10
       },

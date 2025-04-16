@@ -22,26 +22,17 @@ function on_attach(client, bufnr)
   utils.map('n', 'gd', "<Cmd>lua require('telescope.builtin').lsp_definitions()<CR>", opts)
   utils.map('n', 'gr', "<cmd>lua require('telescope.builtin').lsp_references()<CR>", opts)
   utils.map('n', 'gi', "<cmd>lua require('telescope.builtin').lsp_implementations()<CR>", opts)
-  -- utils.map('n', '<leader>a', "<cmd>lua require('telescope.builtin').lsp_code_actions()<CR>", opts)
-  -- utils.map('v', '<leader>a', ":<C-U>lua require('telescope.builtin').lsp_range_code_actions()<CR>", opts)
   -- utils.map('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
   utils.map('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  utils.map('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  utils.map('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  utils.map('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
   utils.map('n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  -- utils.map('n', '<space>rn', '<cmd>lua require("renamer").rename()<CR>', opts)
-  -- utils.map('v', '<space>rn', '<cmd>lua require("renamer").rename()<CR>', opts)
-  -- utils.map('i', '<F2>', '<cmd>lua require("renamer").rename()<CR>', opts)
-  -- utils.map('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts) -- until renamer.nvim fixes the issue
-  -- utils.map('v', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts) -- until renamer.nvim fixes the issue
+  -- utils.map('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts) -- until renamer.nvim fixes the issue
+  -- utils.map('v', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts) -- until renamer.nvim fixes the issue
   -- utils.map('i', '<F2>', '<cmd>lua vim.lsp.buf.rename()<CR>', opts) -- until renamer.nvim fixes the issue
-  utils.map('n', '<space>L', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+  utils.map('n', '<leader>L', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
   utils.map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
   utils.map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-  utils.map('n', '<space>q', '<cmd>lua vim.diagnostic.set_loclist()<CR>', opts)
-  -- utils.map('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  -- utils.map('x', '<space>a', '<cmd>lua vim.lsp.buf.range_code_action()<CR>', opts)
+  utils.map('n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  utils.map('x', '<leader>a', '<cmd>lua vim.lsp.buf.range_code_action()<CR>', opts)
 
   -- lspsaga
   -- utils.map('n', '<C-k>',  "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>", opts)
@@ -85,12 +76,8 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 
 vim.diagnostic.config({
   virtual_text = false, -- Turn off inline diagnostics
-  -- underline = false,
+  underline = false,
 })
-
--- vim.cmd('autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()')
--- vim.cmd('autocmd CursorHold * lua vim.diagnostic.show()')
-vim.cmd('autocmd CursorHold * lua vim.diagnostic.open_float()')
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
