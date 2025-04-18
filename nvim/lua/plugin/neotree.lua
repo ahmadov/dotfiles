@@ -43,6 +43,7 @@ function M.config()
         ['h'] = 'close_node',
         ['l'] = 'open',
         ['o'] = 'open',
+        ['<Tab>'] = 'open',
         ['r'] = 'rename',
         ['/'] = 'fuzzy_finder',
         ['Y'] = 'copy_file_name',

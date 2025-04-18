@@ -102,9 +102,10 @@ utils.map("v", "K", [[:m '<-2<CR>gv=gv]])
 -- utils.map("x", "<C-/>", [[:'<,'>CommentToggle<CR>]])
 
 -- Tree
-utils.map('n', '<C-n>', ':Neotree toggle<CR>', { noremap = true, silent = true })
-utils.map('n', '\\', ':Neotree reveal<CR>', { noremap = true, silent = true })
-utils.map('n', '<C-b>', ':Neotree float buffers<CR>', { noremap = true, silent = true })
+utils.map('n', '<C-n>', ':Neotree toggle left<CR>', { noremap = true, silent = true })
+utils.map('n', '\\', ':Neotree reveal left<CR>', { noremap = true, silent = true })
+utils.map('n', '<C-b>', ':Neotree buffers float<CR>', { noremap = true, silent = true })
+utils.map('n', '<leader>f',  "<cmd>Neotree float<CR>")
 
 -- folding
 utils.map('n', 'Tab', ':AerialTreeToggle<CR>', { noremap = true, silent = true })
@@ -133,9 +134,8 @@ vim.api.nvim_set_keymap('v', '<A-s>', '<Cmd>ClangdSwitchSourceHeader<CR>', { nor
 utils.map('n', 'gh', '<Cmd>ClangdSwitchSourceHeader<CR>')
 
 -- LSP
-utils.map('n', '<leader>f',  "<cmd>Lspsaga lsp_finder<CR>")
 utils.map('n', 'K',  "<cmd>Lspsaga hover_doc<CR>")
-utils.map('n', 'gD', '<Cmd>Lspsaga peek_definition<CR>', opts)
+utils.map('n', 'gD', '<Cmd>Lspsaga peek_definition<CR>')
 utils.map('i', '<F2>', "<cmd>Lspsaga rename<CR>")
 utils.map('n', '<leader>rn', "<cmd>Lspsaga rename<CR>")
 utils.map('v', '<leader>rn', "<cmd>Lspsaga rename<CR>")
@@ -166,8 +166,8 @@ utils.map('n', '<leader>ql', [[<cmd>lua require('persistence').load()<CR>]])
 utils.map("n", "<Leader>gb", [[<Cmd>lua require('telescope.builtin').git_branches()<CR>]])
 utils.map("n", "<Leader>b", [[<Cmd>lua require('telescope.builtin').buffers()<CR>]])
 utils.map("n", "<Leader>e", [[<Cmd>lua require('telescope.builtin').oldfiles()<CR>]])
-utils.map("n", "<C-p>", [[<Cmd>lua require('utils').telescope_find_files()<CR>]])
--- utils.map("n", "<C-P>", [[<Cmd>lua require('telescope.builtin').find_files()<CR>]])
+-- utils.map("n", "<C-p>", [[<Cmd>lua require('utils').telescope_find_files()<CR>]])
+utils.map("n", "<C-p>", [[<Cmd>lua require('telescope.builtin').find_files()<CR>]])
 utils.map("n", "<C-g>", [[<Cmd>lua require('telescope.builtin').git_status()<CR>]])
 utils.map("n", "<leader>gc", [[<Cmd>lua require('telescope.builtin').git_commits()<CR>]])
 utils.map("n", "<Leader>fm", [[<Cmd>lua require('telescope').extensions.media_files.media_files()<CR>]])
