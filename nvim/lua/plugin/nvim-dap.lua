@@ -86,6 +86,13 @@ function M.config()
     },
   }
 
+  local function get_pid(executable)
+    local handle = io.popen("pgrep " .. executable)
+    local result = handle:read("*a")
+    handle:close()
+    return result
+  end
+
   vim.api.nvim_create_user_command('Lldb',
     function(command)
       local config = {
@@ -107,6 +114,20 @@ function M.config()
         type = 'codelldb',
         request = 'launch',
         program = command.fargs[1],
+        args = vim.list_slice(command.fargs, 2, vim.tbl_count(command.fargs)),
+        cwd = '${workspaceFolder}',
+      }
+      dap.run(config)
+    end,
+    { nargs = '+', complete = 'file', desc = 'Run command in Codelldb' }
+  )
+  vim.api.nvim_create_user_command('CodelldbAttach',
+    function(command)
+      local config = {
+        name = command.fargs[1],
+        type = 'codelldb',
+        request = 'attach',
+        pid = get_pid(command.fargs[1]),
         args = vim.list_slice(command.fargs, 2, vim.tbl_count(command.fargs)),
         cwd = '${workspaceFolder}',
       }

@@ -119,11 +119,13 @@ utils.map("n", "<leader>do", [[:DiffviewOpen<CR>]])
 utils.map("n", "<leader>,", [[:G ftp push --insecure<CR>]])
 
 -- CMake
-vim.keymap.set({ '', 'i' }, '<leader>cg', '<Cmd>CMakeGenerat<CR>', { noremap = true, desc = 'Run CMake configure task' })
+vim.keymap.set({ '', 'i' }, '<leader>cg', '<Cmd>CMakeGenerate<CR>', { noremap = true, desc = 'Run CMake configure task' })
+vim.keymap.set({ '', 'i' }, '<leader>cc', '<Cmd>CMakeCloseRunner<CR>', { noremap = true, desc = 'Run CMake configure task' })
 vim.keymap.set({ '', 'i' }, '<leader>cx', '<Cmd>CMakeClean<CR>', { noremap = true, desc = 'Run CMake clean task' })
 
-vim.keymap.set({ '', 'i' }, '<leader>cs', '<Cmd>CMakeSelectBuildTarget<CR>', { noremap = true, desc = 'Select CMake target' })
+vim.keymap.set({ '', 'i' }, '<leader>ca', '<Cmd>CMakeSelectBuildTarget<CR>', { noremap = true, desc = 'Select CMake target' })
 vim.keymap.set({ '', 'i' }, '<leader>ct', '<Cmd>CMakeSelectBuildType<CR>', { noremap = true, desc = 'Select CMake build type' })
+vim.keymap.set({ '', 'i' }, '<leader>cs', '<Cmd>CMakeSelectLaunchTarget<CR>', { noremap = true, desc = 'Select CMake target' })
 vim.keymap.set({ '', 'i' }, '<leader>cr', '<Cmd>CMakeRun<CR>', { noremap = true, desc = 'Run CMake target' })
 vim.keymap.set({ '', 'i' }, '<leader>cd', '<Cmd>CMakeDebug<CR>', { noremap = true, desc = 'Debug CMake target' })
 vim.keymap.set({ '', 'i' }, '<leader>cb', '<Cmd>CMakeBuild<CR>', { noremap = true, desc = 'Build CMake target' })
@@ -132,6 +134,9 @@ vim.api.nvim_set_keymap('n', '<A-s>', '<Cmd>ClangdSwitchSourceHeader<CR>', { nor
 vim.api.nvim_set_keymap('i', '<A-s>', '<Cmd>ClangdSwitchSourceHeader<CR>', { noremap = true })
 vim.api.nvim_set_keymap('v', '<A-s>', '<Cmd>ClangdSwitchSourceHeader<CR>', { noremap = true })
 utils.map('n', 'gh', '<Cmd>ClangdSwitchSourceHeader<CR>')
+
+vim.api.nvim_set_keymap('n', '<A-x>', "<cmd>lua require('cpp_actions').select_action()<CR>", { noremap = true, silent = true })
+
 
 -- LSP
 utils.map('n', 'K',  "<cmd>Lspsaga hover_doc<CR>")

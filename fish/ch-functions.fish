@@ -113,3 +113,13 @@ function makecihappy --argument-names 'commit' -d "Make CI happy by marking test
     echo (set_color red) "Commit SHA must be provided." (set_color normal)
   end
 end
+
+function smu -d "Update Git submodules"
+  git submodule sync --recursive
+  git submodule update --init --recursive
+  git submodule foreach git reset --hard
+  git submodule foreach git clean -xfd
+end
+
+alias chs=runs
+alias chc=runc

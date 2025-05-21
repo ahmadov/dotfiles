@@ -16,8 +16,8 @@ function M.config()
         '--column',
         '--smart-case',
         '--max-columns=512',
-        -- '-g !/contrib/',
-        -- '-g !/build/',
+        '--glob',
+        '!**/contrib/*',
       },
       mappings = {
         i = {
@@ -51,7 +51,7 @@ function M.config()
         },
       },
       file_sorter =  require('telescope.sorters').get_fuzzy_file,
-      file_ignore_patterns = { "contrib/.*" },
+      file_ignore_patterns = { "contrib" },
       generic_sorter =  require('telescope.sorters').get_generic_fuzzy_sorter,
       winblend = 0,
       border = {},
@@ -82,7 +82,12 @@ function M.config()
               use_highlighter = false,
           }
       }
-    }
+    },
+    pickers = {
+      find_files = {
+        find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*", "--glob", "!**/contrib/*" },
+      },
+    },
   })
 
   require('telescope').load_extension('dap')

@@ -8,6 +8,7 @@ function M.config()
     cmake_build_directory = function()
       return "build/${variant:buildType}"
     end,
+    cmake_use_preset = true,
     cmake_regenerate_on_save = false,
     cmake_dap_configuration = {
       name = "cpp",
@@ -29,6 +30,7 @@ function M.config()
           close_on_exit = false,
           auto_scroll = true,
           focus = false,
+          singleton = true,
         },
       }
     },
@@ -40,6 +42,7 @@ function M.config()
           close_on_exit = false,
           auto_scroll = true,
           focus = false,
+          singleton = true,
         },
       }
     },
