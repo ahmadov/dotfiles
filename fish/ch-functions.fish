@@ -4,10 +4,9 @@ set CH_REPO_PATH ~/git/ClickHouse
 set CH_DEBUG_PATH $CH_REPO_PATH/build/Debug
 set CH_RELEASE_PATH $CH_REPO_PATH/build/Release
 
-
 set CH_COMMON "-DENABLE_BUILD_PATH_MAPPING=0 -DENABLE_TESTS=0"
 
-set CH_SLIM_ARGS "-DENABLE_LIBRARIES=0 -DENABLE_LIBURING=0 -DENABLE_CPPJIEBA=1 -DENABLE_AWS_S3=1"
+set CH_SLIM_ARGS "-DENABLE_LIBRARIES=0 -DENABLE_LIBURING=0"
 set CH_FAT_ARGS "-DENABLE_LIBRARIES=1"
 
 set CH_DEBUG_ARGS "-DCMAKE_BUILD_TYPE=Debug -DDEBUG_O_LEVEL=0"
@@ -48,14 +47,14 @@ end
 function cpl -d "Compile ClickHouse in debug mode"
   mkdir -p $CH_DEBUG_PATH
   pushd $CH_DEBUG_PATH
-  ninja
+  cmake --build . --parallel --
   popd
 end
 
 function cplr -d "Compile ClickHouse in release mode"
   mkdir -p $CH_RELEASE_PATH
   pushd $CH_RELEASE_PATH
-  ninja
+  cmake --build . --parallel --
   popd
 end
 
@@ -81,6 +80,16 @@ function runrc -d "Start ClickHouse client in release mode"
   pushd $CH_REPO_PATH
   $CH_RELEASE_PATH/programs/clickhouse-client
   popd
+end
+
+function xs -d "Compile and run ClickHouse server in debug mode"
+  cpl
+  runs
+end
+
+function xc -d "Compile and run ClickHouse client in debug mode"
+  cpl
+  runc
 end
 
 function testd --argument-names 'name' -d "Invoke C++ unit test (debug) with the given name"
@@ -112,13 +121,6 @@ function makecihappy --argument-names 'commit' -d "Make CI happy by marking test
   else
     echo (set_color red) "Commit SHA must be provided." (set_color normal)
   end
-end
-
-function smu -d "Update Git submodules"
-  git submodule sync --recursive
-  git submodule update --init --recursive
-  git submodule foreach git reset --hard
-  git submodule foreach git clean -xfd
 end
 
 alias chs=runs
