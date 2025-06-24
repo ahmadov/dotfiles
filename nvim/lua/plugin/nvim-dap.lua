@@ -87,10 +87,15 @@ function M.config()
   }
 
   local function get_pid(executable)
-    local handle = io.popen("pgrep " .. executable)
+    local handle = io.popen("pgrep -f -o " .. executable)
+    if not handle then
+      print("Cannot find running process: " .. executable)
+      return -1
+    end
     local result = handle:read("*a")
     handle:close()
-    return result
+    print(result)
+    return 1 * result
   end
 
   vim.api.nvim_create_user_command('Lldb',
@@ -123,17 +128,34 @@ function M.config()
   )
   vim.api.nvim_create_user_command('CodelldbAttach',
     function(command)
+      pid = get_pid(command.fargs[1]);
+      if pid > -1 then
+        local config = {
+          name = command.fargs[1],
+          type = 'codelldb',
+          request = 'attach',
+          pid = pid,
+          args = vim.list_slice(command.fargs, 2, vim.tbl_count(command.fargs)),
+          cwd = '${workspaceFolder}',
+        }
+        dap.run(config)
+      end
+    end,
+    { nargs = '+', complete = 'file', desc = 'Attach to the running process in Codelldb' }
+  )
+  vim.api.nvim_create_user_command('CodelldbAttachPid',
+    function(command)
       local config = {
         name = command.fargs[1],
         type = 'codelldb',
         request = 'attach',
-        pid = get_pid(command.fargs[1]),
+        pid = command.fargs[1],
         args = vim.list_slice(command.fargs, 2, vim.tbl_count(command.fargs)),
         cwd = '${workspaceFolder}',
       }
       dap.run(config)
     end,
-    { nargs = '+', complete = 'file', desc = 'Run command in Codelldb' }
+    { nargs = '+', complete = 'file', desc = 'Attach to the running process via pid in Codelldb' }
   )
 
   vim.fn.sign_define('DapBreakpoint',          { text='•', texthl='red', linehl='DapBreakpoint', numhl='DapBreakpoint' })
