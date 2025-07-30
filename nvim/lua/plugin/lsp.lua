@@ -1,9 +1,9 @@
-local lspconfig = require('lspconfig')
 local mason_lspconfig = require('mason-lspconfig')
-local configs = require('lspconfig.configs')
 local aerial = require('aerial')
 local utils = require('utils')
-local nvim_cmp = require('cmp_nvim_lsp');
+-- local nvim_cmp = require('cmp_nvim_lsp');
+local blink = require('blink.cmp');
+
 
 function on_attach(client, bufnr)
   client.server_capabilities.semanticTokensProvider = nil
@@ -58,11 +58,13 @@ function on_attach(client, bufnr)
   -- utils.map('n', ']d', "<cmd>lua require('lspsaga.diagnostic').lsp_jump_diagnostic_next()<CR>", opts)
   
   -- Inlay hints
-  vim.lsp.inlay_hint.enable()
+  vim.lsp.inlay_hint.enable(false)
   utils.map('n', '<leader>i', '<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({0}),{0})<CR>', opts)
 end
 
-local capabilities = nvim_cmp.default_capabilities(capabilities)
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- local capabilities = nvim_cmp.default_capabilities(capabilities)
+capabilities = vim.tbl_deep_extend('force', capabilities, blink.get_lsp_capabilities({}, false))
 
 capabilities.textDocument.semanticHighlighting = true
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -94,17 +96,7 @@ M.on_attach = on_attach
 M.capabilities = capabilities
 
 function M.config()
-  local servers = {'clangd', 'cmake', 'rust_analyzer'}
-
-  mason_lspconfig.setup({ ensure_installed = servers })
-  mason_lspconfig.setup_handlers({
-    function(server_name)
-      lspconfig[server_name].setup({
-        capabilities = capabilities,
-        on_attach = on_attach,
-      })
-    end,
-  })
+  mason_lspconfig.setup({ ensure_installed = {'clangd', 'cmake', 'rust_analyzer'} })
 
   require('lsp.clangd');
   require('lsp.intelephense');

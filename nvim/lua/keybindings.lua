@@ -1,5 +1,5 @@
 local utils = require('utils')
-local luasnip = require('luasnip')
+-- local luasnip = require('luasnip')
 
 -- keybind list
 utils.map("", "<leader>c", '"+y')
@@ -146,9 +146,9 @@ utils.map('n', '<leader>rn', "<cmd>Lspsaga rename<CR>")
 utils.map('v', '<leader>rn', "<cmd>Lspsaga rename<CR>")
 -- utils.map('n', '<leader>a', "<cmd>Lspsaga code_action<CR>", { silent = true })
 -- utils.map('v', '<leader>a', "<cmd><C-U>Lspsaga range_code_action<CR>", { silent = true })
-vim.keymap.set({"i"}, "<C-K>", function() luasnip.expand() end, {silent = true})
-vim.keymap.set({"n", "s"}, "<Tab>", function() luasnip.jump( 1) end, {silent = true})
-vim.keymap.set({"n", "s"}, "<S-Tab>", function() luasnip.jump(-1) end, {silent = true})
+-- vim.keymap.set({"i"}, "<C-K>", function() luasnip.expand() end, {silent = true})
+-- vim.keymap.set({"n", "s"}, "<Tab>", function() luasnip.jump( 1) end, {silent = true})
+-- vim.keymap.set({"n", "s"}, "<S-Tab>", function() luasnip.jump(-1) end, {silent = true})
 
 -- String operations
 utils.map("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>]])

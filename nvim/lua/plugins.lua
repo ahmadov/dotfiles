@@ -9,30 +9,17 @@ return {
       { 'j-hui/fidget.nvim', opts = {} },
       { 'folke/neodev.nvim', opts = { library = { plugins = { "nvim-dap-ui" }, types = true } } },
       { 'https://git.sr.ht/~p00f/clangd_extensions.nvim' },
+      { 'saghen/blink.cmp' },
     }
   },
   {
-    'hrsh7th/nvim-cmp',
-    config = function() require('plugin.nvim-cmp').config() end,
+    'saghen/blink.cmp',
+    version = '1.*',
+    config = function() require('plugin.blink').config() end,
     dependencies = {
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-cmdline',
-      'hrsh7th/cmp-nvim-lsp-signature-help',
-      {
-        'L3MON4D3/LuaSnip',
-        version = 'v2.*',
-        build = "make install_jsregexp",
-        dependencies = 'saadparwaiz1/cmp_luasnip'
-      },
-      {
-        'https://git.sr.ht/~p00f/clangd_extensions.nvim',
-        -- config = function()
-        --   require("clangd_extensions").setup({})
-        -- end
-      },
-    }
+      'rafamadriz/friendly-snippets',
+      'https://git.sr.ht/~p00f/clangd_extensions.nvim',
+    },
   },
   {
     'https://git.sr.ht/~p00f/clangd_extensions.nvim',

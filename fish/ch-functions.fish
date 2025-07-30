@@ -1,5 +1,6 @@
 #!/bin/fish
 
+set CH_EXTRA_ARGS 
 switch (uname)
 case Darwin
   set CH_CC_COMPILER -DCMAKE_C_COMPILER=/opt/homebrew/opt/llvm/bin/clang-19
@@ -9,10 +10,19 @@ case Linux
   set CH_CXX_COMPILER -DCMAKE_CXX_COMPILER=/usr/lib/ccache/clang++-19
 end
 
+function ncores
+  if command -q nproc
+    echo (nproc --all)
+  else if command -q sysctl
+    echo (sysctl -n hw.ncpu)
+  else
+    echo (grep -c '^processor' /proc/cpuinfo 2>/dev/null || echo 16)
+  end
+end
+
 set CH_REPO_PATH ~/git/ClickHouse
 
-set CH_EXTRA_ARGS 
-set CH_COMMON_ARGS -DENABLE_BUILD_PATH_MAPPING=0 -DENABLE_TESTS=0 
+set CH_COMMON_ARGS -DENABLE_BUILD_PATH_MAPPING=0 -DENABLE_TESTS=0 -DENABLE_THINLTO=0 -DPARALLEL_COMPILE_JOBS=(ncores) -DPARALLEL_LINK_JOBS=(ncores)
 
 set CH_SLIM_ARGS -DENABLE_LIBRARIES=0 -DENABLE_LIBURING=0
 set CH_FAT_ARGS -DENABLE_LIBRARIES=1
@@ -107,10 +117,14 @@ function runrc -d "Start ClickHouse client in release mode"
   popd
 end
 
-function testd --argument-names 'name' -d "Invoke C++ unit test (debug) with the given name"
+function testd --argument-names 'name' --argument-names 'runs' -d "Invoke C++ unit test (debug) with the given name"
   if test -n "$name" 
     pushd $CH_REPO_PATH
-    PATH=(debugPath)/programs:$PATH ./tests/clickhouse-test $name
+    if test -n "$runs" 
+      PATH=(debugPath)/programs:$PATH ./tests/clickhouse-test --test-runs $runs $name
+    else
+      PATH=(debugPath)/programs:$PATH ./tests/clickhouse-test $name
+    end
     popd
   else 
     echo (set_color red) "Error: unit test name must be provided." (set_color normal)
