@@ -3,11 +3,11 @@
 set CH_EXTRA_ARGS 
 switch (uname)
 case Darwin
-  set CH_CC_COMPILER -DCMAKE_C_COMPILER=/opt/homebrew/opt/llvm/bin/clang-19
-  set CH_CXX_COMPILER -DCMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++-19
+  set CH_CC_COMPILER -DCMAKE_C_COMPILER=/opt/homebrew/opt/llvm@21/bin/clang
+  set CH_CXX_COMPILER -DCMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm@21/bin/clang++
 case Linux
-  set CH_CC_COMPILER -DCMAKE_C_COMPILER=/usr/lib/ccache/clang-19
-  set CH_CXX_COMPILER -DCMAKE_CXX_COMPILER=/usr/lib/ccache/clang++-19
+  set CH_CC_COMPILER -DCMAKE_C_COMPILER=/usr/lib/ccache/clang-21
+  set CH_CXX_COMPILER -DCMAKE_CXX_COMPILER=/usr/lib/ccache/clang++-21
 end
 
 function ncores
@@ -131,10 +131,14 @@ function testd --argument-names 'name' --argument-names 'runs' -d "Invoke C++ un
   end
 end
 
-function testr --argument-names 'name' -d "Invoke C++ unit test (release) with the given name"
+function testr --argument-names 'name' --argument-names 'runs' -d "Invoke C++ unit test (release) with the given name"
   if test -n "$name" 
     pushd $CH_REPO_PATH
-    PATH=(releasePath)/programs:$PATH ./tests/clickhouse-test $name
+    if test -n "$runs" 
+      PATH=(releasePath)/programs:$PATH ./tests/clickhouse-test --test-runs $runs $name
+    else
+      PATH=(releasePath)/programs:$PATH ./tests/clickhouse-test $name
+    end
     popd
   else 
     echo (set_color red) "Error: unit test name must be provided." (set_color normal)
