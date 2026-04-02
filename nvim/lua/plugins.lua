@@ -17,7 +17,7 @@ return {
     version = '1.*',
     config = function() require('plugin.blink').config() end,
     dependencies = {
-      'rafamadriz/friendly-snippets',
+      -- 'rafamadriz/friendly-snippets',
       'https://git.sr.ht/~p00f/clangd_extensions.nvim',
     },
   },
@@ -162,10 +162,10 @@ return {
     'numToStr/Comment.nvim',
     config = function() require('plugin.Comment').config() end,
   },
-  {
-    'lukas-reineke/indent-blankline.nvim',
-    config = function() require('plugin.indent-blankline').config() end,
-  },
+  -- {
+  --   'lukas-reineke/indent-blankline.nvim',
+  --   config = function() require('plugin.indent-blankline').config() end,
+  -- },
   {
     'sbdchd/neoformat',
     config = function() require('plugin.neoformat').config() end,

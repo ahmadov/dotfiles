@@ -6,8 +6,6 @@ local blink = require('blink.cmp');
 
 
 function on_attach(client, bufnr)
-  client.server_capabilities.semanticTokensProvider = nil
-
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   -- aerial.on_attach(_, bufnr);
   require('illuminate').on_attach(client)

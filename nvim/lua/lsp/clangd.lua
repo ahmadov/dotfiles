@@ -4,7 +4,7 @@ local lsp_status = require('lsp-status')
 
 lspconfig.clangd.setup({
     cmd = {
-      'clangd',
+      vim.fn.expand('~/.local/share/nvim/mason/bin/clangd'),
       '--clang-tidy',
       '--background-index',
       '--suggest-missing-includes',
@@ -16,7 +16,7 @@ lspconfig.clangd.setup({
     on_attach = lsp.on_attach,
     capabilities = lsp.capabilities,
     handlers = lsp_status.extensions.clangd.setup(),
-    root_dir = lspconfig.util.root_pattern('.clangd', '.clang-tidy', '.clang-format', 'Makefile', 'compile_commands.json', 'compile_flags.txt', 'configure.ac', '.git'),
+    root_dir = lspconfig.util.root_pattern('.clangd', '.clang-tidy', '.clang-format', 'CMakeLists.txt', 'Makefile', 'compile_commands.json', 'compile_flags.txt', 'configure.ac', '.git'),
     filetypes = {'c', 'cpp', 'cc', 'objc', 'objcpp'},
     single_file_support = true,
     init_options = {
