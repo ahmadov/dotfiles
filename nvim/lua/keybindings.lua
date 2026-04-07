@@ -171,6 +171,7 @@ utils.map("n", "<C-g>", [[<Cmd>lua require('telescope.builtin').git_status()<CR>
 utils.map("n", "<leader>gc", [[<Cmd>lua require('telescope.builtin').git_commits()<CR>]])
 utils.map("n", "<Leader>fm", [[<Cmd>lua require('telescope').extensions.media_files.media_files()<CR>]])
 utils.map("n", "<Leader>t", [[<Cmd>lua require('telescope.builtin').live_grep()<CR>]])
+utils.map("n", "<Leader>tr", [[<Cmd>lua require('telescope.builtin').resume()<CR>]])
 utils.map("n", "<Leader>s", [[<Cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]])
 
 utils.map('n', '<A-n>', [[<cmd>lua require('illuminate').next_reference{wrap=true}<cr>]])
