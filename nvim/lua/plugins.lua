@@ -172,10 +172,6 @@ return {
     'sbdchd/neoformat',
     config = function() require('plugin.neoformat').config() end,
   },
-  -- {
-  --   'Shatur/neovim-tasks',
-  --   config = function() require('plugin.neovim-tasks').config() end,
-  -- },
   {
     'Civitasv/cmake-tools.nvim',
     config = function() require('plugin.cmake-tools').config() end,
@@ -184,16 +180,6 @@ return {
     'tversteeg/registers.nvim',
     branch = 'main'
   },
-  -- {'sumneko/lua-language-server'},
-  -- {
-  --   'ms-jpq/coq_nvim',
-  --   branch = 'coq',
-  --   config = function() require('plugin.coq').config() end,
-  -- }
-  -- {
-  --   'ms-jpq/coq.artifacts',
-  --   branch = 'artifacts'
-  -- }
   {
     'onsails/lspkind-nvim',
     config = function() require('plugin.lspkind').config() end,
@@ -204,11 +190,10 @@ return {
   },
   {'alvan/vim-closetag'},
   {'tweekmonster/startuptime.vim'},
-  -- Try again
-  -- {
-  --   'ray-x/lsp_signature.nvim',
-  --   config = function() require('plugin.lsp_signature').config() end,()
-  -- } 
+  {
+    'ray-x/lsp_signature.nvim',
+    config = function() require('plugin.lsp_signature').config() end,
+  },
   {'MunifTanjim/nui.nvim'},
   {
     'stevearc/aerial.nvim',
