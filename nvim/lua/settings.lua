@@ -1,6 +1,7 @@
 vim.o.autoread                  = true
 vim.wo.number                   = true
 vim.o.relativenumber            = true
+vim.o.viewoptions               = 'cursor,folds'
 vim.o.encoding                  = 'utf-8'
 vim.o.fileencoding              = 'utf-8'
 vim.o.splitright                = true
@@ -28,11 +29,9 @@ vim.o.softtabstop               = 2
 vim.bo.softtabstop              = 2
 vim.o.autoindent                = true
 vim.o.errorbells                = false
-vim.wo.number                   = true
 vim.o.undofile                  = true
 -- vim.o.undodir                   = '~/.undodir
 vim.o.compatible                = false
-vim.wo.relativenumber           = true
 vim.o.cursorline               = true
 vim.o.incsearch                 = true
 vim.o.backspace                 = 'indent,eol,start'
@@ -41,6 +40,7 @@ vim.o.termsync                  = false
 vim.o.cmdheight                 = 2
 vim.o.ttyfast                   = true
 vim.o.wrap                      = false
+vim.o.splitkeep                 = 'screen'
 vim.o.linebreak                 = true
 vim.o.numberwidth               = 2
 vim.g.mapleader                 = ' ';
@@ -73,19 +73,21 @@ else
 end
 
 vim.cmd('filetype plugin indent on') --- " Enables plugin & indent
+
+-- Restore cursor position on file open (replaces remember.nvim)
+vim.api.nvim_create_autocmd('BufReadPost', {
+  callback = function()
+    local mark = vim.api.nvim_buf_get_mark(0, '"')
+    if mark[1] > 0 and mark[1] <= vim.api.nvim_buf_line_count(0) then
+      vim.api.nvim_win_set_cursor(0, mark)
+    end
+  end,
+})
 vim.cmd([[
   set nocursorcolumn
   syntax sync minlines=200
   syntax sync maxlines=500
-
-  set tabstop=2
-  set softtabstop=2
-  set shiftwidth=2
-  set expandtab
-  set autoindent
-  set smartindent
   set title
-
   syntax enable
   syntax on
   set formatoptions-=c

@@ -1,5 +1,4 @@
 local lsp = require('lsp')
-local lsp_status = require('lsp-status')
 
 local M = {}
 
@@ -17,7 +16,6 @@ function M.setup()
       },
       on_attach = lsp.on_attach,
       capabilities = lsp.capabilities,
-      handlers = lsp_status.extensions.clangd.setup(),
       root_markers = { '.clangd', '.clang-tidy', '.clang-format', 'Makefile', 'compile_commands.json', 'compile_flags.txt', 'configure.ac', '.git' },
       filetypes = {'c', 'cpp', 'cc', 'objc', 'objcpp'},
       single_file_support = true,

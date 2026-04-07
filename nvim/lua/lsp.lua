@@ -92,11 +92,10 @@ M.capabilities = capabilities
 
 function M.setup()
   require("mason").setup()
-  require('mason-lspconfig').setup({ ensure_installed = {'clangd', 'cmake', 'rust_analyzer'} })
+  require('mason-lspconfig').setup({ ensure_installed = {'clangd', 'cmake'} })
 
   vim.lsp.config('cmake', {})
   require('lsp.clangd').setup()
-  require('lsp.rust_analyzer').setup();
   require('lsp.intelephense').setup();
 end
 

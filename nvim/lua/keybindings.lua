@@ -112,11 +112,8 @@ utils.map('n', 'Tab', ':AerialTreeToggle<CR>', { noremap = true, silent = true }
 
 -- Git
 utils.map('n', '<leader>g', '<cmd>lua require("neogit").open()<CR>', { noremap = true, silent = true })
-utils.map("n", "<leader>gs", [[:G<CR>]])
-utils.map("n", "<leader>gf", [[:diffget //2<CR>]])
-utils.map("n", "<leader>gj", [[:diffget //3<CR>]])
+utils.map("n", "<leader>gb", [[:Gitsigns blame<CR>]])
 utils.map("n", "<leader>do", [[:DiffviewOpen<CR>]])
-utils.map("n", "<leader>,", [[:G ftp push --insecure<CR>]])
 
 -- CMake
 vim.keymap.set({ '' }, '<leader>cg', '<Cmd>CMakeGenerate<CR>', { noremap = true, desc = 'Run CMake configure task' })
@@ -156,12 +153,9 @@ utils.map("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>]])
 -- Undotree
 utils.map("n", "<leader>u", [[:UndotreeToggle<CR>]])
 
---splitjoin
-utils.map("n", "sj", [[:SplitjoinJoin<CR>]])
-utils.map("n", "sk", [[:SplitjoinSplit<CR>]])
 
 -- Neo Format
-utils.map("n", "<leader>fd", [[:Neoformat<CR>]])
+utils.map("n", "<leader>fd", [[<cmd>lua require('conform').format()<CR>]])
 
 utils.map('n', '<C-a>', '<esc>ggVG<CR>')
 

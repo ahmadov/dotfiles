@@ -1,30 +1,18 @@
 return {
   -- LSP
-  -- {
-  --   'neovim/nvim-lspconfig',
-  --   config = function() require('plugin.lsp').config() end,
-  --   dependencies = {
-  --     { 'j-hui/fidget.nvim', opts = {} },
-  --     { 'folke/neodev.nvim', opts = { library = { plugins = { "nvim-dap-ui" }, types = true } } },
-  --     { 'https://git.sr.ht/~p00f/clangd_extensions.nvim' },
-  --     { 'saghen/blink.cmp' },
-  --   }
-  -- },
   {
     'williamboman/mason.nvim',
     dependencies = {
       { 'williamboman/mason-lspconfig.nvim' }, 
     }
   },
-  { 'nvim-lua/lsp-status.nvim', },
-  { 'j-hui/fidget.nvim' },
+  { 'j-hui/fidget.nvim', opts = {} },
   {
     'saghen/blink.cmp',
     version = '1.*',
     config = function() require('plugin.blink').config() end,
     dependencies = {
       -- 'rafamadriz/friendly-snippets',
-      'https://git.sr.ht/~p00f/clangd_extensions.nvim',
     },
   },
   {
@@ -33,14 +21,17 @@ return {
       require("clangd_extensions").setup({})
     end
   },
-  -- { 'danymat/neogen', opts = {} },
+  {
+    'mrcjkb/rustaceanvim',
+    version = '^5',
+    lazy = false,
+  },
 
   -- Git
   {
     'lewis6991/gitsigns.nvim',
     config = function() require('plugin.gitsigns').config() end,
   },
-  {'tpope/vim-fugitive'},
   {
     'NeogitOrg/neogit',
     config = function() require('plugin.neogit').config() end,
@@ -51,26 +42,7 @@ return {
     config = function() require('plugin.diffview').config() end,
   },
 
-  -- UI
-  -- {
-  --   'karb94/neoscroll.nvim',
-  --   config = function ()
-  --     require('plugin.neoscroll').config()
-  --   end
-  -- },
-
-  -- Colorscheme
-
-  -- Malicious
-  'tpope/vim-sleuth',
-  -- {
-  --   'lervag/vimtex',
-  --   config = function()
-  --     require('plugin.vimtex').config()
-  --   end,
-  --   ft = { "tex" },
-  -- },
-  -- { 'folke/which-key.nvim', opts = {} },
+  { 'nmac427/guess-indent.nvim', opts = {} },
 
   {
     'Saecki/crates.nvim',
@@ -85,13 +57,12 @@ return {
     'monkoose/matchparen.nvim',
     config = function() require('plugin.matchparen').config() end,
   },
-  { 'vladdoster/remember.nvim', opts = {} },
   {
     'stevearc/stickybuf.nvim',
     config = function() require('plugin.stickybuf').config() end,
   },
   {
-    'glepnir/dashboard-nvim',
+    'nvimdev/dashboard-nvim',
     branch = 'master',
     event = 'VimEnter',
     config = function() require('plugin.dashboard').config() end,
@@ -149,28 +120,16 @@ return {
     'nvim-treesitter/nvim-treesitter',
     config = function() require('plugin.treesitter').config() end,
     dependencies = {
-      -- Automatically end & rename tags
       'windwp/nvim-ts-autotag',
       'nvim-treesitter/nvim-treesitter-textobjects',
-      -- Dynamically set commentstring based on cursor location in file
-      {'JoosepAlviste/nvim-ts-context-commentstring', config = function() require('plugin.ts_commentstring').config() end}
     },
     build = ':TSUpdate'
   },
-  {'RRethy/nvim-treesitter-textsubjects'},
   {'RRethy/vim-illuminate'},
   {'tpope/vim-repeat'},
   {
-    'numToStr/Comment.nvim',
-    config = function() require('plugin.Comment').config() end,
-  },
-  -- {
-  --   'lukas-reineke/indent-blankline.nvim',
-  --   config = function() require('plugin.indent-blankline').config() end,
-  -- },
-  {
-    'sbdchd/neoformat',
-    config = function() require('plugin.neoformat').config() end,
+    'stevearc/conform.nvim',
+    config = function() require('plugin.conform').config() end,
   },
   {
     'Civitasv/cmake-tools.nvim',
@@ -181,18 +140,8 @@ return {
     branch = 'main'
   },
   {
-    'onsails/lspkind-nvim',
-    config = function() require('plugin.lspkind').config() end,
-  },
-  {
     'windwp/nvim-autopairs',
     config = function() require('plugin.nvim-autopairs').config() end,
-  },
-  {'alvan/vim-closetag'},
-  {'tweekmonster/startuptime.vim'},
-  {
-    'ray-x/lsp_signature.nvim',
-    config = function() require('plugin.lsp_signature').config() end,
   },
   {'MunifTanjim/nui.nvim'},
   {
@@ -214,10 +163,8 @@ return {
     branch = '0.1.x',
     config = function() require('plugin.telescope').config() end,
     dependencies = {
-      'nvim-lua/popup.nvim',
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope-media-files.nvim',
-      'nvim-telescope/telescope-fzf-writer.nvim',
       'nvim-telescope/telescope-symbols.nvim',
       {
         'nvim-telescope/telescope-fzf-native.nvim',
@@ -238,28 +185,6 @@ return {
   },
   {'theHamsta/nvim-dap-virtual-text'},
   {'nvim-telescope/telescope-dap.nvim'},
-  {'famiu/nvim-reload'},
-  { 'gelguy/wilder.nvim' },
-  {
-    "luukvbaal/stabilize.nvim",
-    config = function()
-        require("stabilize").setup({
-          force = true, -- stabilize window even when current cursor position will be hidden behind new window
-          forcemark = nil, -- set context mark to register on force event which can be jumped to with '<forcemark>
-          ignore = { -- do not manage windows matching these file/buftypes
-            filetype = { "packer", "Dashboard", "Trouble", "TelescopePrompt" },
-            buftype = {
-              "Dashboard",
-              "terminal",
-              "quickfix",
-              "loclist",
-            },
-          },
-          nested = nil, -- comma-separated list of autocmds that wil trigger the plugin.window restore function
-        })
-      end,
-  },
-  -- { 'simrat39/rust-tools.nvim', opts = {} },
   { 'windwp/nvim-spectre', opts = {} },
   {
     'rcarriga/nvim-notify',
