@@ -1,17 +1,23 @@
 return {
   -- LSP
+  -- {
+  --   'neovim/nvim-lspconfig',
+  --   config = function() require('plugin.lsp').config() end,
+  --   dependencies = {
+  --     { 'j-hui/fidget.nvim', opts = {} },
+  --     { 'folke/neodev.nvim', opts = { library = { plugins = { "nvim-dap-ui" }, types = true } } },
+  --     { 'https://git.sr.ht/~p00f/clangd_extensions.nvim' },
+  --     { 'saghen/blink.cmp' },
+  --   }
+  -- },
   {
-    'neovim/nvim-lspconfig',
-    config = function() require('plugin.lsp').config() end,
+    'williamboman/mason.nvim',
     dependencies = {
-      { 'williamboman/mason.nvim', opts = {} },
       { 'williamboman/mason-lspconfig.nvim' }, 
-      { 'j-hui/fidget.nvim', opts = {} },
-      { 'folke/neodev.nvim', opts = { library = { plugins = { "nvim-dap-ui" }, types = true } } },
-      { 'https://git.sr.ht/~p00f/clangd_extensions.nvim' },
-      { 'saghen/blink.cmp' },
     }
   },
+  { 'nvim-lua/lsp-status.nvim', },
+  { 'j-hui/fidget.nvim' },
   {
     'saghen/blink.cmp',
     version = '1.*',
@@ -89,10 +95,6 @@ return {
     branch = 'master',
     event = 'VimEnter',
     config = function() require('plugin.dashboard').config() end,
-  },
-  {
-    'jose-elias-alvarez/null-ls.nvim',
-    -- config = function() require('plugin.null_ls').config() end,
   },
   {
     'iamcco/markdown-preview.nvim',
@@ -202,7 +204,6 @@ return {
   },
   {'alvan/vim-closetag'},
   {'tweekmonster/startuptime.vim'},
-  { 'nvim-lua/lsp-status.nvim', },
   -- Try again
   -- {
   --   'ray-x/lsp_signature.nvim',
@@ -273,7 +274,7 @@ return {
         })
       end,
   },
-  { 'simrat39/rust-tools.nvim', opts = {} },
+  -- { 'simrat39/rust-tools.nvim', opts = {} },
   { 'windwp/nvim-spectre', opts = {} },
   {
     'rcarriga/nvim-notify',

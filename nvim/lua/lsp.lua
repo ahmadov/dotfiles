@@ -1,9 +1,6 @@
-local mason_lspconfig = require('mason-lspconfig')
 local aerial = require('aerial')
 local utils = require('utils')
--- local nvim_cmp = require('cmp_nvim_lsp');
 local blink = require('blink.cmp');
-
 
 function on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -93,12 +90,14 @@ local M = {}
 M.on_attach = on_attach
 M.capabilities = capabilities
 
-function M.config()
-  mason_lspconfig.setup({ ensure_installed = {'clangd', 'cmake', 'rust_analyzer'} })
+function M.setup()
+  require("mason").setup()
+  require('mason-lspconfig').setup({ ensure_installed = {'clangd', 'cmake', 'rust_analyzer'} })
 
-  require('lsp.clangd');
-  require('lsp.intelephense');
-  require('lsp.rust_analyzer');
+  vim.lsp.config('cmake', {})
+  require('lsp.clangd').setup()
+  require('lsp.rust_analyzer').setup();
+  require('lsp.intelephense').setup();
 end
 
 return M

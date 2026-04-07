@@ -21,3 +21,9 @@ function gchpr --argument-names 'PR' --argument-names 'branch' -d "Fetch GitHub 
     echo (set_color red) "PR id and branch name must be provided." (set_color normal)
   end
 end
+
+function gisml -d "Ignore git submodules in local repo"
+  git config --local submodule.recurse false
+  git config --local diff.ignoreSubmodules all
+  git config --local status.submodulesummary false
+end

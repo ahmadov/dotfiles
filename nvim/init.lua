@@ -19,6 +19,7 @@ require('lazy').setup('plugins')
 require('disable_builtins')
 require('keybindings')
 require('colorscheme')
+require('lsp').setup()
 
 vim.cmd([[
   if exists('g:neovide')

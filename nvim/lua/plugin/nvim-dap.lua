@@ -27,7 +27,7 @@ function M.config()
             size = 0.6
           }
         },
-        position = "left",
+        position = "right",
         size = 40
       },
       {

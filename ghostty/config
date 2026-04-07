@@ -1,8 +1,13 @@
 command = /usr/local/bin/fish
 
-theme = GruvboxDarkHard
-background = "#000000"
-foreground = "#ebdbb2"
+# light theme for demos
+# theme = Monokai Pro Light Sun
+
+# dark theme for work
+theme = Gruvbox Dark Hard
+background = "#000"
+# background = "#151515"
+# foreground = "#ebdbb2"
 
 font-family = Liga SFMono Nerd Font
 font-size = 14
@@ -13,14 +18,15 @@ shell-integration = fish
 split-divider-color = "#fabd2f"
 unfocused-split-fill = "#3c3b2a"
 
-scrollback-limit = 10000000
+scrollback-limit = 1000000000
 
 cursor-style = block
 cursor-style-blink = false
 shell-integration-features = no-cursor
 mouse-hide-while-typing = true
 
-macos-titlebar-style = "transparent"
+macos-icon = xray
+macos-titlebar-style = transparent
 
 # keybind = ctrl+tab=text:\x1b[9;5u
 # keybind = ctrl+shift+tab=text:\x1b[9;6u
@@ -42,3 +48,4 @@ keybind = ctrl+a>l=goto_split:right
 keybind = ctrl+a>-=new_split:down
 keybind = ctrl+a>\=new_split:right
 keybind = ctrl+a>f=toggle_split_zoom
+keybind = shift+enter=text:\x1b\r
