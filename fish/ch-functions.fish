@@ -83,14 +83,18 @@ function cpl -d "Compile ClickHouse in debug mode"
   mkdir -p (debugPath)
   pushd (debugPath)
   cmake --build . --parallel --
+  set -l ret $status
   popd
+  return $ret
 end
 
 function cplr -d "Compile ClickHouse in release mode"
   mkdir -p (releasePath)
   pushd (releasePath)
   cmake --build . --parallel --
+  set -l ret $status
   popd
+  return $ret
 end
 
 function runs -d "Start ClickHouse server in debug mode"
@@ -117,13 +121,23 @@ function runrc -d "Start ClickHouse client in release mode"
   popd
 end
 
+function dq -d "Run a query using ClickHouse client (debug)"
+  set -l chbin (debugPath)/programs/clickhouse-client
+  $chbin $argv
+end
+
+function rq -d "Run a query using ClickHouse client (release)"
+  set -l chbin (releasePath)/programs/clickhouse-client
+  $chbin $argv
+end
+
 function testd --argument-names 'name' --argument-names 'runs' -d "Invoke C++ unit test (debug) with the given name"
   if test -n "$name" 
     pushd $CH_REPO_PATH
     if test -n "$runs" 
-      PATH=(debugPath)/programs:$PATH ./tests/clickhouse-test --test-runs $runs $name
+      PATH=(debugPath)/programs:$PATH ./tests/clickhouse-test --database=local --test-runs $runs $name
     else
-      PATH=(debugPath)/programs:$PATH ./tests/clickhouse-test $name
+      PATH=(debugPath)/programs:$PATH ./tests/clickhouse-test --database=local $name
     end
     popd
   else 
@@ -135,9 +149,9 @@ function testr --argument-names 'name' --argument-names 'runs' -d "Invoke C++ un
   if test -n "$name" 
     pushd $CH_REPO_PATH
     if test -n "$runs" 
-      PATH=(releasePath)/programs:$PATH ./tests/clickhouse-test --test-runs $runs $name
+      PATH=(releasePath)/programs:$PATH ./tests/clickhouse-test --database=local --test-runs $runs $name
     else
-      PATH=(releasePath)/programs:$PATH ./tests/clickhouse-test $name
+      PATH=(releasePath)/programs:$PATH ./tests/clickhouse-test --database=local $name
     end
     popd
   else 
@@ -157,14 +171,12 @@ function makecihappy --argument-names 'commit' -d "Make CI happy by marking test
 end
 
 function xs -d "Compile and run ClickHouse server in debug mode"
-  cpl
-  runs
+  cpl && runs
 end
 
 function xrs -d "Compile and run ClickHouse server in release ode"
-  cplr
-  runrs
+  cplr && runrs
 end
 
-alias chs=runs
-alias chc=runc
+alias chs=runrs
+alias chc=runrc
