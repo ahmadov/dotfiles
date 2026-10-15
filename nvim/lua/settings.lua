@@ -26,7 +26,8 @@ vim.o.softtabstop               = 2
 vim.o.autoindent                = true
 vim.o.errorbells                = false
 vim.o.undofile                  = true
--- vim.o.undodir                   = '~/.undodir
+vim.o.undodir                   = vim.fn.expand('~/.undodir')
+vim.fn.mkdir(vim.o.undodir, 'p', tonumber('700', 8))
 vim.o.compatible                = false
 vim.o.cursorline               = true
 vim.o.incsearch                 = true

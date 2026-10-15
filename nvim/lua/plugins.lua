@@ -34,11 +34,13 @@ return {
   },
   {
     'NeogitOrg/neogit',
+    cmd = 'Neogit',
     config = function() require('plugin.neogit').config() end,
     dependencies = 'nvim-lua/plenary.nvim'
   },
   {
     'sindrets/diffview.nvim',
+    cmd = { 'DiffviewOpen', 'DiffviewClose', 'DiffviewToggleFiles', 'DiffviewFocusFiles', 'DiffviewRefresh', 'DiffviewFileHistory' },
     config = function() require('plugin.diffview').config() end,
   },
 
@@ -46,6 +48,7 @@ return {
 
   {
     'Saecki/crates.nvim',
+    event = 'BufRead Cargo.toml',
     config = function() require('plugin.crates').config() end,
   },
   {
@@ -101,6 +104,8 @@ return {
   {
     'akinsho/toggleterm.nvim',
     version = "*",
+    cmd = { 'ToggleTerm', 'TermExec' },
+    keys = { { [[<C-\>]], mode = { 'n', 'i' } } },
     config = function() require('plugin.toggleterm').config() end,
   },
   {
@@ -110,6 +115,7 @@ return {
   },
   {
     'mbbill/undotree',
+    cmd = 'UndotreeToggle',
     config = function() require('plugin.undotree').config() end,
   },
   {
@@ -125,10 +131,20 @@ return {
   {'tpope/vim-repeat'},
   {
     'stevearc/conform.nvim',
+    cmd = 'ConformInfo',
     config = function() require('plugin.conform').config() end,
   },
   {
     'Civitasv/cmake-tools.nvim',
+    cmd = {
+      'CMakeBuild', 'CMakeBuildCurrentFile', 'CMakeClean', 'CMakeCloseExecutor', 'CMakeCloseRunner',
+      'CMakeGenerate', 'CMakeInstall', 'CMakeLaunchArgs', 'CMakeOpenCache', 'CMakeOpenExecutor',
+      'CMakeOpenRunner', 'CMakeQuickBuild', 'CMakeQuickRun', 'CMakeQuickStart', 'CMakeRun',
+      'CMakeRunCurrentFile', 'CMakeRunTest', 'CMakeSelectBuildDir', 'CMakeSelectBuildPreset',
+      'CMakeSelectBuildTarget', 'CMakeSelectBuildType', 'CMakeSelectConfigurePreset', 'CMakeSelectCwd',
+      'CMakeSelectKit', 'CMakeSelectLaunchTarget', 'CMakeSelectTestPreset', 'CMakeSettings',
+      'CMakeStopExecutor', 'CMakeStopRunner', 'CMakeTargetSettings',
+    },
     config = function() require('plugin.cmake-tools').config() end,
   },
   {
@@ -147,21 +163,26 @@ return {
   {
     'nvimdev/lspsaga.nvim',
     branch = 'main',
+    event = 'LspAttach',
+    cmd = 'Lspsaga',
     config = function() require('plugin.lspsaga').config() end,
   },
   {
     'folke/trouble.nvim',
+    cmd = 'Trouble',
     config = function() require('plugin.trouble').config() end,
     dependencies = {'kyazdani42/nvim-web-devicons'},
   },
   {
     'nvim-telescope/telescope.nvim',
     branch = 'master',
+    cmd = 'Telescope',
     config = function() require('plugin.telescope').config() end,
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope-media-files.nvim',
       'nvim-telescope/telescope-symbols.nvim',
+      'nvim-telescope/telescope-dap.nvim',
       {
         'nvim-telescope/telescope-fzf-native.nvim',
         build = 'make',
@@ -172,18 +193,33 @@ return {
     }
   },
   {
-    'rcarriga/nvim-dap-ui',
+    -- The config defines adapters and keymaps, so attach it to nvim-dap: any `require('dap')` sets it up
+    'mfussenegger/nvim-dap',
     config = function() require('plugin.nvim-dap').config() end,
+    keys = {
+      { '<A-b>', mode = { 'n', 'i', 'v' } },
+      { '<A-o>', mode = { 'n', 'i', 'v' } },
+      { '<A-i>', mode = { 'n', 'i', 'v' } },
+      { '<A-u>', mode = { 'n', 'i', 'v' } },
+      { '<A-c>', mode = { 'n', 'i', 'v' } },
+      { '<A-t>', mode = { 'n', 'i', 'v' } },
+      { '<A-r>', mode = { 'n', 'i', 'v' } },
+      { '<A-d>', mode = { 'n', 'i', 'v' } },
+      { '<A-v>', mode = { 'n', 'i', 'v' } },
+      { '<A-BS>', mode = { 'n', 'i', 'v' } },
+      { '<A-f>' },
+      { '<A-/>' },
+    },
     dependencies = {
-      'mfussenegger/nvim-dap',
-      'nvim-neotest/nvim-nio'
+      'rcarriga/nvim-dap-ui',
+      'nvim-neotest/nvim-nio',
+      'theHamsta/nvim-dap-virtual-text',
     }
   },
-  {'theHamsta/nvim-dap-virtual-text'},
-  {'nvim-telescope/telescope-dap.nvim'},
-  { 'windwp/nvim-spectre', opts = {} },
+  { 'windwp/nvim-spectre', cmd = 'Spectre', opts = {} },
   {
     'rcarriga/nvim-notify',
+    lazy = true,
     config = function() require('plugin.nvim-notify').config() end,
   },
 
