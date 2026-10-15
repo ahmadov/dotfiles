@@ -160,7 +160,7 @@ return {
   },
   {
     'nvim-telescope/telescope.nvim',
-    branch = '0.1.x',
+    branch = 'master',
     config = function() require('plugin.telescope').config() end,
     dependencies = {
       'nvim-lua/plenary.nvim',

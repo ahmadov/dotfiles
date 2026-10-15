@@ -2,7 +2,6 @@ local M = {}
 
 function M.config()
    require('blink.cmp').setup({
-      auto_start = true,
       appearance = {
         nerd_font_variant = 'mono'
       },

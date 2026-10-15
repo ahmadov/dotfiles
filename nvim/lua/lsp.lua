@@ -3,7 +3,7 @@ local utils = require('utils')
 local blink = require('blink.cmp');
 
 function on_attach(client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
   -- aerial.on_attach(_, bufnr);
   require('illuminate').on_attach(client)
   -- Aerial does not set any mappings by default, so you'll want to set some up
@@ -24,10 +24,10 @@ function on_attach(client, bufnr)
   -- utils.map('v', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts) -- until renamer.nvim fixes the issue
   -- utils.map('i', '<F2>', '<cmd>lua vim.lsp.buf.rename()<CR>', opts) -- until renamer.nvim fixes the issue
   utils.map('n', '<leader>L', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-  utils.map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-  utils.map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+  utils.map('n', '[d', '<cmd>lua vim.diagnostic.jump({ count = -1, float = true })<CR>', opts)
+  utils.map('n', ']d', '<cmd>lua vim.diagnostic.jump({ count = 1, float = true })<CR>', opts)
   utils.map('n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  utils.map('x', '<leader>a', '<cmd>lua vim.lsp.buf.range_code_action()<CR>', opts)
+  utils.map('x', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
 
   -- lspsaga
   -- utils.map('n', '<C-k>',  "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>", opts)
@@ -38,15 +38,15 @@ function on_attach(client, bufnr)
   utils.map('n', '<A-g>', "<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>", opts)
   utils.map('n', '<leader>i', "<cmd>lua require('telescope.builtin').lsp_incoming_calls()<CR>", opts)
 
-  utils.map('n', ']g', "<cmd>lua require('gitsigns.actions').next_hunk()<CR>", opts)
-  utils.map('n', '[g', "<cmd>lua require('gitsigns.actions').prev_hunk()<CR>", opts)
-  utils.map('n', '<leader>hs', "<cmd>lua require('gitsigns.actions').stage_hunk()<CR>", opts)
-  utils.map('v', '<leader>hs', "<cmd>lua require('gitsigns.actions').stage_hunk({vim.fn.line('.'), vim.fn.line('v')})<CR>", opts)
-  utils.map('n', '<leader>hu', "<cmd>lua require('gitsigns.actions').undo_stage_hunk()<CR>", opts)
-  utils.map('n', '<leader>hr', "<cmd>lua require('gitsigns.actions').reset_hunk()<CR>", opts)
-  utils.map('v', '<leader>hr', "<cmd>lua require('gitsigns.actions').reset_hunk({vim.fn.line('.'), vim.fn.line('v')})<CR>", opts)
-  utils.map('n', '<leader>hp', "<cmd>lua require('gitsigns.actions').preview_hunk()<CR>", opts)
-  utils.map('n', '<leader>hb', "<cmd>lua require('gitsigns.actions').blame_line()<CR>", opts)
+  utils.map('n', ']g', "<cmd>lua require('gitsigns').nav_hunk('next')<CR>", opts)
+  utils.map('n', '[g', "<cmd>lua require('gitsigns').nav_hunk('prev')<CR>", opts)
+  utils.map('n', '<leader>hs', "<cmd>lua require('gitsigns').stage_hunk()<CR>", opts)
+  utils.map('v', '<leader>hs', "<cmd>lua require('gitsigns').stage_hunk({vim.fn.line('.'), vim.fn.line('v')})<CR>", opts)
+  utils.map('n', '<leader>hu', "<cmd>lua require('gitsigns').stage_hunk()<CR>", opts)
+  utils.map('n', '<leader>hr', "<cmd>lua require('gitsigns').reset_hunk()<CR>", opts)
+  utils.map('v', '<leader>hr', "<cmd>lua require('gitsigns').reset_hunk({vim.fn.line('.'), vim.fn.line('v')})<CR>", opts)
+  utils.map('n', '<leader>hp', "<cmd>lua require('gitsigns').preview_hunk()<CR>", opts)
+  utils.map('n', '<leader>hb', "<cmd>lua require('gitsigns').blame_line()<CR>", opts)
 
   -- utils.map('n', '<leader>d', "<cmd>lua require('lspsaga.diagnostic').show_line_diagnostics()<CR>", opts)
   -- utils.map('n', '[d', "<cmd>lua require('lspsaga.diagnostic').lsp_jump_diagnostic_prev()<CR>", opts)
@@ -74,16 +74,9 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 vim.diagnostic.config({
   virtual_text = false, -- Turn off inline diagnostics
   underline = false,
+  signs = true,
+  update_in_insert = true,
 })
-
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    underline = false,
-    virtual_text = true,
-    signs = true,
-    update_in_insert = true,
-  }
-)
 
 local M = {}
 
