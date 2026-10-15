@@ -68,10 +68,6 @@ return {
     config = function() require('plugin.dashboard').config() end,
   },
   {
-    'iamcco/markdown-preview.nvim',
-    config = function() require('plugin.markdown-preview').config() end,
-  },
-  {
     'folke/persistence.nvim',
     config = function() require('plugin.persistence').config() end,
   },

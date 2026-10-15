@@ -16,13 +16,8 @@ local colors = {
 
 function M.config()
   local get_git_root = function()
-      local git_dir = require('utils').get_git_dir()
-      if not git_dir then
-          return ''
-      end
-
-      local git_root = git_dir:gsub('/.git/?$', '')
-      return git_root:match '^.+/(.+)$'
+      local root = vim.fs.root(0, '.git')
+      return root and vim.fs.basename(root) or ''
   end
 
   require('lualine').setup {
@@ -40,7 +35,7 @@ function M.config()
       lualine_a = {'mode'},
       lualine_b = {{'filename', path = 1}},
       lualine_c = {'branch', 'diff', },
-      lualine_d = {
+      lualine_x = {
         {
           'diagnostics',
           sources = { 'nvim_diagnostic' },
@@ -52,8 +47,8 @@ function M.config()
           },
         },
         {get_git_root}, 'encoding', 'filetype'},
-      lualine_e = {'progress'},
-      lualine_f = {'location'},
+      lualine_y = {'progress'},
+      lualine_z = {'location'},
       -- lualine_z = { {"require('lsp-status').status()"}, },
     },
     inactive_sections = {

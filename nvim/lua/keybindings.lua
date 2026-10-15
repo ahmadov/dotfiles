@@ -2,7 +2,6 @@ local utils = require('utils')
 -- local luasnip = require('luasnip')
 
 -- keybind list
-utils.map("", "<leader>c", '"+y')
 
 -- open terminals
 -- utils.map('n', '<C-,>', ':Ttoggle<CR>', opts)
@@ -11,8 +10,8 @@ utils.map("", "<leader>c", '"+y')
 utils.map('t', '<esc>', [[<C-\><C-n>]])
 
 -- spacing
-utils.map('n', '<leader>m', [[:set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>]])
-utils.map('n', '<leader>t', [[:set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>]])
+utils.map('n', '<leader>m4', [[:set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>]])
+utils.map('n', '<leader>m2', [[:set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>]])
 
 -- buffers
 utils.map("", "<C-l>", [[<Cmd>BufferNext<CR>]]) -- go to the next buffer
@@ -22,8 +21,6 @@ utils.map("", "<C-PageUp>", [[<Cmd>BufferPrevious<CR>]]) -- go to the previous b
 -- utils.map("", "<C-L>", [[<Cmd>BufferMoveNext<CR>]], opt) -- go to the next buffer
 -- utils.map("", "<C-H>", [[<Cmd>BufferMovePrevious<CR>]], opt) -- go to the previous buffer
 utils.map("", "<C-x>", [[<cmd>BufferClose<CR>]]) -- close the current buffer
-utils.map("", "<C-X>", [[<cmd>BufferClose!<CR>]]) -- force close the current buffer
-utils.map("n", "<C-t>", [[:<C-u>enew<CR>]]) -- new buffer
 utils.map("n", "<C-t>", [[<ESC>:<C-u>enew<CR>]]) -- new buffer
 utils.map("n", "<leader>q", [[<Cmd>q<CR>]])
 utils.map("n", "B", [[<cmd>BufferPick<CR>]])
@@ -65,8 +62,8 @@ utils.map("n", "<Esc>^[", [[<Esc>^[ ]])
 
 -- remove without copy
 utils.map("n", "<leader>x", [["_x]])
-utils.map("n", "<leader>d", [["_d]])
-utils.map("x", "<leader>d", [["_d]])
+utils.map("n", "<leader>D", [["_d]])
+utils.map("x", "<leader>D", [["_d]])
 utils.map("x", "<leader>p", [["_dP]])
 
 -- copy&paste
@@ -108,11 +105,10 @@ utils.map('n', '<C-b>', ':Neotree buffers float<CR>', { noremap = true, silent =
 utils.map('n', '<leader>f', ':Neotree toggle float<CR>', { noremap = true, silent = true })
 
 -- folding
-utils.map('n', 'Tab', ':AerialTreeToggle<CR>', { noremap = true, silent = true })
 
 -- Git
 utils.map('n', '<leader>g', '<cmd>lua require("neogit").open()<CR>', { noremap = true, silent = true })
-utils.map("n", "<leader>gb", [[:Gitsigns blame<CR>]])
+utils.map("n", "<leader>hB", [[:Gitsigns blame<CR>]])
 utils.map("n", "<leader>do", [[:DiffviewOpen<CR>]])
 
 -- CMake

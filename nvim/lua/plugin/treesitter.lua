@@ -18,10 +18,10 @@ function M.config()
       incremental_selection = {
         enable = true,
         keymaps = {
-          init_selection = 'gn',
-          node_incremental = 'gr',
-          scope_incremental = 'gc',
-          node_decremental = 'gm',
+          init_selection = '<CR>',
+          node_incremental = '<CR>',
+          scope_incremental = '<S-CR>',
+          node_decremental = '<BS>',
         },
       },
       indent = {

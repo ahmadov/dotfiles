@@ -17,16 +17,12 @@ vim.o.mouse                     = 'a'
 vim.o.smartcase                 = true
 vim.o.smarttab                  = true
 vim.o.hidden                    = true
-vim.bo.expandtab                = true
-vim.bo.smartindent              = true
+vim.o.expandtab                 = true
 vim.o.smartindent               = true
-vim.bo.shiftwidth               = 2
 vim.o.shiftwidth                = 2
 vim.o.showtabline               = 2
 vim.o.tabstop                   = 2
-vim.bo.tabstop                  = 2
 vim.o.softtabstop               = 2
-vim.bo.softtabstop              = 2
 vim.o.autoindent                = true
 vim.o.errorbells                = false
 vim.o.undofile                  = true
@@ -66,13 +62,16 @@ vim.opt.shortmess = {
   W = true, -- Don't show [w] or written when writing
 }
 
-if vim.fn.has('macunix') then
-  vim.opt.shell = "/usr/local/bin/fish"
-else
-  vim.opt.shell = "/bin/fish"
-end
+vim.opt.shell = vim.fn.exepath('fish')
 
 vim.cmd('filetype plugin indent on') --- " Enables plugin & indent
+
+-- ftplugins reset 'formatoptions', so remove comment continuation after they run
+vim.api.nvim_create_autocmd('FileType', {
+  callback = function()
+    vim.opt_local.formatoptions:remove({ 'c', 'r', 'o' })
+  end,
+})
 
 -- Restore cursor position on file open (replaces remember.nvim)
 vim.api.nvim_create_autocmd('BufReadPost', {
@@ -90,7 +89,4 @@ vim.cmd([[
   set title
   syntax enable
   syntax on
-  set formatoptions-=c
-  set formatoptions-=r
-  set formatoptions-=o
 ]], '')
