@@ -3,6 +3,7 @@ local M = {}
 function M.config()
   require('lspsaga').setup({
     ui = {
+      border = 'single',
       code_action = '💡',
     },
     lightbulb = {
@@ -11,30 +12,20 @@ function M.config()
       sign_priority = 20,
       virtual_text = true,
     },
-    diagnostic_header = { " ", " ", " ", "ﴞ " },
-    -- show_diagnostic_source = true,
-    -- code_action_prompt = {
-    --   enable        = true,
-    --   sign          = true,
-    --   sign_priority = 20,
-    --   virtual_text  = false,
-    -- },
-    finder_action_keys = {
-      open = {'<CR>', 'o'},
-      vsplit = 's',
-      split = 'i',
-      quit = {'q', '<esc>', '<C-c>'},
-      scroll_down = '<C-f>',
-      scroll_up = '<C-b>'
+    finder = {
+      keys = {
+        toggle_or_open = { '<CR>', 'o' },
+        vsplit = 's',
+        split = 'i',
+        quit = { 'q', '<Esc>' },
+      },
     },
-    code_action_keys = { quit = {'q', '<ESC>'}, exec = '<CR>' },
-    -- rename_action_keys = { quit = {'<ESC>', '<C-c>'}, exec = '<CR>' },
-    rename_action_quit = '<C-c>',
-    border_style = "single",
-    -- symbol_in_winbar = false,
-    -- winbar_separator = '>',
-    -- winbar_show_file = false,
-    -- rename_prompt_prefix = "➤",
+    code_action = {
+      keys = { quit = { 'q', '<Esc>' }, exec = '<CR>' },
+    },
+    rename = {
+      keys = { quit = '<C-c>' },
+    },
   })
 end
 

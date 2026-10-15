@@ -51,7 +51,7 @@ function M.config()
         },
       },
       file_sorter =  require('telescope.sorters').get_fuzzy_file,
-      file_ignore_patterns = { "contrib" },
+      file_ignore_patterns = { '^contrib/' },
       generic_sorter =  require('telescope.sorters').get_generic_fuzzy_sorter,
       winblend = 0,
       border = {},
@@ -65,23 +65,18 @@ function M.config()
 
       -- Developer configurations: Not meant for general override
       buffer_previewer_maker = require('telescope.previewers').buffer_previewer_maker,
-      extensions = {
-          media_files = {
-              filetypes = {'png', 'webp', 'jpg', 'jpeg'},
-              find_cmd = 'rg'
-          },
-          fzf = {
-              fuzzy = true,
-              override_generic_sorter = false,
-              override_file_sorter = true,
-              case_mode = 'smart_case',
-          },
-          fzf_writer = {
-              minimum_grep_characters = 1,
-              minimum_files_characters = 1,
-              use_highlighter = false,
-          }
-      }
+    },
+    extensions = {
+      media_files = {
+        filetypes = { 'png', 'webp', 'jpg', 'jpeg' },
+        find_cmd = 'rg',
+      },
+      fzf = {
+        fuzzy = true,
+        override_generic_sorter = false,
+        override_file_sorter = true,
+        case_mode = 'smart_case',
+      },
     },
     pickers = {
       find_files = {

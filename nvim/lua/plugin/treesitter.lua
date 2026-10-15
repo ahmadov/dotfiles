@@ -13,8 +13,6 @@ function M.config()
         end,
         additional_vim_regex_highlighting = { "latex" },
       },
-      textobjects = { enable = true },
-      textsubjects = { enable = true },
       incremental_selection = {
         enable = true,
         keymaps = {
@@ -27,21 +25,8 @@ function M.config()
       indent = {
         enable = true,
       },
-      autotag = {
-        enable = true,
-      },
-      rainbow = {
-        enable = true,
-        extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-        max_file_lines = nil, -- Do not enable for files with more than n lines, int
-      },
-      autopairs = {
-        enable = true,
-      },
-      matchup = {
-        enable = true,
-      },
     }
+    require('nvim-ts-autotag').setup()
   end, 0)
 end
 

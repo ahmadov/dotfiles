@@ -8,7 +8,6 @@ function M.setup()
         'clangd',
         '--clang-tidy',
         '--background-index',
-        '--suggest-missing-includes',
         '--all-scopes-completion',
         '--header-insertion=iwyu',
         '--completion-style=detailed',
@@ -17,13 +16,11 @@ function M.setup()
       on_attach = lsp.on_attach,
       capabilities = lsp.capabilities,
       root_markers = { '.clangd', '.clang-tidy', '.clang-format', 'Makefile', 'compile_commands.json', 'compile_flags.txt', 'configure.ac', '.git' },
-      filetypes = {'c', 'cpp', 'cc', 'objc', 'objcpp'},
-      single_file_support = true,
+      filetypes = {'c', 'cpp', 'objc', 'objcpp'},
       init_options = {
         clangdFileStatus = true,
         usePlaceholders = true,
         completeUnimported = true,
-        semanticHighlighting = true,
       },
   })
 

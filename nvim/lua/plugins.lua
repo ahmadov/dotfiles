@@ -95,6 +95,7 @@ return {
   {
     'romgrk/barbar.nvim',
     event = "VimEnter",
+    init = function() vim.g.barbar_auto_setup = false end,
     config = function() require('plugin.barbar').config() end,
   },
   {
@@ -170,6 +171,7 @@ return {
   {
     'folke/trouble.nvim',
     cmd = 'Trouble',
+    keys = function() return require('plugin.trouble').keys end,
     config = function() require('plugin.trouble').config() end,
     dependencies = {'kyazdani42/nvim-web-devicons'},
   },
@@ -217,11 +219,6 @@ return {
     }
   },
   { 'windwp/nvim-spectre', cmd = 'Spectre', opts = {} },
-  {
-    'rcarriga/nvim-notify',
-    lazy = true,
-    config = function() require('plugin.nvim-notify').config() end,
-  },
 
   -- Colorschemes
   'ellisonleao/gruvbox.nvim',

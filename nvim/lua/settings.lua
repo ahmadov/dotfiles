@@ -2,7 +2,6 @@ vim.o.autoread                  = true
 vim.wo.number                   = true
 vim.o.relativenumber            = true
 vim.o.viewoptions               = 'cursor,folds'
-vim.o.encoding                  = 'utf-8'
 vim.o.fileencoding              = 'utf-8'
 vim.o.splitright                = true
 vim.o.completeopt               = 'menuone,noselect,noinsert'
@@ -15,36 +14,25 @@ vim.o.timeoutlen                = 300
 vim.o.ttimeoutlen               = 50
 vim.o.mouse                     = 'a'
 vim.o.smartcase                 = true
-vim.o.smarttab                  = true
-vim.o.hidden                    = true
 vim.o.expandtab                 = true
 vim.o.smartindent               = true
 vim.o.shiftwidth                = 2
 vim.o.showtabline               = 2
 vim.o.tabstop                   = 2
 vim.o.softtabstop               = 2
-vim.o.autoindent                = true
-vim.o.errorbells                = false
 vim.o.undofile                  = true
 vim.o.undodir                   = vim.fn.expand('~/.undodir')
 vim.fn.mkdir(vim.o.undodir, 'p', tonumber('700', 8))
-vim.o.compatible                = false
 vim.o.cursorline               = true
-vim.o.incsearch                 = true
-vim.o.backspace                 = 'indent,eol,start'
 vim.o.termguicolors             = true
 vim.o.termsync                  = false
 vim.o.cmdheight                 = 2
-vim.o.ttyfast                   = true
 vim.o.wrap                      = false
 vim.o.splitkeep                 = 'screen'
 vim.o.linebreak                 = true
 vim.o.numberwidth               = 2
 vim.g.mapleader                 = ' ';
-vim.g.auto_save                 = 1
 vim.o.signcolumn                = 'yes'
-vim.g.indentLine_enabled        = 1
-vim.wo.colorcolumn              = '99999'
 vim.o.listchars                 = 'space:⋅,tab:→ ' -- Display tabs
 vim.o.inccommand                = 'split'
 vim.o.lazyredraw                = true
@@ -65,8 +53,6 @@ vim.opt.shortmess = {
 
 vim.opt.shell = vim.fn.exepath('fish')
 
-vim.cmd('filetype plugin indent on') --- " Enables plugin & indent
-
 -- ftplugins reset 'formatoptions', so remove comment continuation after they run
 vim.api.nvim_create_autocmd('FileType', {
   callback = function()
@@ -83,11 +69,4 @@ vim.api.nvim_create_autocmd('BufReadPost', {
     end
   end,
 })
-vim.cmd([[
-  set nocursorcolumn
-  syntax sync minlines=200
-  syntax sync maxlines=500
-  set title
-  syntax enable
-  syntax on
-]], '')
+vim.o.title                     = true
