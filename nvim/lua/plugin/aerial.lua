@@ -4,12 +4,16 @@ function M.config()
   require('aerial').setup({
     backends = { "lsp", "treesitter", "markdown" },
     -- close_behavior = 'auto',
-    default_bindings = true,
     highlight_mode = 'split_width',
     highlight_on_jump = 300,
-    link_tree_to_folds = true,
-    link_folds_to_tree = false,
-    manage_folds = true,
+    -- ufo owns folding
+    link_tree_to_folds = false,
+    manage_folds = false,
+    on_attach = function(bufnr)
+      vim.keymap.set('n', '<leader>o', '<cmd>AerialToggle<CR>', { buffer = bufnr })
+      vim.keymap.set('n', '[[', '<cmd>AerialPrev<CR>', { buffer = bufnr })
+      vim.keymap.set('n', ']]', '<cmd>AerialNext<CR>', { buffer = bufnr })
+    end,
     layout = {
       default_direction = 'prefer_right',
       max_width = 50,

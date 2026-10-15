@@ -1,5 +1,3 @@
-local lsp = require('lsp')
-
 local M = {}
 
 function M.setup()
@@ -13,8 +11,6 @@ function M.setup()
         '--completion-style=detailed',
         '--pch-storage=memory',
       },
-      on_attach = lsp.on_attach,
-      capabilities = lsp.capabilities,
       root_markers = { '.clangd', '.clang-tidy', '.clang-format', 'Makefile', 'compile_commands.json', 'compile_flags.txt', 'configure.ac', '.git' },
       filetypes = {'c', 'cpp', 'objc', 'objcpp'},
       init_options = {

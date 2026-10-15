@@ -49,6 +49,23 @@ function M.config()
     diff_opts = {
       internal = true -- If luajit is present
     },
+    on_attach = function(bufnr)
+      local gs = require('gitsigns')
+      local function map(mode, lhs, rhs)
+        vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, silent = true })
+      end
+      local function selection() return { vim.fn.line('.'), vim.fn.line('v') } end
+
+      map('n', ']g', function() gs.nav_hunk('next') end)
+      map('n', '[g', function() gs.nav_hunk('prev') end)
+      map('n', '<leader>hs', gs.stage_hunk)
+      map('v', '<leader>hs', function() gs.stage_hunk(selection()) end)
+      map('n', '<leader>hu', gs.stage_hunk)
+      map('n', '<leader>hr', gs.reset_hunk)
+      map('v', '<leader>hr', function() gs.reset_hunk(selection()) end)
+      map('n', '<leader>hp', gs.preview_hunk)
+      map('n', '<leader>hb', gs.blame_line)
+    end,
   }
 end
 

@@ -121,11 +121,9 @@ return {
   },
   {
     'nvim-treesitter/nvim-treesitter',
+    branch = 'master',
     config = function() require('plugin.treesitter').config() end,
-    dependencies = {
-      'windwp/nvim-ts-autotag',
-      'nvim-treesitter/nvim-treesitter-textobjects',
-    },
+    dependencies = { 'windwp/nvim-ts-autotag' },
     build = ':TSUpdate'
   },
   {'RRethy/vim-illuminate'},

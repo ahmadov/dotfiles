@@ -1,11 +1,7 @@
-local lsp = require('lsp')
-
 local M = {}
 
 function M.setup()
   vim.lsp.config('intelephense', {
-    on_attach = lsp.on_attach,
-    capabilities = lsp.capabilities,
     settings = {
       intelephense = {
         stubs = { 

@@ -1,95 +1,55 @@
-local aerial = require('aerial')
-local utils = require('utils')
-local blink = require('blink.cmp');
+local M = {}
 
-function on_attach(client, bufnr)
-  vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
-  -- aerial.on_attach(_, bufnr);
-  require('illuminate').on_attach(client)
-  -- Aerial does not set any mappings by default, so you'll want to set some up
-  -- Toggle the aerial window with <leader>o
-  utils.buf_map(bufnr, 'n', '<leader>o', '<cmd>AerialToggle<CR>', {})
-  -- Jump forwards/backwards with '[[' and ']]'
-  utils.buf_map(bufnr, 'n', '[[', '<cmd>AerialPrev<CR>', {})
-  utils.buf_map(bufnr, 'n', ']]', '<cmd>AerialNext<CR>', {})
-
-  local opts = {noremap = true, silent = true}
-  utils.map('n', 'gd', "<Cmd>lua require('telescope.builtin').lsp_definitions()<CR>", opts)
-  utils.map('n', 'gr', "<cmd>lua require('telescope.builtin').lsp_references()<CR>", opts)
-  utils.map('n', 'gi', "<cmd>lua require('telescope.builtin').lsp_implementations()<CR>", opts)
-  -- utils.map('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  utils.map('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  utils.map('n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  -- utils.map('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts) -- until renamer.nvim fixes the issue
-  -- utils.map('v', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts) -- until renamer.nvim fixes the issue
-  -- utils.map('i', '<F2>', '<cmd>lua vim.lsp.buf.rename()<CR>', opts) -- until renamer.nvim fixes the issue
-  utils.map('n', '<leader>L', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-  utils.map('n', '[d', '<cmd>lua vim.diagnostic.jump({ count = -1, float = true })<CR>', opts)
-  utils.map('n', ']d', '<cmd>lua vim.diagnostic.jump({ count = 1, float = true })<CR>', opts)
-  utils.map('n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  utils.map('x', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-
-  -- lspsaga
-  -- utils.map('n', '<C-k>',  "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>", opts)
-  -- utils.map('n', 'gr',  "<cmd>lua require('lspsaga.provider').lsp_finder()<CR>", opts)
-
-
-  -- Telescope LSP
-  utils.map('n', '<A-g>', "<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>", opts)
-  utils.map('n', '<leader>ci', "<cmd>lua require('telescope.builtin').lsp_incoming_calls()<CR>", opts)
-
-  utils.map('n', ']g', "<cmd>lua require('gitsigns').nav_hunk('next')<CR>", opts)
-  utils.map('n', '[g', "<cmd>lua require('gitsigns').nav_hunk('prev')<CR>", opts)
-  utils.map('n', '<leader>hs', "<cmd>lua require('gitsigns').stage_hunk()<CR>", opts)
-  utils.map('v', '<leader>hs', "<cmd>lua require('gitsigns').stage_hunk({vim.fn.line('.'), vim.fn.line('v')})<CR>", opts)
-  utils.map('n', '<leader>hu', "<cmd>lua require('gitsigns').stage_hunk()<CR>", opts)
-  utils.map('n', '<leader>hr', "<cmd>lua require('gitsigns').reset_hunk()<CR>", opts)
-  utils.map('v', '<leader>hr', "<cmd>lua require('gitsigns').reset_hunk({vim.fn.line('.'), vim.fn.line('v')})<CR>", opts)
-  utils.map('n', '<leader>hp', "<cmd>lua require('gitsigns').preview_hunk()<CR>", opts)
-  utils.map('n', '<leader>hb', "<cmd>lua require('gitsigns').blame_line()<CR>", opts)
-
-  -- utils.map('n', '<leader>d', "<cmd>lua require('lspsaga.diagnostic').show_line_diagnostics()<CR>", opts)
-  -- utils.map('n', '[d', "<cmd>lua require('lspsaga.diagnostic').lsp_jump_diagnostic_prev()<CR>", opts)
-  -- utils.map('n', ']d', "<cmd>lua require('lspsaga.diagnostic').lsp_jump_diagnostic_next()<CR>", opts)
-  
-  -- Inlay hints
-  vim.lsp.inlay_hint.enable(false)
-  utils.map('n', '<leader>i', '<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({0}),{0})<CR>', opts)
+-- Built-in `grr`, `gri`, `gra`, ... would make `gr` below wait for 'timeoutlen'
+for _, map in ipairs(vim.api.nvim_get_keymap('n')) do
+  if map.lhs:match('^gr.$') then
+    vim.keymap.del('n', map.lhs)
+  end
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
--- local capabilities = nvim_cmp.default_capabilities(capabilities)
-capabilities = vim.tbl_deep_extend('force', capabilities, blink.get_lsp_capabilities({}, false))
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local function map(mode, lhs, rhs)
+      vim.keymap.set(mode, lhs, rhs, { buffer = args.buf, silent = true })
+    end
+    local telescope = function(picker)
+      return function() require('telescope.builtin')[picker]() end
+    end
 
-capabilities.textDocument.semanticHighlighting = true
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-  properties = {
-    "documentation",
-    "detail",
-    "additionalTextEdits",
-  },
-}
+    map('n', 'gd', telescope('lsp_definitions'))
+    map('n', 'gr', telescope('lsp_references'))
+    map('n', 'gi', telescope('lsp_implementations'))
+    map('n', '<A-g>', telescope('lsp_document_symbols'))
+    map('n', '<leader>ci', telescope('lsp_incoming_calls'))
+    map('n', 'gt', vim.lsp.buf.type_definition)
+    map('n', '<C-k>', vim.lsp.buf.signature_help)
+    map('n', '<leader>L', vim.diagnostic.open_float)
+    map({ 'n', 'x' }, '<leader>a', vim.lsp.buf.code_action)
+    map('n', '<leader>i', function()
+      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = args.buf }), { bufnr = args.buf })
+    end)
+  end,
+})
 
 vim.diagnostic.config({
-  virtual_text = false, -- Turn off inline diagnostics
+  virtual_text = false,
   underline = false,
   signs = true,
   update_in_insert = true,
+  -- Used by the built-in `[d` and `]d`
+  jump = {
+    on_jump = function(_, bufnr)
+      vim.diagnostic.open_float({ bufnr = bufnr, scope = 'cursor', focus = false })
+    end,
+  },
 })
 
-local M = {}
-
-M.on_attach = on_attach
-M.capabilities = capabilities
-
 function M.setup()
-  require("mason").setup()
-  require('mason-lspconfig').setup({ ensure_installed = {'clangd', 'cmake'} })
+  require('mason').setup()
+  require('mason-lspconfig').setup({ ensure_installed = { 'clangd' } })
 
-  vim.lsp.config('cmake', {})
   require('lsp.clangd').setup()
-  require('lsp.intelephense').setup();
+  require('lsp.intelephense').setup()
 end
 
 return M
