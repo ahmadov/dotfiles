@@ -1,12 +1,14 @@
 #!/bin/fish
 
+set CLANG_VERSION 23
+
 switch (uname)
 case Darwin
-  set CH_CC_COMPILER -DCMAKE_C_COMPILER=/opt/homebrew/opt/llvm@22/bin/clang
-  set CH_CXX_COMPILER -DCMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm@22/bin/clang++
+  set CH_CC_COMPILER -DCMAKE_C_COMPILER=/opt/homebrew/opt/llvm@$CLANG_VERSION/bin/clang
+  set CH_CXX_COMPILER -DCMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm@$CLANG_VERSION/bin/clang++
 case Linux
-  set CH_CC_COMPILER -DCMAKE_C_COMPILER=/usr/lib/ccache/clang-22
-  set CH_CXX_COMPILER -DCMAKE_CXX_COMPILER=/usr/lib/ccache/clang++-22
+  set CH_CC_COMPILER -DCMAKE_C_COMPILER=/usr/lib/ccache/clang-$CLANG_VERSION
+  set CH_CXX_COMPILER -DCMAKE_CXX_COMPILER=/usr/lib/ccache/clang++-$CLANG_VERSION
 end
 
 function ncores
@@ -159,16 +161,16 @@ function testr --argument-names 'name' --argument-names 'runs' -d "Invoke C++ un
   end
 end
 
-function makecihappy --argument-names 'commit' -d "Make CI happy by marking tests green."
-  if test -n "$commit"
-    echo "Marking tests green in commit '$commit'"
-
-    gh api repos/ClickHouse/ClickHouse/statuses/"$commit" -X POST -F state=success -F description="Manually set" -F context="Mergeable Check"
-    gh api repos/ClickHouse/ClickHouse/statuses/"$commit" -X POST -F state=success -F description="Manually set" -F context="CH Inc sync"
-  else
-    echo (set_color red) "Commit SHA must be provided." (set_color normal)
-  end
-end
+# function makecihappy --argument-names 'commit' -d "Make CI happy by marking tests green."
+#   if test -n "$commit"
+#     echo "Marking tests green in commit '$commit'"
+#
+#     gh api repos/ClickHouse/ClickHouse/statuses/"$commit" -X POST -F state=success -F description="Manually set" -F context="Mergeable Check"
+#     gh api repos/ClickHouse/ClickHouse/statuses/"$commit" -X POST -F state=success -F description="Manually set" -F context="CH Inc sync"
+#   else
+#     echo (set_color red) "Commit SHA must be provided." (set_color normal)
+#   end
+# end
 
 function xs -d "Compile and run ClickHouse server in debug mode"
   cpl && runs
